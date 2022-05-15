@@ -1,4 +1,4 @@
-const { DataTypes, Sequelize } = require("sequelize");
+const { DataTypes, Sequelize, INTEGER } = require("sequelize");
 const sequalize = require("../configs/database");
 
 const Oleh_Oleh = sequalize.define("tbl_oleh_oleh", {
@@ -39,6 +39,10 @@ const Oleh_Oleh = sequalize.define("tbl_oleh_oleh", {
         type: DataTypes.CHAR,
         allowNull:true
     },
+    youtube: {
+        type: DataTypes.CHAR,
+        allowNull:true
+    },
     tiktok: {
         type: DataTypes.CHAR,
         allowNull:true
@@ -60,6 +64,10 @@ const Oleh_Oleh = sequalize.define("tbl_oleh_oleh", {
         allowNull:false
     },
     pengguna_id: {
+        type: DataTypes.INTEGER,
+        allowNull:false
+    },
+    kategori_pariwisata_id:{
         type: DataTypes.INTEGER,
         allowNull:false
     },

@@ -31,6 +31,10 @@ const Wisata = sequalize.define("tbl_wisata", {
         type: DataTypes.CHAR,
         allowNull:true
     },
+    youtube : {
+        type: DataTypes.CHAR,
+        allowNull : true
+    },
     instagram: {
         type: DataTypes.CHAR,
         allowNull:true
@@ -63,11 +67,14 @@ const Wisata = sequalize.define("tbl_wisata", {
         type: DataTypes.INTEGER,
         allowNull:false
     },
+    kategori_pariwisata_id : {
+        type : DataTypes.INTEGER,
+        allowNull : false
+    },
     kategori_wisata_id: {
         type:DataTypes.INTEGER,
         allowNull:false
     }
-
 }, {
     tableName: 'tbl_wisata',
     modelName: 'tbl_wisata',
