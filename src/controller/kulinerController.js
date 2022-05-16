@@ -1,23 +1,23 @@
 const router = require("express").Router();
 const response = require("../core/response");
 const {Op} = require('sequelize')
-const {runValidation, validationWisata} = require('../validation/index');
+const {runValidation, validationKuliner} = require('../validation/index');
 
-const Wisata = require("../models/Wisata_Model");
-const Jadwal = require("../models/Jadwal_Model");
-const Kategori_Wisata = require("../models/KategoriWisata_Model");
-const Kategori_Pariwisata = require('../models/Pariwisata_Model');
-const Tiket = require('../models/Tiket_Model');
+
+const Kuliner = require('../models/Kuliner_Model');
+const Menu = require('../models/MenuKuliner_Model');
+const Jadwal = require('../models/Jadwal_Model');
+const Kategori_Kuliner = require('../models/KategoriKuliner_Model');
 const Fasilitas = require('../models/Fasilitas_Model');
 const Gambar = require('../models/Gambar_Model');
+const Kategori_Pariwisata = require('../models/Pariwisata_Model');
 
-
-Wisata.hasMany(Jadwal,{as:'jadwal',foreignKey:'id_pariwisata'});
-Wisata.belongsTo(Kategori_Wisata,{as:'kategori_wisata', foreignKey:'kategori_wisata_id'});
-Jadwal.hasOne(Tiket,{as:'tiket',foreignKey:'jadwal_id'});
-Wisata.belongsTo(Kategori_Pariwisata,{as:'kategori_pariwisata', foreignKey:'kategori_pariwisata_id'})
-Wisata.hasMany(Fasilitas,{as:'fasilitas', foreignKey:'id_pariwisata'})
-Wisata.hasMany(Gambar, {as:'gambar',foreignKey:'id_pariwisata'})
+Kuliner.hasMany(Jadwal,{as:'jadwal', foreignKey:'id_pariwisata'});
+Kuliner.hasMany(Menu,{as:'menu',foreignKey:'kuliner_id'});
+Kuliner.belongsTo(Kategori_Kuliner,{as:'kategori_kuliner', foreignKey:'kategori_kuliner_id'});
+Kuliner.hasMany(Fasilitas,{as:'fasilitas', foreignKey:'id_pariwisata'});
+Kuliner.hasMany(Gambar,{as:'gambar', foreignKey:'id_pariwisata'});
+Kuliner.belongsTo(Kategori_Pariwisata, {as:'kategori_pariwisata',foreignKey:'kategori_pariwisata_id'})
 
 router.get('/', async (req, res) => {
     const options = {
@@ -25,43 +25,41 @@ router.get('/', async (req, res) => {
             {
                 model : Jadwal,
                 as : 'jadwal',
-                attributes : ['id_pariwisata','hari','jam_buka','jam_tutup'],
-                include:[
-                    {
-                        model:Tiket,
-                        as:'tiket',
-                        attributes:['harga','tiket']
-                    }
-                ]
+                attributes : ['hari','jam_buka','jam_tutup'],
+            },
+            {
+                model : Kategori_Kuliner,
+                as : 'kategori_kuliner',
+                attributes:['jenis_kuliner']
+            },
+            {
+                model : Kategori_Pariwisata,
+                as : 'kategori_pariwisata',
+                attributes:['kategori']
+            },
+            {
+                model:Menu,
+                as:'menu',
+                attributes : ['nama_menu','harga','keterangan']
             },
             {
                 model:Fasilitas,
-                as : 'fasilitas',
+                as:'fasilitas',
                 attributes:['nama_fasilitas','keterangan']
             },
             {
                 model:Gambar,
                 as:'gambar',
                 attributes:['gambar','keterangan','tanggal']
-            },
-            {
-                model : Kategori_Wisata,
-                as : 'kategori_wisata',
-                attributes:['kategori']
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:['kategori']
             }
         ],
     }
 
     try {
-        const wisata = await Wisata.findAll(options)
+        const kuliner = await Kuliner.findAll(options)
         response.code = 200;
         response.message = "Sukses";
-        response.data = wisata;
+        response.data = kuliner;
         res.send(response.getResponse());
     } catch (error) {
         response.code = 110;
@@ -77,34 +75,32 @@ router.get('/search', async (req,res)=>{
             {
                 model : Jadwal,
                 as : 'jadwal',
-                attributes : ['id_pariwisata','hari','jam_buka','jam_tutup'],
-                include:[
-                    {
-                        model:Tiket,
-                        as:'tiket',
-                        attributes:['harga','tiket']
-                    }
-                ]
+                attributes : ['hari','jam_buka','jam_tutup'],
+            },
+            {
+                model : Kategori_Kuliner,
+                as : 'kategori_kuliner',
+                attributes:['jenis_kuliner']
+            },
+            {
+                model : Kategori_Pariwisata,
+                as : 'kategori_pariwisata',
+                attributes:['kategori']
+            },
+            {
+                model:Menu,
+                as:'menu',
+                attributes : ['nama_menu','harga','keterangan']
             },
             {
                 model:Fasilitas,
-                as : 'fasilitas',
+                as:'fasilitas',
                 attributes:['nama_fasilitas','keterangan']
             },
             {
                 model:Gambar,
                 as:'gambar',
                 attributes:['gambar','keterangan','tanggal']
-            },
-            {
-                model : Kategori_Wisata,
-                as : 'kategori_wisata',
-                attributes:['kategori']
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:['kategori']
             }
         ],
     }
@@ -112,13 +108,13 @@ router.get('/search', async (req,res)=>{
     options["where"] = {
         [Op.or]: [
           {
-            nama_wisata: {
-              [Op.like]: `%${search.nama_wisata}%`,
+            nama_kuliner: {
+              [Op.like]: `%${search.nama_kuliner}%`,
             },
           },
           {
-            alamat_wisata: {
-              [Op.like]: `%${search.alamat_wisata}%`,
+            alamat_kuliner: {
+              [Op.like]: `%${search.alamat_kuliner}%`,
             },
           },
 
@@ -138,25 +134,34 @@ router.get('/search', async (req,res)=>{
               }
           },
           {
-            kategori_wisata_id:{
-                [Op.like]:`%${search.kategori_wisata_id}%`
+            kategori_kuliner_id:{
+                [Op.like]:`%${search.kategori_kuliner_id}%`
             }
           },
           {
-              "$kategori_wisata.kategori$" : {
-                  [Op.like] : `%${search.kategori}%`
+              "$kategori_kuliner.jenis_kuliner$" : {
+                  [Op.like] : `%${search.jenis_kuliner}%`
               }
           },
-          
+          {
+              "$menu.nama_menu$":{
+                  [Op.like] : `%${search.nama_menu}%`
+              }
+          },
+          {
+            "$menu.harga$":{
+                [Op.like] : `%${search.harga}%`
+            }
+          }
         ],
     };
 
     try {
-        const wisata = await Wisata.findAll(options)
-        if(wisata.length != 0){
+        const kuliner = await Kuliner.findAll(options)
+        if(kuliner.length != 0){
             response.code = 200;
             response.message = "Sukses";
-            response.data = wisata;
+            response.data = kuliner;
             res.send(response.getResponse());
         }else{
             response.code = 111;
@@ -177,34 +182,32 @@ router.get('/filter', async (req,res)=>{
             {
                 model : Jadwal,
                 as : 'jadwal',
-                attributes : ['id_pariwisata','hari','jam_buka','jam_tutup'],
-                include:[
-                    {
-                        model:Tiket,
-                        as:'tiket',
-                        attributes:['harga','tiket']
-                    }
-                ]
+                attributes : ['hari','jam_buka','jam_tutup'],
+            },
+            {
+                model : Kategori_Kuliner,
+                as : 'kategori_kuliner',
+                attributes:['jenis_kuliner']
+            },
+            {
+                model : Kategori_Pariwisata,
+                as : 'kategori_pariwisata',
+                attributes:['kategori']
+            },
+            {
+                model:Menu,
+                as:'menu',
+                attributes : ['nama_menu','harga','keterangan']
             },
             {
                 model:Fasilitas,
-                as : 'fasilitas',
+                as:'fasilitas',
                 attributes:['nama_fasilitas','keterangan']
             },
             {
                 model:Gambar,
                 as:'gambar',
                 attributes:['gambar','keterangan','tanggal']
-            },
-            {
-                model : Kategori_Wisata,
-                as : 'kategori_wisata',
-                attributes:['kategori']
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:['kategori']
             }
         ],
     }
@@ -220,9 +223,9 @@ router.get('/filter', async (req,res)=>{
         });
       }
 
-      if (filter.kategori_wisata_id) {
+      if (filter.kategori_kuliner_id) {
         options.where[Op.and].push({
-          kategori_wisata_id: filter.kategori_wisata_id,
+          kategori_kuliner_id: filter.kategori_kuliner_id,
         });
       }
 
@@ -233,11 +236,11 @@ router.get('/filter', async (req,res)=>{
       }
 
       try {
-        const wisata = await Wisata.findAll(options)
-        if(wisata.length!=0){
+        const kuliner = await Kuliner.findAll(options)
+        if(kuliner.length!=0){
             response.code = 200;
             response.message = "Sukses";
-            response.data = wisata;
+            response.data = kuliner;
             res.send(response.getResponse());
         }else{
             response.code = 111;
@@ -251,47 +254,44 @@ router.get('/filter', async (req,res)=>{
       }
 })
 
-
 router.get('/find', async(req,res)=>{
     const options = {
         include:[
             {
                 model : Jadwal,
                 as : 'jadwal',
-                attributes : ['id_pariwisata','hari','jam_buka','jam_tutup'],
-                include:[
-                    {
-                        model:Tiket,
-                        as:'tiket',
-                        attributes:['harga','tiket']
-                    }
-                ]
+                attributes : ['hari','jam_buka','jam_tutup'],
+            },
+            {
+                model : Kategori_Kuliner,
+                as : 'kategori_kuliner',
+                attributes:['jenis_kuliner']
+            },
+            {
+                model : Kategori_Pariwisata,
+                as : 'kategori_pariwisata',
+                attributes:['kategori']
+            },
+            {
+                model:Menu,
+                as:'menu',
+                attributes : ['nama_menu','harga','keterangan']
             },
             {
                 model:Fasilitas,
-                as : 'fasilitas',
+                as:'fasilitas',
                 attributes:['nama_fasilitas','keterangan']
             },
             {
                 model:Gambar,
                 as:'gambar',
                 attributes:['gambar','keterangan','tanggal']
-            },
-            {
-                model : Kategori_Wisata,
-                as : 'kategori_wisata',
-                attributes:['kategori']
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:['kategori']
             }
         ],
     }
 
     const find = req.query
-    let modelAttr = Wisata.rawAttributes;
+    let modelAttr = Kuliner.rawAttributes;
     const findwhere = {};
     Object.values(modelAttr).forEach((val) => {
       Object.entries(find).forEach((f) => {
@@ -305,11 +305,11 @@ router.get('/find', async(req,res)=>{
     options["where"] = findwhere
 
     try {
-        const wisata = await Wisata.findAll(options)
-        if(wisata.length!=0){
+        const kuliner = await Kuliner.findAll(options)
+        if(kuliner.length!=0){
             response.code = 200;
             response.message = "Sukses";
-            response.data = wisata;
+            response.data = kuliner;
             res.send(response.getResponse());
         }else{
             response.code = 111;
@@ -329,47 +329,46 @@ router.get('/:id', async (req,res)=>{
             {
                 model : Jadwal,
                 as : 'jadwal',
-                attributes : ['id_pariwisata','hari','jam_buka','jam_tutup'],
-                include:[
-                    {
-                        model:Tiket,
-                        as:'tiket',
-                        attributes:['harga','tiket']
-                    }
-                ]
+                attributes : ['hari','jam_buka','jam_tutup'],
+            },
+            {
+                model : Kategori_Kuliner,
+                as : 'kategori_kuliner',
+                attributes:['jenis_kuliner']
+            },
+            {
+                model : Kategori_Pariwisata,
+                as : 'kategori_pariwisata',
+                attributes:['kategori']
+            },
+            {
+                model:Menu,
+                as:'menu',
+                attributes : ['nama_menu','harga','keterangan']
             },
             {
                 model:Fasilitas,
-                as : 'fasilitas',
+                as:'fasilitas',
                 attributes:['nama_fasilitas','keterangan']
             },
             {
                 model:Gambar,
                 as:'gambar',
                 attributes:['gambar','keterangan','tanggal']
-            },
-            {
-                model : Kategori_Wisata,
-                as : 'kategori_wisata',
-                attributes:['kategori']
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:['kategori']
             }
         ],
     }
+
     options['where'] = {
-        id_wisata : req.params.id
+        id_kuliner : req.params.id
     }
 
     try {
-        const wisata = await Wisata.findOne(options)
-        if(wisata){
+        const kuliner = await Kuliner.findOne(options)
+        if(kuliner){
             response.code = 200;
             response.message = "Sukses";
-            response.data = wisata;
+            response.data = kuliner;
             res.send(response.getResponse());
         }else{
             response.code = 111;
@@ -383,30 +382,30 @@ router.get('/:id', async (req,res)=>{
     }
 })
 
-router.post('/', validationWisata, runValidation, async (req, res)=>{
+router.post('/', validationKuliner, runValidation, async (req, res)=>{
 
-    const lastest = await Wisata.findOne({attributes:['id_wisata'],order:[['created_at','DESC']]})
-    const id_wisata = parseInt(lastest.id_wisata.slice(1))+1
+    const lastest = await Kuliner.findOne({attributes:['id_kuliner'],order:[['created_at','DESC']]})
+    const id_kuliner = parseInt(lastest.id_kuliner.slice(1))+1
 
-    const modelAttr = Wisata.rawAttributes
-    const inputWisata = {};
-
-    
+    const modelAttr = Kuliner.rawAttributes
+    const inputKuliner = {};
 
     Object.values(modelAttr).forEach((val) => {
-        if (val.field != "id_wisata") {
+        if (val.field != "id_kuliner") {
           if (req.body[val.field] != null) {
-            inputWisata[val.fieldName] = req.body[val.field];
+            inputKuliner[val.fieldName] = req.body[val.field];
           } else {
-            inputWisata[val.fieldName] = null;
+            inputKuliner[val.fieldName] = null;
           }
         }
     });
-    inputWisata['id_wisata'] = `W`+id_wisata
-    console.log(inputWisata)
 
+    inputKuliner['id_kuliner'] = `K`+id_kuliner
+    console.log(inputKuliner)
+
+    
     try {
-        const wisata = await Wisata.create(inputWisata)
+        // const wisata = await Wisata.create(inputWisata)
         response.code = 200;
         response.message = "Sukses";
         response.data = inputWisata;
@@ -419,58 +418,58 @@ router.post('/', validationWisata, runValidation, async (req, res)=>{
 
 })
 
-router.put('/', validationWisata, runValidation, async (req,res)=>{
-    const options = {}
-    options.where = {
-        id_wisata : req.body.id_wisata
-    }
+// router.put('/', validationWisata, runValidation, async (req,res)=>{
+//     const options = {}
+//     options.where = {
+//         id_wisata : req.body.id_wisata
+//     }
 
-    const modelAttr = Wisata.rawAttributes
-    const inputWisata = {};
-    inputWisata.id_wisata = req.body.id_wisata
-    Object.values(modelAttr).forEach((val) => {
-        if (val.field != "id_wisata") {
-          if (req.body[val.field] != null) {
-            inputWisata[val.fieldName] = req.body[val.field];
-          } else {
-            inputWisata[val.fieldName] = null;
-          }
-        }
-    });
+//     const modelAttr = Wisata.rawAttributes
+//     const inputWisata = {};
+//     inputWisata.id_wisata = req.body.id_wisata
+//     Object.values(modelAttr).forEach((val) => {
+//         if (val.field != "id_wisata") {
+//           if (req.body[val.field] != null) {
+//             inputWisata[val.fieldName] = req.body[val.field];
+//           } else {
+//             inputWisata[val.fieldName] = null;
+//           }
+//         }
+//     });
 
-    try {
-        const wisata = await Wisata.update(inputWisata, options);
-        response.code = 200;
-        response.message = "Sukses";
-        response.data = inputWisata;
-        res.send(response.getResponse());
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
+//     try {
+//         const wisata = await Wisata.update(inputWisata, options);
+//         response.code = 200;
+//         response.message = "Sukses";
+//         response.data = inputWisata;
+//         res.send(response.getResponse());
+//     } catch (error) {
+//         response.code = 110;
+//         response.message = error.message;
+//         res.send(response.getResponse());
+//     }
     
-})
+// })
 
 
-router.delete('/', async(req,res)=>{
-    const options = {}
-    options.where = {
-        id_wisata : req.body.id_wisata
-    }
+// router.delete('/', async(req,res)=>{
+//     const options = {}
+//     options.where = {
+//         id_wisata : req.body.id_wisata
+//     }
 
-    try {
-        const wisata = await Wisata.destroy(options)
-        response.code = 200;
-        response.message = "Sukses";
-        response.data = wisata;
-        res.send(response.getResponse());
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
-})
+//     try {
+//         const wisata = await Wisata.destroy(options)
+//         response.code = 200;
+//         response.message = "Sukses";
+//         response.data = wisata;
+//         res.send(response.getResponse());
+//     } catch (error) {
+//         response.code = 110;
+//         response.message = error.message;
+//         res.send(response.getResponse());
+//     }
+// })
 
 
 // router.get("/find", (req, res) => {

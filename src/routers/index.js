@@ -17,6 +17,8 @@ const routes = (app) => {
   app.use('/menu', require('../controller/menuController'));
   app.use('/access', require('../controller/accessmenuController'))
   app.use('/pariwisata', require('../controller/pariwisataController'))
+  app.use('/wisata', require('../controller/wisataController'))
+  app.use('/kuliner', require('../controller/kulinerController'))
 };
 
 

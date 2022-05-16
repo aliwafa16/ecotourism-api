@@ -3,9 +3,9 @@ const sequalize = require("../configs/database");
 
 const Wisata = sequalize.define("tbl_wisata", {
     id_wisata: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         primaryKey: true,
-        allowNull:false
+        allowNull:false,
     },
     nama_wisata: {
         type: DataTypes.CHAR,
@@ -61,11 +61,13 @@ const Wisata = sequalize.define("tbl_wisata", {
     },
     status: {
         type: DataTypes.INTEGER,
-        allowNull:false
+        allowNull:false,
+        defaultValue : 0
     },
     pengguna_id: {
         type: DataTypes.INTEGER,
-        allowNull:false
+        allowNull:false,
+        defaultValue : 0
     },
     kategori_pariwisata_id : {
         type : DataTypes.INTEGER,

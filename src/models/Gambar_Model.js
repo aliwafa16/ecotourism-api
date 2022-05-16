@@ -8,15 +8,15 @@ const Gambar = sequalize.define('tbl_gambar', {
         allowNull: false
     },
     id_pariwisata: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         allowNull:false
     },
     gambar: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         allowNull:false
     },
     keterangan: {
-        type: DataTypes.CHAR,
+        type: DataTypes.TEXT,
         allowNull:false
     },
     tanggal: {

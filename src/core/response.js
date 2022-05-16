@@ -25,6 +25,7 @@
      this.message = null;
      this.code = null;
      this.data = null;
+
    }
  
    getResponse() {
@@ -38,8 +39,9 @@
      this.message = null;
      this.data = null;
      this.code = null;
+
  
-     const result = { code, data, success, message };
+     const result = { code, data, success, message};
      log.info(
        `RESPONSE: (${code}) | STATUS: ${success} | MESSAGE: ${message}`,
        result

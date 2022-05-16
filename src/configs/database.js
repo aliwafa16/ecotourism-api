@@ -7,6 +7,7 @@ const log = require("./logger");
 const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
   host: DB_HOST,
   dialect: "mysql",
+  timezone:'+07:00'
 });
 
 sequelize

@@ -12,5 +12,29 @@ exports.runValidation = (req,res,next)=>{
 }
 
 exports.validationPariwisata = [
-    check('kategori','kategori tidak boleh kosong').notEmpty().isString().withMessage('Kategori tidak boleh berupa nomor')
+    check('kategori','Kategori is required').notEmpty()
+]
+
+exports.validationWisata = [
+    check('nama_wisata','Nama Wisata is required').notEmpty(),
+    check('deskripsi_wisata','Deskripsi Wisata is required').notEmpty(),
+    check('alamat_wisata','Alamat Wisata is required').notEmpty(),
+    check('latitude','Latitude is required').notEmpty(),
+    check('longitude','Longitude is required').notEmpty(),
+    check('kategori_pariwisata_id','Id Kategori Pariwisata is required').notEmpty(),
+    check('kategori_wisata_id','Id Kategori Wisata is required').notEmpty(),
+    check('status','Status is required').notEmpty(),
+    check('pengguna_id','Id Pengguna is required').notEmpty()
+]
+
+exports.validationKuliner = [
+    check('nama_kuliner','Nama Kuliner is required').notEmpty(),
+    check('deskripsi_kuliner','Deskripsi Kuliner is required').notEmpty(),
+    check('alamat_kuliner','Alamat Kuliner is required').notEmpty(),
+    check('latitude','Latitude is required').notEmpty(),
+    check('longitude','Longitude is required').notEmpty(),
+    check('kategori_pariwisata_id','Id Kategori Pariwisata is required').notEmpty(),
+    check('kategori_kuliner_id','Id Kategori Kuliner is required').notEmpty(),
+    check('status','Status is required').notEmpty(),
+    check('pengguna_id','Id Pengguna is required').notEmpty()
 ]

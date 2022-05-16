@@ -8,7 +8,7 @@ const Jadwal = sequalize.define('tbl_jadwal', {
         allowNull: false
     },
     id_pariwisata: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         allowNull:false
     },
     hari: {

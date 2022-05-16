@@ -279,8 +279,8 @@ router.get('/:id', async(req,res)=>{
     }
 
     try {
-        const pariwisata = await Pariwisata.findAll(options)
-        if(pariwisata.length!=0){
+        const pariwisata = await Pariwisata.findOne(options)
+        if(pariwisata){
             response.code = 200;
             response.message = "Sukses";
             response.data = pariwisata;
@@ -326,15 +326,15 @@ router.post('/', validationPariwisata, runValidation, async(req,res)=>{
 })
 
 
-router.put('/:id', validationPariwisata, runValidation, async(req, res)=>{
+router.put('/', validationPariwisata, runValidation, async(req, res)=>{
     const options = {};
      options.where = {
-        id_kategori_pariwisata : req.params.id
+        id_kategori_pariwisata : req.body.id_kategori_pariwisata
     }
 
     const modelAttr = Pariwisata.rawAttributes;
     const inputPariwisata = {};
-    inputPariwisata.id_kategori_pariwisata = req.params.id
+    inputPariwisata.id_kategori_pariwisata = req.body.id_kategori_pariwisata
     Object.values(modelAttr).forEach((val) => {
       if (val.field != "id_kategori_pariwisata") {
         if (req.body[val.field] != null) {
@@ -358,10 +358,10 @@ router.put('/:id', validationPariwisata, runValidation, async(req, res)=>{
 })
 
 
-router.delete('/:id', async(req,res)=>{
+router.delete('/', async(req,res)=>{
     const options = {}
     options.where = {
-        id_kategori_pariwisata : req.params.id
+        id_kategori_pariwisata : req.body.id_kategori_pariwisata
     }
 
     try {

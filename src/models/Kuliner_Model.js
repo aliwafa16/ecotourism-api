@@ -43,6 +43,10 @@ const Kuliner = sequalize.define("tbl_kuliner", {
         type: DataTypes.CHAR,
         allowNull:true
     },
+    youtube:{
+        type:DataTypes.CHAR,
+        allowNull:true
+    },
     website: {
         type: DataTypes.CHAR,
         allowNull: true
@@ -64,6 +68,10 @@ const Kuliner = sequalize.define("tbl_kuliner", {
         allowNull:false
     },
     kategori_kuliner_id: {
+        type:DataTypes.INTEGER,
+        allowNull:false
+    },
+    kategori_pariwisata_id:{
         type:DataTypes.INTEGER,
         allowNull:false
     }

@@ -8,15 +8,15 @@ const Fasilitas = sequalize.define('tbl_fasilitas', {
         allowNull: false
     },
     id_pariwisata: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         allowNull:false
     },
     nama_fasilitas: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         allowNull:false
     },
     keterangan: {
-        type: DataTypes.CHAR,
+        type: DataTypes.TEXT,
         allowNull:false
     },
 }, {
