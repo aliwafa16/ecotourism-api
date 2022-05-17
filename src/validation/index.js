@@ -38,3 +38,15 @@ exports.validationKuliner = [
     check('status','Status is required').notEmpty(),
     check('pengguna_id','Id Pengguna is required').notEmpty()
 ]
+
+exports.validationPenginapan = [
+    check('nama_penginapan', 'Nama Penginapan is required').notEmpty(),
+    check('deskripsi_penginapan', 'Deskripsi Penginapan is required').notEmpty(),
+    check('alamat_penginapan', 'Alamat Penginapan is required').notEmpty(),
+    check('latitude', 'Latitude is required').notEmpty(),
+    check('longitude', 'Longitude is required').notEmpty(),
+    check('status', 'Status is required').notEmpty(),
+    check('pengguna_id', 'Id Pengguna is required').notEmpty(),
+    check('kategori_penginapan_id', 'Id Kategori Penginapan is required').notEmpty(),
+    check('kategori_pariwisata_id', 'Id Kategori Pariwisata is required').notEmpty(),
+]

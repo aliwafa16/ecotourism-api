@@ -4,7 +4,7 @@ const Kategori_Pariwisata = require("./Pariwisata_Model");
 
 const Penginapan = sequalize.define("tbl_penginapan", {
     id_penginapan: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         primaryKey: true,
         allowNull:false
     },

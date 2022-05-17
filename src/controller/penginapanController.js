@@ -1,23 +1,16 @@
 const router = require("express").Router();
 const response = require("../core/response");
 const {Op} = require('sequelize')
-const {runValidation, validationKuliner} = require('../validation/index');
+const { runValidation, validationPenginapan } = require('../validation/index');
 
-
-const Kuliner = require('../models/Kuliner_Model');
-const Menu = require('../models/MenuKuliner_Model');
-const Jadwal = require('../models/Jadwal_Model');
-const Kategori_Kuliner = require('../models/KategoriKuliner_Model');
-const Fasilitas = require('../models/Fasilitas_Model');
-const Gambar = require('../models/Gambar_Model');
+const Penginapan = require('../models/Penginapan_Model');
+const Kategori_Penginapan = require('../models/KategoriPenginapan_Model');
 const Kategori_Pariwisata = require('../models/Pariwisata_Model');
+const Fasilitas = require('../models/Fasilitas_Model');
+const Fasilitas_Kamar = require('../models/FasilitasKamar_Model');
+const Kamar_Penginapan = require('../models/KamarPenginapan_Model');
+const Gambar = require('../models/Gambar_Model');
 
-Kuliner.hasMany(Jadwal,{as:'jadwal', foreignKey:'id_pariwisata'});
-Kuliner.hasMany(Menu,{as:'menu',foreignKey:'kuliner_id'});
-Kuliner.belongsTo(Kategori_Kuliner,{as:'kategori_kuliner', foreignKey:'kategori_kuliner_id'});
-Kuliner.hasMany(Fasilitas,{as:'fasilitas', foreignKey:'id_pariwisata'});
-Kuliner.hasMany(Gambar,{as:'gambar', foreignKey:'id_pariwisata'});
-Kuliner.belongsTo(Kategori_Pariwisata, {as:'kategori_pariwisata',foreignKey:'kategori_pariwisata_id'})
 
 router.get('/', async (req, res) => {
     const options = {
