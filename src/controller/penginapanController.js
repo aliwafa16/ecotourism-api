@@ -11,34 +11,41 @@ const Fasilitas_Kamar = require('../models/FasilitasKamar_Model');
 const Kamar_Penginapan = require('../models/KamarPenginapan_Model');
 const Gambar = require('../models/Gambar_Model');
 
+Penginapan.hasMany(Fasilitas, { as: 'fasilitas', foreignKey: 'id_pariwisata' });
+Penginapan.belongsTo(Kategori_Pariwisata, { as: 'kategori_pariwisata', foreignKey: 'kategori_pariwisata_id' });
+Penginapan.belongsTo(Kategori_Penginapan, { as: 'kategori_penginapan', foreignKey: 'kategori_penginapan_id' });
+Penginapan.hasMany(Kamar_Penginapan, { as: 'tipe_kamar', foreignKey: 'penginapan_id' });
+Penginapan.hasMany(Gambar, { as: 'gambar', foreignKey: 'id_pariwisata' });
+Kamar_Penginapan.hasMany(Fasilitas_Kamar, { as: 'fasilitas', foreignKey:'kamar_penginapan_id'})
+
 
 router.get('/', async (req, res) => {
     const options = {
         include:[
             {
-                model : Jadwal,
-                as : 'jadwal',
-                attributes : ['hari','jam_buka','jam_tutup'],
+                model : Fasilitas,
+                as : 'fasilitas',
+                attributes : ['id_pariwisata','nama_fasilitas', 'keterangan'],
             },
             {
-                model : Kategori_Kuliner,
-                as : 'kategori_kuliner',
-                attributes:['jenis_kuliner']
+                model : Kategori_Penginapan,
+                as : 'kategori_penginapan',
+                attributes:[['kategori','jenis_penginapan']]
             },
             {
                 model : Kategori_Pariwisata,
                 as : 'kategori_pariwisata',
-                attributes:['kategori']
+                attributes:[['kategori','kategori_pariwisata']]
             },
             {
-                model:Menu,
-                as:'menu',
-                attributes : ['nama_menu','harga','keterangan']
-            },
-            {
-                model:Fasilitas,
-                as:'fasilitas',
-                attributes:['nama_fasilitas','keterangan']
+                model:Kamar_Penginapan,
+                as:'tipe_kamar',
+                attributes: ['tipe_kamar', 'kapasitas', 'harga', 'keterangan'],
+                include: [{
+                    model: Fasilitas_Kamar,
+                    as: 'fasilitas',
+                    attributes:['nama_fasilitas','keterangan']
+                }]
             },
             {
                 model:Gambar,
@@ -49,10 +56,10 @@ router.get('/', async (req, res) => {
     }
 
     try {
-        const kuliner = await Kuliner.findAll(options)
+        const penginapan = await Penginapan.findAll(options)
         response.code = 200;
         response.message = "Sukses";
-        response.data = kuliner;
+        response.data = penginapan;
         res.send(response.getResponse());
     } catch (error) {
         response.code = 110;
@@ -66,29 +73,29 @@ router.get('/search', async (req,res)=>{
     const options = {
         include:[
             {
-                model : Jadwal,
-                as : 'jadwal',
-                attributes : ['hari','jam_buka','jam_tutup'],
+                model : Fasilitas,
+                as : 'fasilitas',
+                attributes : ['id_pariwisata','nama_fasilitas', 'keterangan'],
             },
             {
-                model : Kategori_Kuliner,
-                as : 'kategori_kuliner',
-                attributes:['jenis_kuliner']
+                model : Kategori_Penginapan,
+                as : 'kategori_penginapan',
+                attributes:[['kategori','jenis_penginapan']]
             },
             {
                 model : Kategori_Pariwisata,
                 as : 'kategori_pariwisata',
-                attributes:['kategori']
+                attributes:[['kategori','kategori_pariwisata']]
             },
             {
-                model:Menu,
-                as:'menu',
-                attributes : ['nama_menu','harga','keterangan']
-            },
-            {
-                model:Fasilitas,
-                as:'fasilitas',
-                attributes:['nama_fasilitas','keterangan']
+                model:Kamar_Penginapan,
+                as:'tipe_kamar',
+                attributes: ['tipe_kamar', 'kapasitas', 'harga', 'keterangan'],
+                include: [{
+                    model: Fasilitas_Kamar,
+                    as: 'fasilitas',
+                    attributes:['nama_fasilitas','keterangan']
+                }]
             },
             {
                 model:Gambar,
@@ -101,13 +108,13 @@ router.get('/search', async (req,res)=>{
     options["where"] = {
         [Op.or]: [
           {
-            nama_kuliner: {
-              [Op.like]: `%${search.nama_kuliner}%`,
+            nama_penginapan: {
+              [Op.like]: `%${search.nama_penginapan}%`,
             },
           },
           {
-            alamat_kuliner: {
-              [Op.like]: `%${search.alamat_kuliner}%`,
+            alamat_penginapan: {
+              [Op.like]: `%${search.alamat_penginapan}%`,
             },
           },
 
@@ -127,34 +134,34 @@ router.get('/search', async (req,res)=>{
               }
           },
           {
-            kategori_kuliner_id:{
-                [Op.like]:`%${search.kategori_kuliner_id}%`
+            kategori_penginapan_id:{
+                [Op.like]:`%${search.kategori_penginapan_id}%`
             }
           },
           {
-              "$kategori_kuliner.jenis_kuliner$" : {
-                  [Op.like] : `%${search.jenis_kuliner}%`
+              "$kategori_penginapan.kategori$" : {
+                  [Op.like] : `%${search.jenis_penginapan}%`
               }
           },
           {
-              "$menu.nama_menu$":{
-                  [Op.like] : `%${search.nama_menu}%`
+              "$kategori_pariwisata.kategori$":{
+                  [Op.like] : `%${search.kategori_pariwisata}%`
               }
           },
           {
-            "$menu.harga$":{
-                [Op.like] : `%${search.harga}%`
+            "$tipe_kamar.tipe_kamar$":{
+                [Op.like] : `%${search.tipe_kamar}%`
             }
           }
         ],
     };
 
     try {
-        const kuliner = await Kuliner.findAll(options)
-        if(kuliner.length != 0){
+        const penginapan = await Penginapan.findAll(options)
+        if(penginapan.length != 0){
             response.code = 200;
             response.message = "Sukses";
-            response.data = kuliner;
+            response.data = penginapan;
             res.send(response.getResponse());
         }else{
             response.code = 111;
@@ -173,29 +180,29 @@ router.get('/filter', async (req,res)=>{
     const options = {
         include:[
             {
-                model : Jadwal,
-                as : 'jadwal',
-                attributes : ['hari','jam_buka','jam_tutup'],
+                model : Fasilitas,
+                as : 'fasilitas',
+                attributes : ['id_pariwisata','nama_fasilitas', 'keterangan'],
             },
             {
-                model : Kategori_Kuliner,
-                as : 'kategori_kuliner',
-                attributes:['jenis_kuliner']
+                model : Kategori_Penginapan,
+                as : 'kategori_penginapan',
+                attributes:[['kategori','jenis_penginapan']]
             },
             {
                 model : Kategori_Pariwisata,
                 as : 'kategori_pariwisata',
-                attributes:['kategori']
+                attributes:[['kategori','kategori_pariwisata']]
             },
             {
-                model:Menu,
-                as:'menu',
-                attributes : ['nama_menu','harga','keterangan']
-            },
-            {
-                model:Fasilitas,
-                as:'fasilitas',
-                attributes:['nama_fasilitas','keterangan']
+                model:Kamar_Penginapan,
+                as:'tipe_kamar',
+                attributes: ['tipe_kamar', 'kapasitas', 'harga', 'keterangan'],
+                include: [{
+                    model: Fasilitas_Kamar,
+                    as: 'fasilitas',
+                    attributes:['nama_fasilitas','keterangan']
+                }]
             },
             {
                 model:Gambar,
@@ -216,9 +223,9 @@ router.get('/filter', async (req,res)=>{
         });
       }
 
-      if (filter.kategori_kuliner_id) {
+      if (filter.kategori_penginapan_id) {
         options.where[Op.and].push({
-          kategori_kuliner_id: filter.kategori_kuliner_id,
+          kategori_penginapan_id: filter.kategori_penginapan_id,
         });
       }
 
@@ -229,11 +236,11 @@ router.get('/filter', async (req,res)=>{
       }
 
       try {
-        const kuliner = await Kuliner.findAll(options)
-        if(kuliner.length!=0){
+        const penginapan = await Penginapan.findAll(options)
+        if(penginapan.length!=0){
             response.code = 200;
             response.message = "Sukses";
-            response.data = kuliner;
+            response.data = penginapan;
             res.send(response.getResponse());
         }else{
             response.code = 111;
@@ -251,29 +258,29 @@ router.get('/find', async(req,res)=>{
     const options = {
         include:[
             {
-                model : Jadwal,
-                as : 'jadwal',
-                attributes : ['hari','jam_buka','jam_tutup'],
+                model : Fasilitas,
+                as : 'fasilitas',
+                attributes : ['id_pariwisata','nama_fasilitas', 'keterangan'],
             },
             {
-                model : Kategori_Kuliner,
-                as : 'kategori_kuliner',
-                attributes:['jenis_kuliner']
+                model : Kategori_Penginapan,
+                as : 'kategori_penginapan',
+                attributes:[['kategori','jenis_penginapan']]
             },
             {
                 model : Kategori_Pariwisata,
                 as : 'kategori_pariwisata',
-                attributes:['kategori']
+                attributes:[['kategori','kategori_pariwisata']]
             },
             {
-                model:Menu,
-                as:'menu',
-                attributes : ['nama_menu','harga','keterangan']
-            },
-            {
-                model:Fasilitas,
-                as:'fasilitas',
-                attributes:['nama_fasilitas','keterangan']
+                model:Kamar_Penginapan,
+                as:'tipe_kamar',
+                attributes: ['tipe_kamar', 'kapasitas', 'harga', 'keterangan'],
+                include: [{
+                    model: Fasilitas_Kamar,
+                    as: 'fasilitas',
+                    attributes:['nama_fasilitas','keterangan']
+                }]
             },
             {
                 model:Gambar,
@@ -284,7 +291,7 @@ router.get('/find', async(req,res)=>{
     }
 
     const find = req.query
-    let modelAttr = Kuliner.rawAttributes;
+    let modelAttr = Penginapan.rawAttributes;
     const findwhere = {};
     Object.values(modelAttr).forEach((val) => {
       Object.entries(find).forEach((f) => {
@@ -298,11 +305,11 @@ router.get('/find', async(req,res)=>{
     options["where"] = findwhere
 
     try {
-        const kuliner = await Kuliner.findAll(options)
-        if(kuliner.length!=0){
+        const penginapan = await Penginapan.findAll(options)
+        if(penginapan.length!=0){
             response.code = 200;
             response.message = "Sukses";
-            response.data = kuliner;
+            response.data = penginapan;
             res.send(response.getResponse());
         }else{
             response.code = 111;
@@ -320,29 +327,29 @@ router.get('/:id', async (req,res)=>{
     const options = {
         include:[
             {
-                model : Jadwal,
-                as : 'jadwal',
-                attributes : ['hari','jam_buka','jam_tutup'],
+                model : Fasilitas,
+                as : 'fasilitas',
+                attributes : ['id_pariwisata','nama_fasilitas', 'keterangan'],
             },
             {
-                model : Kategori_Kuliner,
-                as : 'kategori_kuliner',
-                attributes:['jenis_kuliner']
+                model : Kategori_Penginapan,
+                as : 'kategori_penginapan',
+                attributes:[['kategori','jenis_penginapan']]
             },
             {
                 model : Kategori_Pariwisata,
                 as : 'kategori_pariwisata',
-                attributes:['kategori']
+                attributes:[['kategori','kategori_pariwisata']]
             },
             {
-                model:Menu,
-                as:'menu',
-                attributes : ['nama_menu','harga','keterangan']
-            },
-            {
-                model:Fasilitas,
-                as:'fasilitas',
-                attributes:['nama_fasilitas','keterangan']
+                model:Kamar_Penginapan,
+                as:'tipe_kamar',
+                attributes: ['tipe_kamar', 'kapasitas', 'harga', 'keterangan'],
+                include: [{
+                    model: Fasilitas_Kamar,
+                    as: 'fasilitas',
+                    attributes:['nama_fasilitas','keterangan']
+                }]
             },
             {
                 model:Gambar,
@@ -353,15 +360,15 @@ router.get('/:id', async (req,res)=>{
     }
 
     options['where'] = {
-        id_kuliner : req.params.id
+        id_penginapan : req.params.id
     }
 
     try {
-        const kuliner = await Kuliner.findOne(options)
-        if(kuliner){
+        const penginapan = await Penginapan.findOne(options)
+        if(penginapan){
             response.code = 200;
             response.message = "Sukses";
-            response.data = kuliner;
+            response.data = penginapan;
             res.send(response.getResponse());
         }else{
             response.code = 111;
@@ -375,29 +382,30 @@ router.get('/:id', async (req,res)=>{
     }
 })
 
-router.post('/', validationKuliner, runValidation, async (req, res)=>{
+router.post('/', validationPenginapan, runValidation, async (req, res)=>{
 
-    const lastest = await Kuliner.findOne({attributes:['id_kuliner'],order:[['created_at','DESC']]})
-    const id_kuliner = parseInt(lastest.id_kuliner.slice(1))+1
+    const lastest = await Penginapan.findOne({attributes:['id_penginapan'],order:[['created_at','DESC']]})
+    const id_penginapan = parseInt(lastest.id_penginapan.slice(1))+1
 
-    const modelAttr = Kuliner.rawAttributes
-    const inputKuliner = {};
+    const modelAttr = Penginapan.rawAttributes
+    const inputPenginapan = {};
 
     Object.values(modelAttr).forEach((val) => {
-        if (val.field != "id_kuliner") {
+        if (val.field != "id_penginapan") {
           if (req.body[val.field] != null) {
-            inputKuliner[val.fieldName] = req.body[val.field];
+            inputPenginapan[val.fieldName] = req.body[val.field];
           } else {
-            inputKuliner[val.fieldName] = null;
+            inputPenginapan[val.fieldName] = null;
           }
         }
     });
 
-    inputKuliner['id_kuliner'] = `K`+id_kuliner
-
+    inputPenginapan['id_penginapan'] = `P` + id_penginapan
     
+    console.log(inputPenginapan)
+
     try {
-        const kuliner = await Kuliner.create(inputKuliner)
+        // const kuliner = await Kuliner.create(inputKuliner)
         response.code = 200;
         response.message = "Sukses";
         response.data = inputKuliner;
@@ -410,60 +418,60 @@ router.post('/', validationKuliner, runValidation, async (req, res)=>{
 
 })
 
-router.put('/', validationKuliner, runValidation, async (req,res)=>{
-    const options = {}
-    options.where = {
-        id_kuliner : req.body.id_kuliner
-    }
+// router.put('/', validationKuliner, runValidation, async (req,res)=>{
+//     const options = {}
+//     options.where = {
+//         id_kuliner : req.body.id_kuliner
+//     }
 
-    const modelAttr = Kuliner.rawAttributes
-    const inputKuliner = {};
-    inputKuliner.id_kuliner = req.body.id_kuliner
-    Object.values(modelAttr).forEach((val) => {
-        if (val.field != "id_kuliner") {
-          if (req.body[val.field] != null) {
-            inputKuliner[val.fieldName] = req.body[val.field];
-          } else {
-            inputKuliner[val.fieldName] = null;
-          }
-        }
-    });
-    console.log(inputKuliner)
-    try {
-        const kuliner = await Kuliner.update(inputKuliner, options);
-        response.code = 200;
-        response.message = "Sukses";
-        response.data = inputKuliner;
-        res.send(response.getResponse());
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
+//     const modelAttr = Kuliner.rawAttributes
+//     const inputKuliner = {};
+//     inputKuliner.id_kuliner = req.body.id_kuliner
+//     Object.values(modelAttr).forEach((val) => {
+//         if (val.field != "id_kuliner") {
+//           if (req.body[val.field] != null) {
+//             inputKuliner[val.fieldName] = req.body[val.field];
+//           } else {
+//             inputKuliner[val.fieldName] = null;
+//           }
+//         }
+//     });
+//     console.log(inputKuliner)
+//     try {
+//         const kuliner = await Kuliner.update(inputKuliner, options);
+//         response.code = 200;
+//         response.message = "Sukses";
+//         response.data = inputKuliner;
+//         res.send(response.getResponse());
+//     } catch (error) {
+//         response.code = 110;
+//         response.message = error.message;
+//         res.send(response.getResponse());
+//     }
     
-})
+// })
 
 
-router.delete('/', async(req,res)=>{
-    const options = {}
-    options.where = {
-        id_kuliner : req.body.id_kuliner
-    }
+// router.delete('/', async(req,res)=>{
+//     const options = {}
+//     options.where = {
+//         id_kuliner : req.body.id_kuliner
+//     }
 
     
 
-    try {
-        const kuliner = await Kuliner.destroy(options)
-        response.code = 200;
-        response.message = "Sukses";
-        response.data = kuliner;
-        res.send(response.getResponse());
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
-})
+//     try {
+//         const kuliner = await Kuliner.destroy(options)
+//         response.code = 200;
+//         response.message = "Sukses";
+//         response.data = kuliner;
+//         res.send(response.getResponse());
+//     } catch (error) {
+//         response.code = 110;
+//         response.message = error.message;
+//         res.send(response.getResponse());
+//     }
+// })
 
 
 // router.get("/find", (req, res) => {
