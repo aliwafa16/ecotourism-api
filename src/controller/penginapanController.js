@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
             {
                 model : Fasilitas,
                 as : 'fasilitas',
-                attributes : ['id_pariwisata','nama_fasilitas', 'keterangan'],
+                attributes : ['nama_fasilitas', 'keterangan'],
             },
             {
                 model : Kategori_Penginapan,
@@ -75,7 +75,7 @@ router.get('/search', async (req,res)=>{
             {
                 model : Fasilitas,
                 as : 'fasilitas',
-                attributes : ['id_pariwisata','nama_fasilitas', 'keterangan'],
+                attributes : ['nama_fasilitas', 'keterangan'],
             },
             {
                 model : Kategori_Penginapan,
@@ -182,7 +182,7 @@ router.get('/filter', async (req,res)=>{
             {
                 model : Fasilitas,
                 as : 'fasilitas',
-                attributes : ['id_pariwisata','nama_fasilitas', 'keterangan'],
+                attributes : ['nama_fasilitas', 'keterangan'],
             },
             {
                 model : Kategori_Penginapan,
@@ -260,7 +260,7 @@ router.get('/find', async(req,res)=>{
             {
                 model : Fasilitas,
                 as : 'fasilitas',
-                attributes : ['id_pariwisata','nama_fasilitas', 'keterangan'],
+                attributes : ['nama_fasilitas', 'keterangan'],
             },
             {
                 model : Kategori_Penginapan,
@@ -329,7 +329,7 @@ router.get('/:id', async (req,res)=>{
             {
                 model : Fasilitas,
                 as : 'fasilitas',
-                attributes : ['id_pariwisata','nama_fasilitas', 'keterangan'],
+                attributes : ['nama_fasilitas', 'keterangan'],
             },
             {
                 model : Kategori_Penginapan,
@@ -405,10 +405,10 @@ router.post('/', validationPenginapan, runValidation, async (req, res)=>{
     console.log(inputPenginapan)
 
     try {
-        // const kuliner = await Kuliner.create(inputKuliner)
+        const penginapan = await Penginapan.create(inputPenginapan)
         response.code = 200;
         response.message = "Sukses";
-        response.data = inputKuliner;
+        response.data = inputPenginapan;
         res.send(response.getResponse());
     } catch (error) {
         response.code = 110;
@@ -418,60 +418,59 @@ router.post('/', validationPenginapan, runValidation, async (req, res)=>{
 
 })
 
-// router.put('/', validationKuliner, runValidation, async (req,res)=>{
-//     const options = {}
-//     options.where = {
-//         id_kuliner : req.body.id_kuliner
-//     }
+router.put('/', validationPenginapan, runValidation, async (req,res)=>{
+    const options = {}
+    options.where = {
+        id_penginapan : req.body.id_penginapan
+    }
 
-//     const modelAttr = Kuliner.rawAttributes
-//     const inputKuliner = {};
-//     inputKuliner.id_kuliner = req.body.id_kuliner
-//     Object.values(modelAttr).forEach((val) => {
-//         if (val.field != "id_kuliner") {
-//           if (req.body[val.field] != null) {
-//             inputKuliner[val.fieldName] = req.body[val.field];
-//           } else {
-//             inputKuliner[val.fieldName] = null;
-//           }
-//         }
-//     });
-//     console.log(inputKuliner)
-//     try {
-//         const kuliner = await Kuliner.update(inputKuliner, options);
-//         response.code = 200;
-//         response.message = "Sukses";
-//         response.data = inputKuliner;
-//         res.send(response.getResponse());
-//     } catch (error) {
-//         response.code = 110;
-//         response.message = error.message;
-//         res.send(response.getResponse());
-//     }
+    const modelAttr = Penginapan.rawAttributes
+    const inputPenginapan = {};
+    inputPenginapan.id_kuliner = req.body.id_penginapan
+    Object.values(modelAttr).forEach((val) => {
+        if (val.field != "id_penginapan") {
+          if (req.body[val.field] != null) {
+            inputPenginapan[val.fieldName] = req.body[val.field];
+          } else {
+            inputPenginapan[val.fieldName] = null;
+          }
+        }
+    });
+    console.log(inputPenginapan)
+    try {
+        const penginapan = await Penginapan.update(inputPenginapan, options);
+        response.code = 200;
+        response.message = "Sukses";
+        response.data = inputPenginapan;
+        res.send(response.getResponse());
+    } catch (error) {
+        response.code = 110;
+        response.message = error.message;
+        res.send(response.getResponse());
+    }
     
-// })
+})
 
 
-// router.delete('/', async(req,res)=>{
-//     const options = {}
-//     options.where = {
-//         id_kuliner : req.body.id_kuliner
-//     }
+router.delete('/', async(req,res)=>{
+    const options = {}
+    options.where = {
+        id_penginapan : req.body.id_penginapan
+    }
 
-    
 
-//     try {
-//         const kuliner = await Kuliner.destroy(options)
-//         response.code = 200;
-//         response.message = "Sukses";
-//         response.data = kuliner;
-//         res.send(response.getResponse());
-//     } catch (error) {
-//         response.code = 110;
-//         response.message = error.message;
-//         res.send(response.getResponse());
-//     }
-// })
+    try {
+        const penginapan = await Penginapan.destroy(options)
+        response.code = 200;
+        response.message = "Sukses";
+        response.data = penginapan;
+        res.send(response.getResponse());
+    } catch (error) {
+        response.code = 110;
+        response.message = error.message;
+        res.send(response.getResponse());
+    }
+})
 
 
 // router.get("/find", (req, res) => {

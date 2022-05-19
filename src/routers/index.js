@@ -12,7 +12,7 @@ const routes = (app) => {
   // app.use("/fasilitas", require("../controller/fasilitasController"));
   // app.use("/gambar", require("../controller/gambarController"));
 
-  // app.use('/auth', require('../controller/authController'));
+  app.use('/auth', require('../controller/authController'));
   app.use('/role', require('../controller/roleController'))
   app.use('/menu', require('../controller/menuController'));
   app.use('/access', require('../controller/accessmenuController'))

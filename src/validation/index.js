@@ -50,3 +50,8 @@ exports.validationPenginapan = [
     check('kategori_penginapan_id', 'Id Kategori Penginapan is required').notEmpty(),
     check('kategori_pariwisata_id', 'Id Kategori Pariwisata is required').notEmpty(),
 ]
+
+exports.validationLogin = [
+    check('email', 'Email is required').notEmpty().isEmail().withMessage('Email is not valid'),
+    check('password','Password is required').notEmpty()
+]

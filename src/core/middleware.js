@@ -3,7 +3,8 @@
  * Nov 02, 2021 09:00
  */
 
- const log  =require('../configs/logger')
+const log = require('../configs/logger');
+require('dotenv').config();
 
  const writeReq = async (req, res, next) => {
      const {
