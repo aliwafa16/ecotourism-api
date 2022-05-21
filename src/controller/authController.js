@@ -3,7 +3,7 @@ const response = require("../core/response");
 const routes = require("../routers");
 const crypto = require("crypto");
 const Pengguna = require("../models/Pengguna_Model");
-const { runValidation, validationLogin } = require('../validation/index');
+const { runValidation, validationLogin, validationRegistrasi } = require('../validation/index');
 const jsonwebtoken = require('jsonwebtoken')
 require('dotenv').config();
 
@@ -21,27 +21,38 @@ router.post("/", validationLogin, runValidation, async (req, res) => {
     });
 
     if (pengguna) {
-      const new_pw = crypto.createHash("md5").update(password_pengguna).digest("hex");
-      if (new_pw == pengguna.password) {
-        const data = {
-          id_pengguna : pengguna.id_pengguna
-        }
-        const token = await jsonwebtoken.sign(data, process.env.ECOTOURISM_TOKEN)
-
-        pengguna.dataValues.token = token
-
-        response.code = 200;
-        response.message = "Berhasil Login";
-        response.data = pengguna;
-        res.send(response.getResponse());
+      if (pengguna.status == 1) {
+        const new_pw = crypto.createHash("md5").update(password_pengguna).digest("hex");
+          if (new_pw == pengguna.password) {
+              if (pengguna.role_id !=3 ) {
+                  const data = {
+                    id_pengguna : pengguna.id_pengguna
+                  }
+                  const token = await jsonwebtoken.sign(data, process.env.ECOTOURISM_TOKEN)
+                  pengguna.dataValues.token = token
+                  response.code = 200;
+                  response.message = "Berhasil login";
+                  response.data = pengguna;
+                  res.send(response.getResponse());
+              } else {
+                response.code = 110;
+                response.message = "Akun tidak terdaftar";
+                res.send(response.getResponse());
+              }
+          } else {
+            response.code = 110;
+            response.message = "Password salah";
+            res.send(response.getResponse());
+          }
       } else {
         response.code = 110;
-        response.message = "Password Salah";
+        response.message = "Email belum diaktivasi";
         res.send(response.getResponse());
       }
+
     } else {
       response.code = 110;
-      response.message = "Email Tidak Ditemukan";
+      response.message = "Email tidak ditemukan";
       res.send(response.getResponse());
     }
 
@@ -52,6 +63,121 @@ router.post("/", validationLogin, runValidation, async (req, res) => {
     res.send(response.getResponse());
   }
 });
+
+router.post("/sign-in", validationLogin, runValidation, async (req, res) => {
+  try {
+    const password_pengguna = req.body.password;
+    const email_pengguna = req.body.email;
+
+    const pengguna = await Pengguna.findOne({
+      where: {
+        email: email_pengguna,
+      },
+    });
+
+    if (pengguna) {
+      if (pengguna.status == 1) {
+        const new_pw = crypto.createHash("md5").update(password_pengguna).digest("hex");
+          if (new_pw == pengguna.password) {
+              if (pengguna.role_id == 3 ) {
+                  const data = {
+                    id_pengguna : pengguna.id_pengguna
+                  }
+                  const token = await jsonwebtoken.sign(data, process.env.ECOTOURISM_TOKEN)
+                  pengguna.dataValues.token = token
+                  response.code = 200;
+                  response.message = "Berhasil login";
+                  response.data = pengguna;
+                  res.send(response.getResponse());
+              } else {
+                response.code = 110;
+                response.message = "Akun tidak terdaftar";
+                res.send(response.getResponse());
+              }
+          } else {
+            response.code = 110;
+            response.message = "Password salah";
+            res.send(response.getResponse());
+          }
+      } else {
+        response.code = 110;
+        response.message = "Email belum diaktivasi";
+        res.send(response.getResponse());
+      }
+
+    } else {
+      response.code = 110;
+      response.message = "Email tidak ditemukan";
+      res.send(response.getResponse());
+    }
+
+
+  } catch (err) {
+    response.code = 110;
+    response.message = err.message;
+    res.send(response.getResponse());
+  }
+})
+
+router.post('/registration', validationRegistrasi, runValidation ,async (req, res) => {
+
+  try {
+      const { pengelola, wisatawan } = req.body
+      const inputRegistrasi = {}
+      const options = {}
+
+      if (pengelola) {
+        inputRegistrasi.role_id = 2
+        options['where'] = {
+          role_id: 2,
+          email : req.body.email
+        }
+      } else if (wisatawan) {
+        inputRegistrasi.role_id = 3
+        options['where'] = {
+          role_id: 3,
+          email : req.body.email
+        }
+      }
+
+      let email = await Pengguna.findOne(options)
+
+    if (!email) {
+
+      inputRegistrasi.username = req.body.username
+      inputRegistrasi.email = req.body.email
+      inputRegistrasi.status = 0,
+        inputRegistrasi.password = crypto.createHash("md5").update(req.body.password).digest("hex") 
+      
+      
+      try {
+        const registasi = await Pengguna.create(inputRegistrasi);
+        response.code = 200;
+        response.message = "Registrasi berhasil";
+        response.data = inputRegistrasi;
+        res.send(response.getResponse());
+      } catch (error) {
+         response.code = 110;
+          response.message = error.message;
+          res.send(response.getResponse());
+      }
+      
+      } else {
+        response.code = 110;
+        response.message = "Email sudah digunakan";
+        res.send(response.getResponse());
+      }
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+
+ 
+
+
+
+})
 
 // router.post('/sign-in', async (req, res) => {
 //   try {

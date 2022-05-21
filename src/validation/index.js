@@ -55,3 +55,9 @@ exports.validationLogin = [
     check('email', 'Email is required').notEmpty().isEmail().withMessage('Email is not valid'),
     check('password','Password is required').notEmpty()
 ]
+
+exports.validationRegistrasi = [
+    check('username', 'Username is required').notEmpty(),
+    check('email', 'Email is required').notEmpty().isEmail().withMessage('Email is not valid'),
+    check('password', 'Password is required').notEmpty().isLength({ min: 5 }).withMessage('Password min 5 characters'),
+]

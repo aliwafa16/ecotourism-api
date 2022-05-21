@@ -4,6 +4,8 @@
  */
 
 const log = require('../configs/logger');
+const jsonwebtoken =  require('jsonwebtoken')
+const response = require("../core/response");
 require('dotenv').config();
 
  const writeReq = async (req, res, next) => {
@@ -20,12 +22,26 @@ require('dotenv').config();
      next()
  }
 
+const token = async (req, res, next) => {
+    let token = req.header('Authorization');
+    
+    if (!token) {
+        response.message = "Tidak ada token"
+        res.send(response.getResponse());
+    }
+
+    const decode = jsonwebtoken.verify(token, process.env.ECOTOURISM_TOKEN)
+    req.id_pengguna = decode.id_pengguna
+    next()
+ }
+
  
 
  
  
  module.exports = {
-     writeReq
+     writeReq,
+     token
  }/**
   * Middleware
   * Nov 02, 2021 09:00

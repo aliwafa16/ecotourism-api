@@ -2,7 +2,7 @@ const router = require("express").Router();
 const response = require("../core/response");
 const {Op} = require('sequelize')
 const {runValidation, validationWisata} = require('../validation/index');
-
+const { token } = require('../core/middleware')
 const Wisata = require("../models/Wisata_Model");
 const Jadwal = require("../models/Jadwal_Model");
 const Kategori_Wisata = require("../models/KategoriWisata_Model");
@@ -19,7 +19,7 @@ Wisata.belongsTo(Kategori_Pariwisata,{as:'kategori_pariwisata', foreignKey:'kate
 Wisata.hasMany(Fasilitas,{as:'fasilitas', foreignKey:'id_pariwisata'})
 Wisata.hasMany(Gambar, {as:'gambar',foreignKey:'id_pariwisata'})
 
-router.get('/', async (req, res) => {
+router.get('/', token, async (req, res) => {
     const options = {
         include:[
             {
