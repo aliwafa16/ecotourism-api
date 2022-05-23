@@ -1,12 +1,12 @@
 const {check, validationResult} = require('express-validator')
+const response = require("../core/response");
 
 exports.runValidation = (req,res,next)=>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        return res.status(400).json({
-            status:false,
-            message:errors.array()[0].msg
-        })
+        response.message= errors.array()[0].msg
+        response.code = 110;
+        res.send(response.getResponse());
     }
     next()
 }
@@ -60,4 +60,11 @@ exports.validationRegistrasi = [
     check('username', 'Username is required').notEmpty(),
     check('email', 'Email is required').notEmpty().isEmail().withMessage('Email is not valid'),
     check('password', 'Password is required').notEmpty().isLength({ min: 5 }).withMessage('Password min 5 characters'),
+]
+
+exports.validationPengguna = [
+    check('role_id','Id Role is required').notEmpty(),
+    check('username','Username is required').notEmpty(),
+    check('email','Email is required').notEmpty(),
+    check('password','Password is required').notEmpty().isLength({ min: 5 }).withMessage('Password min 5 characters'),
 ]

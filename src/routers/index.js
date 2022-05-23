@@ -20,6 +20,7 @@ const routes = (app) => {
   app.use('/wisata', require('../controller/wisataController'))
   app.use('/kuliner', require('../controller/kulinerController'))
   app.use('/penginapan', require('../controller/penginapanController'))
+  app.use('/pengguna', require('../controller/PenggunaController'))
 };
 
 

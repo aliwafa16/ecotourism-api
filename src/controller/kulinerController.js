@@ -392,7 +392,7 @@ router.post('/', validationKuliner, runValidation, async (req, res)=>{
 
     Object.values(modelAttr).forEach((val) => {
         if (val.field != "id_kuliner") {
-          if (req.body[val.field] != null) {
+          if (req.body[val.field] != '') {
             inputKuliner[val.fieldName] = req.body[val.field];
           } else {
             inputKuliner[val.fieldName] = null;
@@ -428,7 +428,7 @@ router.put('/', validationKuliner, runValidation, async (req,res)=>{
     inputKuliner.id_kuliner = req.body.id_kuliner
     Object.values(modelAttr).forEach((val) => {
         if (val.field != "id_kuliner") {
-          if (req.body[val.field] != null) {
+          if (req.body[val.field] != '') {
             inputKuliner[val.fieldName] = req.body[val.field];
           } else {
             inputKuliner[val.fieldName] = null;

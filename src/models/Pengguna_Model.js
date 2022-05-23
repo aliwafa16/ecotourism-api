@@ -5,7 +5,8 @@ const Pengguna = sequalize.define("tbl_pengguna", {
     id_pengguna: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull:false
+        allowNull:false,
+        autoIncrement:true
     },
     role_id: {
         type: DataTypes.INTEGER,

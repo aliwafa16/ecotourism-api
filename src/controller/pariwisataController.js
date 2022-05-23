@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const response = require("../core/response");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 const Pariwisata = require("../models/Pariwisata_Model");
 const Wisata = require("../models/Wisata_Model");
@@ -20,20 +20,21 @@ router.get('/', async (req, res) => {
         include:[
             {
                 model:Wisata,
-                as: 'wisata'
+                as: 'wisata',
             },{
                 model:Oleh_Oleh,
-                as: 'oleh_oleh'
+                as: 'oleh_oleh',
             },{
                 model:Penginapan,
-                as: 'penginapan'
+                as: 'penginapan',
             },{
                 model: Kuliner,
-                as:'kuliner'
+                as:'kuliner',
             }],
             attributes:{
                 exclude:['created_at','deleted_at','updated_at']
-            }
+            },
+            required:false
     }
     try {
         const pariwisata = await Pariwisata.findAll(options)
@@ -78,19 +79,38 @@ router.get('/search', async (req,res)=>{
             },
           },
           {
+              "$wisata.pengguna_id$":{
+                [Op.like]: `%${search.pengguna_id}%`,
+              }
+          },
+          {
             "$oleh_oleh.nama_oleh_oleh$": {
               [Op.like]: `%${search.nama_oleh_oleh}%`,
             },
           },
-
+          {
+            "$oleh_oleh.pengguna_id$": {
+              [Op.like]: `%${search.pengguna_id}%`,
+            },
+          },
           {
             "$penginapan.nama_penginapan$": {
               [Op.like]: `%${search.nama_penginapan}%`,
             },
           },
           {
+            "$penginapan.pengguna_id$": {
+              [Op.like]: `%${search.pengguna_id}%`,
+            },
+          },
+          {
             "$kuliner.nama_kuliner$": {
               [Op.like]: `%${search.nama_kuliner}%`,
+            },
+          },
+          {
+            "$kuliner.pengguna_id$": {
+              [Op.like]: `%${search.pengguna_id}%`,
             },
           },
           {
@@ -123,6 +143,7 @@ router.get('/search', async (req,res)=>{
         res.send(response.getResponse());
     }
 })
+
 
 router.get('/filter', async(req,res)=>{
     let filter = req.query;
@@ -303,7 +324,7 @@ router.post('/', validationPariwisata, runValidation, async(req,res)=>{
 
     Object.values(modelAttr).forEach((val) => {
       if (val.field != "id_kategori_pariwisata") {
-        if (req.body[val.field] != null) {
+        if (req.body[val.field] != '') {
           inputPariwisata[val.fieldName] = req.body[val.field];
         } else {
           inputPariwisata[val.fieldName] = null;
@@ -337,7 +358,7 @@ router.put('/', validationPariwisata, runValidation, async(req, res)=>{
     inputPariwisata.id_kategori_pariwisata = req.body.id_kategori_pariwisata
     Object.values(modelAttr).forEach((val) => {
       if (val.field != "id_kategori_pariwisata") {
-        if (req.body[val.field] != null) {
+        if (req.body[val.field] != '') {
           inputPariwisata[val.fieldName] = req.body[val.field];
         } else {
           inputPariwisata[val.fieldName] = null;

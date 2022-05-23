@@ -19,7 +19,7 @@ Wisata.belongsTo(Kategori_Pariwisata,{as:'kategori_pariwisata', foreignKey:'kate
 Wisata.hasMany(Fasilitas,{as:'fasilitas', foreignKey:'id_pariwisata'})
 Wisata.hasMany(Gambar, {as:'gambar',foreignKey:'id_pariwisata'})
 
-router.get('/', token, async (req, res) => {
+router.get('/', async (req, res) => {
     const options = {
         include:[
             {
@@ -395,7 +395,7 @@ router.post('/', validationWisata, runValidation, async (req, res)=>{
 
     Object.values(modelAttr).forEach((val) => {
         if (val.field != "id_wisata") {
-          if (req.body[val.field] != null) {
+          if (req.body[val.field] != '') {
             inputWisata[val.fieldName] = req.body[val.field];
           } else {
             inputWisata[val.fieldName] = null;
@@ -430,7 +430,7 @@ router.put('/', validationWisata, runValidation, async (req,res)=>{
     inputWisata.id_wisata = req.body.id_wisata
     Object.values(modelAttr).forEach((val) => {
         if (val.field != "id_wisata") {
-          if (req.body[val.field] != null) {
+          if (req.body[val.field] != '') {
             inputWisata[val.fieldName] = req.body[val.field];
           } else {
             inputWisata[val.fieldName] = null;

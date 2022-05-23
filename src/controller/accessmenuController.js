@@ -11,9 +11,12 @@ router.get('/:id_role', (req, res) => {
     let role_id = req.params.id_role
     Menu.findAll({
         include: [{
-            model: Access, where: {
+            model: Access, 
+            where: {
             id_role:role_id
-        }}]
+        }},
+    ],
+    order:[['sort','asc']]
     }).then(data => {
         response.code = 200;
         response.message = "Sukses";
