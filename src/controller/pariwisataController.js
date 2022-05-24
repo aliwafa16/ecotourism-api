@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
         include:[
             {
                 model:Wisata,
-                as: 'wisata',
+                as: 'wisata'
             },{
                 model:Oleh_Oleh,
                 as: 'oleh_oleh',
@@ -37,7 +37,24 @@ router.get('/', async (req, res) => {
             required:false
     }
     try {
-        const pariwisata = await Pariwisata.findAll(options)
+      let pariwisata = await Pariwisata.findAll(options)
+      // pariwisata = JSON.parse(JSON.stringify(pariwisata))
+      // pariwisata = pariwisata.map(item => {
+      //   const key = Object.keys(item)
+      //   let new_pariwisata = {}
+      //   key.forEach(element => {
+      //     if (typeof item[element] == 'object') {
+      //       if (item[element].length != 0) {
+      //         new_pariwisata = {
+       
+      //           [element]:item[element]
+      //         }
+      //       }
+      //     }
+      //   });
+      //   return new_pariwisata
+      // })
+      
         response.code = 200;
         response.message = "Sukses";
         response.data = pariwisata;
@@ -167,7 +184,7 @@ router.get('/filter', async(req,res)=>{
                 exclude:['created_at','deleted_at','updated_at']
             }
     }
-
+  
     options["where"] = {
         ...options.where,
         [Op.and]: [],

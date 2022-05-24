@@ -24,6 +24,10 @@ const Pengguna = sequalize.define("tbl_pengguna", {
         type: DataTypes.CHAR,
         allowNull:false
     },
+    no_telp: {
+        type: DataTypes.CHAR,
+        allowNull:false
+    },
     foto_profil: {
         type: DataTypes.CHAR,
         allowNull:true
@@ -40,6 +44,14 @@ const Pengguna = sequalize.define("tbl_pengguna", {
         type: DataTypes.INTEGER,
         allowNull:false
     },
+    aktivasi: {
+        type: DataTypes.INTEGER,
+        allowNull:false
+    },
+    link_aktivasi: {
+        type: DataTypes.TEXT,
+        allowNull:false
+    }
 }, {
     tableName: 'tbl_pengguna',
     modelName: 'tbl_pengguna',

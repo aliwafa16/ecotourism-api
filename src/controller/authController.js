@@ -5,6 +5,7 @@ const crypto = require("crypto");
 const Pengguna = require("../models/Pengguna_Model");
 const { runValidation, validationLogin, validationRegistrasi } = require('../validation/index');
 const jsonwebtoken = require('jsonwebtoken')
+const { kirimEmail } = require('../helpers/index')
 require('dotenv').config();
 
 
@@ -144,14 +145,29 @@ router.post('/registration', validationRegistrasi, runValidation ,async (req, re
 
     if (!email) {
 
+      const data = {
+        email: req.body.email
+      };
+      const token = await jsonwebtoken.sign(data, process.env.ECOTOURISM_TOKEN)
+
       inputRegistrasi.username = req.body.username
       inputRegistrasi.email = req.body.email
       inputRegistrasi.status = 0,
-        inputRegistrasi.password = crypto.createHash("md5").update(req.body.password).digest("hex") 
-      
+      inputRegistrasi.password = crypto.createHash("md5").update(req.body.password).digest("hex")
+      inputRegistrasi.link_aktivasi = token
+      inputRegistrasi.aktivasi = 0
+      inputRegistrasi.no_telp = req.body.no_telp
+
+      const templateEMail = {
+        from: 'Team Ecotourism',
+        to: inputRegistrasi.email,
+        subject: 'Aktivasi Email',
+        html : `<p>silahkan klik link dibawah untuk aktivasi akun pengelola wisata</p> <p>${process.env.CLIENT_URL}Auth/aktivasi/${token}</p>`
+      }
+      kirimEmail(templateEMail)
       
       try {
-        const registasi = await Pengguna.create(inputRegistrasi);
+        const registasi = await Pengguna.create(inputRegistrasi)
         response.code = 200;
         response.message = "Registrasi berhasil";
         response.data = inputRegistrasi;
@@ -177,6 +193,25 @@ router.post('/registration', validationRegistrasi, runValidation ,async (req, re
 
 
 
+})
+
+router.post('/activation/:id', async (req, res) => {
+  let id = req.params.id
+  try {
+    const pengguna = await Pengguna.update({ status: 1 }, {
+      where: {
+        id_pengguna:id
+      }
+    })
+    response.code = 200;
+    response.message = "Berhasil diaktivasi";
+    response.data = pengguna;
+    res.send(response.getResponse());
+  } catch (error) {
+    response.code = 110;
+    response.message = err.message;
+    res.send(response.getResponse());
+  }
 })
 
 // router.post('/sign-in', async (req, res) => {
