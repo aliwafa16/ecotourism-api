@@ -22,35 +22,40 @@ router.post("/", validationLogin, runValidation, async (req, res) => {
     });
 
     if (pengguna) {
-      if (pengguna.status == 1) {
-        const new_pw = crypto.createHash("md5").update(password_pengguna).digest("hex");
-          if (new_pw == pengguna.password) {
-              if (pengguna.role_id !=3 ) {
-                  const data = {
-                    id_pengguna : pengguna.id_pengguna
-                  }
-                  const token = await jsonwebtoken.sign(data, process.env.ECOTOURISM_TOKEN)
-                  pengguna.dataValues.token = token
-                  response.code = 200;
-                  response.message = "Berhasil login";
-                  response.data = pengguna;
+      if(pengguna.verifikasi == 1){
+        if (pengguna.status == 1) {
+          const new_pw = crypto.createHash("md5").update(password_pengguna).digest("hex");
+            if (new_pw == pengguna.password) {
+                if (pengguna.role_id !=3 ) {
+                    const data = {
+                      id_pengguna : pengguna.id_pengguna
+                    }
+                    const token = await jsonwebtoken.sign(data, process.env.ECOTOURISM_TOKEN)
+                    pengguna.dataValues.token = token
+                    response.code = 200;
+                    response.message = "Berhasil login";
+                    response.data = pengguna;
+                    res.send(response.getResponse());
+                } else {
+                  response.code = 110;
+                  response.message = "Akun tidak terdaftar";
                   res.send(response.getResponse());
-              } else {
-                response.code = 110;
-                response.message = "Akun tidak terdaftar";
-                res.send(response.getResponse());
-              }
-          } else {
-            response.code = 110;
-            response.message = "Password salah";
-            res.send(response.getResponse());
-          }
-      } else {
+                }
+            } else {
+              response.code = 110;
+              response.message = "Password salah";
+              res.send(response.getResponse());
+            }
+        } else {
+          response.code = 110;
+          response.message = "Email belum diaktivasi";
+          res.send(response.getResponse());
+        }
+      }else{
         response.code = 110;
-        response.message = "Email belum diaktivasi";
+        response.message = "Email belum diverifikasi";
         res.send(response.getResponse());
       }
-
     } else {
       response.code = 110;
       response.message = "Email tidak ditemukan";
@@ -77,6 +82,7 @@ router.post("/sign-in", validationLogin, runValidation, async (req, res) => {
     });
 
     if (pengguna) {
+      if(pengguna.verifikasi == 1){  
       if (pengguna.status == 1) {
         const new_pw = crypto.createHash("md5").update(password_pengguna).digest("hex");
           if (new_pw == pengguna.password) {
@@ -105,7 +111,11 @@ router.post("/sign-in", validationLogin, runValidation, async (req, res) => {
         response.message = "Email belum diaktivasi";
         res.send(response.getResponse());
       }
-
+      }else{
+        response.code = 110;
+        response.message = "Email belum diverifikasi";
+        res.send(response.getResponse());
+      }
     } else {
       response.code = 110;
       response.message = "Email tidak ditemukan";
@@ -154,15 +164,15 @@ router.post('/registration', validationRegistrasi, runValidation ,async (req, re
       inputRegistrasi.email = req.body.email
       inputRegistrasi.status = 0,
       inputRegistrasi.password = crypto.createHash("md5").update(req.body.password).digest("hex")
-      inputRegistrasi.link_aktivasi = token
-      inputRegistrasi.aktivasi = 0
+      inputRegistrasi.link_verifikasi = token
+      inputRegistrasi.verifikasi = 0
       inputRegistrasi.no_telp = req.body.no_telp
 
       const templateEMail = {
         from: 'Team Ecotourism',
         to: inputRegistrasi.email,
         subject: 'Aktivasi Email',
-        html : `<p>silahkan klik link dibawah untuk aktivasi akun pengelola wisata</p> <p>${process.env.CLIENT_URL}Auth/aktivasi/${token}</p>`
+        html : `<p>silahkan klik link dibawah untuk verifikasi akun pengelola wisata</p> <p>${process.env.CLIENT_URL}Auth/aktivasi/${token}</p>`
       }
       kirimEmail(templateEMail)
       
@@ -210,6 +220,45 @@ router.post('/activation/:id', async (req, res) => {
   } catch (error) {
     response.code = 110;
     response.message = err.message;
+    res.send(response.getResponse());
+  }
+})
+
+
+router.post('/verifikasi', async(req,res)=>{
+  let token = req.body.token
+
+  try {
+    const pengguna = await Pengguna.findOne({
+      where:{
+        link_verifikasi : token
+      }
+    })
+  
+    if(pengguna){
+      if(pengguna.verifikasi == 0){
+        const verifikasi = await Pengguna.update({verifikasi:1},{
+          where:{
+            link_verifikasi:token
+          }
+        })
+        response.code = 200;
+        response.message = "Verifikasi berhasil";
+        response.data = pengguna;
+        res.send(response.getResponse());
+      }else{
+        response.code = 110;
+        response.message = "Email sudah diverifikasi !";
+        res.send(response.getResponse());
+      }
+    }else{
+      response.code = 110;
+      response.message = "Token verifikasi salah !";
+      res.send(response.getResponse());
+    }
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
     res.send(response.getResponse());
   }
 })

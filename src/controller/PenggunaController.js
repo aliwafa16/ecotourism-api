@@ -67,6 +67,11 @@ router.get('/search', async(req,res)=>{
             },
           },
           {
+              verifikasi:{
+                [Op.like]: `%${search.verifikasi}%`,
+              }
+          },
+          {
               "$role.role$" : {
                   [Op.like] : `%${search.role}%`
               }
@@ -120,6 +125,12 @@ router.get('/filter', async (req,res)=>{
       if (filter.status) {
         options.where[Op.and].push({
           status: filter.status,
+        });
+      }
+
+      if (filter.verifikasi) {
+        options.where[Op.and].push({
+          verifikasi: filter.verifikasi,
         });
       }
 

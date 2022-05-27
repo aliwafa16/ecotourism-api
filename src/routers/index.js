@@ -12,17 +12,19 @@ const routes = (app) => {
   // app.use("/fasilitas", require("../controller/fasilitasController"));
   // app.use("/gambar", require("../controller/gambarController"));
 
-  app.use('/auth', require('../controller/authController'));
-  app.use('/role', require('../controller/roleController'))
-  app.use('/menu', require('../controller/menuController'));
-  app.use('/access', require('../controller/accessmenuController'))
-  app.use('/pariwisata', require('../controller/pariwisataController'))
-  app.use('/wisata', require('../controller/wisataController'))
-  app.use('/kuliner', require('../controller/kulinerController'))
-  app.use('/penginapan', require('../controller/penginapanController'))
-  app.use('/pengguna', require('../controller/PenggunaController'))
+  app.use("/auth", require("../controller/authController"));
+  app.use("/role", require("../controller/roleController"));
+  app.use("/menu", require("../controller/menuController"));
+  app.use("/access", require("../controller/accessmenuController"));
+  app.use("/pariwisata", require("../controller/pariwisataController"));
+  app.use("/wisata", require("../controller/wisataController"));
+  app.use("/kuliner", require("../controller/kulinerController"));
+  app.use("/penginapan", require("../controller/penginapanController"));
+  app.use("/pengguna", require("../controller/PenggunaController"));
+  app.use(
+    "/kategori_wisata",
+    require("../controller/kategoriwisataController")
+  );
 };
-
-
 
 module.exports = routes;
