@@ -2,13 +2,13 @@ const { DataTypes, Sequelize} = require("sequelize");
 const sequalize = require("../configs/database");
 
 const Item_Pariwisata = sequalize.define('tbl_item_pariwisata', {
-    id_item_pariwasata: {
+    id_item_pariwisata: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false
     },
     id_pariwisata: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         allowNull:false
     },
     qr_code: {

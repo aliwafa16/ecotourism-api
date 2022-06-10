@@ -25,6 +25,13 @@ const routes = (app) => {
     "/kategori_wisata",
     require("../controller/kategoriwisataController")
   );
+
+  app.use("/jadwal", require("../controller/jadwalController"))
+  app.use("/tiket", require("../controller/tiketController"))
+  app.use("/fasilitas", require("../controller/fasilitasController"));
+  app.use('/kategori_kuliner', require('../controller/kategorikulinerController'))
+  app.use('/menu_kuliner', require('../controller/menukulinerController'))
+  
 };
 
 module.exports = routes;

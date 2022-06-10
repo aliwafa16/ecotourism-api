@@ -22,8 +22,7 @@ router.post("/", validationLogin, runValidation, async (req, res) => {
     });
 
     if (pengguna) {
-      if(pengguna.verifikasi == 1){
-        if (pengguna.status == 1) {
+      if (pengguna.status == 1) {
           const new_pw = crypto.createHash("md5").update(password_pengguna).digest("hex");
             if (new_pw == pengguna.password) {
                 if (pengguna.role_id !=3 ) {
@@ -48,14 +47,9 @@ router.post("/", validationLogin, runValidation, async (req, res) => {
             }
         } else {
           response.code = 110;
-          response.message = "Email belum diaktivasi";
+          response.message = "Email belum diverifikasi";
           res.send(response.getResponse());
         }
-      }else{
-        response.code = 110;
-        response.message = "Email belum diverifikasi";
-        res.send(response.getResponse());
-      }
     } else {
       response.code = 110;
       response.message = "Email tidak ditemukan";
@@ -82,7 +76,6 @@ router.post("/sign-in", validationLogin, runValidation, async (req, res) => {
     });
 
     if (pengguna) {
-      if(pengguna.verifikasi == 1){  
       if (pengguna.status == 1) {
         const new_pw = crypto.createHash("md5").update(password_pengguna).digest("hex");
           if (new_pw == pengguna.password) {
@@ -107,11 +100,6 @@ router.post("/sign-in", validationLogin, runValidation, async (req, res) => {
             res.send(response.getResponse());
           }
       } else {
-        response.code = 110;
-        response.message = "Email belum diaktivasi";
-        res.send(response.getResponse());
-      }
-      }else{
         response.code = 110;
         response.message = "Email belum diverifikasi";
         res.send(response.getResponse());
@@ -165,7 +153,6 @@ router.post('/registration', validationRegistrasi, runValidation ,async (req, re
       inputRegistrasi.status = 0,
       inputRegistrasi.password = crypto.createHash("md5").update(req.body.password).digest("hex")
       inputRegistrasi.link_verifikasi = token
-      inputRegistrasi.verifikasi = 0
       inputRegistrasi.no_telp = req.body.no_telp
 
       const templateEMail = {
@@ -199,31 +186,7 @@ router.post('/registration', validationRegistrasi, runValidation ,async (req, re
     res.send(response.getResponse());
   }
 
- 
-
-
-
 })
-
-router.post('/activation/:id', async (req, res) => {
-  let id = req.params.id
-  try {
-    const pengguna = await Pengguna.update({ status: 1 }, {
-      where: {
-        id_pengguna:id
-      }
-    })
-    response.code = 200;
-    response.message = "Berhasil diaktivasi";
-    response.data = pengguna;
-    res.send(response.getResponse());
-  } catch (error) {
-    response.code = 110;
-    response.message = err.message;
-    res.send(response.getResponse());
-  }
-})
-
 
 router.post('/verifikasi', async(req,res)=>{
   let token = req.body.token
@@ -236,8 +199,8 @@ router.post('/verifikasi', async(req,res)=>{
     })
   
     if(pengguna){
-      if(pengguna.verifikasi == 0){
-        const verifikasi = await Pengguna.update({verifikasi:1},{
+      if(pengguna.status == 0){
+        const verifikasi = await Pengguna.update({status:1},{
           where:{
             link_verifikasi:token
           }
@@ -262,6 +225,56 @@ router.post('/verifikasi', async(req,res)=>{
     res.send(response.getResponse());
   }
 })
+
+router.post('/cekEmail', async (req, res) => {
+  
+  try {
+  
+  const email =  await Pengguna.findOne({
+    where: {
+      email:req.body.email
+    }
+  })
+
+    if (email) {
+      response.code = 110;
+      response.message = "Email sudah terdaftar";
+      res.send(response.getResponse());
+    } else {
+      response.code = 200;
+      response.message = "Email belum terdaftar";
+      res.send(response.getResponse());
+    }   
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+ 
+})
+
+
+// router.post('/activation/:id', async (req, res) => {
+//   let id = req.params.id
+//   try {
+//     const pengguna = await Pengguna.update({ status: 1 }, {
+//       where: {
+//         id_pengguna:id
+//       }
+//     })
+//     response.code = 200;
+//     response.message = "Berhasil diaktivasi";
+//     response.data = pengguna;
+//     res.send(response.getResponse());
+//   } catch (error) {
+//     response.code = 110;
+//     response.message = err.message;
+//     res.send(response.getResponse());
+//   }
+// })
+
+
+
 
 // router.post('/sign-in', async (req, res) => {
 //   try {

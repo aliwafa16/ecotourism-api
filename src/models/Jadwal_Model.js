@@ -4,6 +4,7 @@ const sequalize = require("../configs/database");
 const Jadwal = sequalize.define('tbl_jadwal', {
     id_jadwal: {
         type: DataTypes.INTEGER,
+        autoIncrement:true,
         primaryKey: true,
         allowNull: false
     },
@@ -23,6 +24,10 @@ const Jadwal = sequalize.define('tbl_jadwal', {
         type: DataTypes.CHAR,
         allowNull:false
     },
+    keterangan: {
+        type: DataTypes.TEXT,
+        allowNull:true
+    }
 }, {
     tableName: 'tbl_jadwal',
     modelName: 'tbl_jadwal',

@@ -5,19 +5,20 @@ const Tiket = sequalize.define('tbl_tiket', {
     id_tiket: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement:true,
         allowNull: false
     },
     id_pariwisata: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         allowNull:false
-    },
-    jadwal_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
     },
     tiket: {
         type: DataTypes.CHAR,
         allowNull:false
+    },
+    harga: {
+        type: DataTypes.CHAR,
+        allowNull: false
     },
     keterangan: {
         type: DataTypes.CHAR,

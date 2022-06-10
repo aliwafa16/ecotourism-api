@@ -5,6 +5,7 @@ const Menu_Kuliner = sequalize.define('tbl_menu_kuliner', {
     id_menu_kuliner: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement:true,
         allowNull: false
     },
     kuliner_id: {

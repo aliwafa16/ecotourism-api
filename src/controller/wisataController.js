@@ -10,13 +10,15 @@ const Kategori_Pariwisata = require("../models/Pariwisata_Model");
 const Tiket = require("../models/Tiket_Model");
 const Fasilitas = require("../models/Fasilitas_Model");
 const Gambar = require("../models/Gambar_Model");
+const Item = require("../models/ItemPariwisata_Model")
 
 Wisata.hasMany(Jadwal, { as: "jadwal", foreignKey: "id_pariwisata" });
 Wisata.belongsTo(Kategori_Wisata, {
   as: "kategori_wisata",
   foreignKey: "kategori_wisata_id",
 });
-Jadwal.hasOne(Tiket, { as: "tiket", foreignKey: "jadwal_id" });
+Wisata.hasMany(Item, { as: 'item', foreignKey: 'id_pariwisata' });
+Wisata.hasMany(Tiket, { as: "tiket", foreignKey: 'id_pariwisata' });
 Wisata.belongsTo(Kategori_Pariwisata, {
   as: "kategori_pariwisata",
   foreignKey: "kategori_pariwisata_id",
@@ -30,24 +32,22 @@ router.get("/", async (req, res) => {
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_pariwisata", "hari", "jam_buka", "jam_tutup"],
-        include: [
-          {
-            model: Tiket,
-            as: "tiket",
-            attributes: ["harga", "tiket"],
-          },
-        ],
+        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup", 'keterangan'],
+      },
+      {
+        model: Tiket,
+        as: 'tiket',
+        attributes:["id_tiket",'id_pariwisata','tiket','harga','keterangan'],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Wisata,
@@ -58,6 +58,11 @@ router.get("/", async (req, res) => {
         model: Kategori_Pariwisata,
         as: "kategori_pariwisata",
         attributes: ["kategori"],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
       },
     ],
     order: [["created_at", "DESC"]],
@@ -83,24 +88,22 @@ router.get("/search", async (req, res) => {
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_pariwisata", "hari", "jam_buka", "jam_tutup"],
-        include: [
-          {
-            model: Tiket,
-            as: "tiket",
-            attributes: ["harga", "tiket"],
-          },
-        ],
+        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup",'keterangan'],
+      },
+      {
+        model: Tiket,
+        as: 'tiket',
+        attributes:["id_tiket",'id_pariwisata','tiket','harga','keterangan'],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Wisata,
@@ -111,6 +114,11 @@ router.get("/search", async (req, res) => {
         model: Kategori_Pariwisata,
         as: "kategori_pariwisata",
         attributes: ["kategori"],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
       },
     ],
   };
@@ -182,24 +190,22 @@ router.get("/filter", async (req, res) => {
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_pariwisata", "hari", "jam_buka", "jam_tutup"],
-        include: [
-          {
-            model: Tiket,
-            as: "tiket",
-            attributes: ["harga", "tiket"],
-          },
-        ],
+        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup",'keterangan'],
+      },
+      {
+        model: Tiket,
+        as: 'tiket',
+        attributes:["id_tiket",'id_pariwisata','tiket','harga','keterangan'],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Wisata,
@@ -210,6 +216,11 @@ router.get("/filter", async (req, res) => {
         model: Kategori_Pariwisata,
         as: "kategori_pariwisata",
         attributes: ["kategori"],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
       },
     ],
   };
@@ -262,24 +273,22 @@ router.get("/find", async (req, res) => {
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_pariwisata", "hari", "jam_buka", "jam_tutup"],
-        include: [
-          {
-            model: Tiket,
-            as: "tiket",
-            attributes: ["harga", "tiket"],
-          },
-        ],
+        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup",'keterangan'],
+      },
+      {
+        model: Tiket,
+        as: 'tiket',
+        attributes:["id_tiket",'id_pariwisata','tiket','harga','keterangan'],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Wisata,
@@ -290,6 +299,11 @@ router.get("/find", async (req, res) => {
         model: Kategori_Pariwisata,
         as: "kategori_pariwisata",
         attributes: ["kategori"],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
       },
     ],
   };
@@ -333,24 +347,22 @@ router.get("/:id", async (req, res) => {
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_pariwisata", "hari", "jam_buka", "jam_tutup"],
-        include: [
-          {
-            model: Tiket,
-            as: "tiket",
-            attributes: ["harga", "tiket"],
-          },
-        ],
+        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup",'keterangan'],
+      },
+      {
+        model: Tiket,
+        as: 'tiket',
+        attributes:["id_tiket",'id_pariwisata','tiket','harga','keterangan'],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Wisata,
@@ -361,6 +373,11 @@ router.get("/:id", async (req, res) => {
         model: Kategori_Pariwisata,
         as: "kategori_pariwisata",
         attributes: ["kategori"],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
       },
     ],
   };

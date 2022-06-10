@@ -5,6 +5,7 @@ const Fasilitas = sequalize.define('tbl_fasilitas', {
     id_fasilitas: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement:true,
         allowNull: false
     },
     id_pariwisata: {
@@ -16,8 +17,7 @@ const Fasilitas = sequalize.define('tbl_fasilitas', {
         allowNull:false
     },
     keterangan: {
-        type: DataTypes.TEXT,
-        allowNull:false
+        type: DataTypes.TEXT
     },
 }, {
     tableName: 'tbl_fasilitas',

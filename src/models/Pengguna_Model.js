@@ -44,10 +44,6 @@ const Pengguna = sequalize.define("tbl_pengguna", {
         type: DataTypes.INTEGER,
         allowNull:false
     },
-    verifikasi: {
-        type: DataTypes.INTEGER,
-        allowNull:false
-    },
     link_verifikasi: {
         type: DataTypes.TEXT,
         allowNull:false

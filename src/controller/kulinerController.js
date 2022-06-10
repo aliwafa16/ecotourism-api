@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
             {
                 model : Jadwal,
                 as : 'jadwal',
-                attributes : ['hari','jam_buka','jam_tutup'],
+                attributes : ['id_jadwal','hari','jam_buka','jam_tutup','keterangan'],
             },
             {
                 model : Kategori_Kuliner,
@@ -40,17 +40,17 @@ router.get('/', async (req, res) => {
             {
                 model:Menu,
                 as:'menu',
-                attributes : ['nama_menu','harga','keterangan']
+                attributes : ['id_menu_kuliner','nama_menu','harga','keterangan']
             },
             {
                 model:Fasilitas,
                 as:'fasilitas',
-                attributes:['nama_fasilitas','keterangan']
+                attributes:['id_fasilitas','nama_fasilitas','keterangan']
             },
             {
                 model:Gambar,
                 as:'gambar',
-                attributes:['gambar','keterangan','tanggal']
+                attributes:['id_gambar','gambar','keterangan','tanggal']
             }
         ],
     }
@@ -75,7 +75,7 @@ router.get('/search', async (req,res)=>{
             {
                 model : Jadwal,
                 as : 'jadwal',
-                attributes : ['hari','jam_buka','jam_tutup'],
+                attributes : ['id_jadwal','hari','jam_buka','jam_tutup','keterangan'],
             },
             {
                 model : Kategori_Kuliner,
@@ -90,17 +90,17 @@ router.get('/search', async (req,res)=>{
             {
                 model:Menu,
                 as:'menu',
-                attributes : ['nama_menu','harga','keterangan']
+                attributes : ['id_menu_kuliner','nama_menu','harga','keterangan']
             },
             {
                 model:Fasilitas,
                 as:'fasilitas',
-                attributes:['nama_fasilitas','keterangan']
+                attributes:['id_fasilitas','nama_fasilitas','keterangan']
             },
             {
                 model:Gambar,
                 as:'gambar',
-                attributes:['gambar','keterangan','tanggal']
+                attributes:['id_gambar','gambar','keterangan','tanggal']
             }
         ],
     }
@@ -182,7 +182,7 @@ router.get('/filter', async (req,res)=>{
             {
                 model : Jadwal,
                 as : 'jadwal',
-                attributes : ['hari','jam_buka','jam_tutup'],
+                attributes : ['id_jadwal','hari','jam_buka','jam_tutup','keterangan'],
             },
             {
                 model : Kategori_Kuliner,
@@ -197,17 +197,17 @@ router.get('/filter', async (req,res)=>{
             {
                 model:Menu,
                 as:'menu',
-                attributes : ['nama_menu','harga','keterangan']
+                attributes : ['id_menu_kuliner','nama_menu','harga','keterangan']
             },
             {
                 model:Fasilitas,
                 as:'fasilitas',
-                attributes:['nama_fasilitas','keterangan']
+                attributes:['id_fasilitas','nama_fasilitas','keterangan']
             },
             {
                 model:Gambar,
                 as:'gambar',
-                attributes:['gambar','keterangan','tanggal']
+                attributes:['id_gambar','gambar','keterangan','tanggal']
             }
         ],
     }
@@ -260,7 +260,7 @@ router.get('/find', async(req,res)=>{
             {
                 model : Jadwal,
                 as : 'jadwal',
-                attributes : ['hari','jam_buka','jam_tutup'],
+                attributes : ['id_jadwal','hari','jam_buka','jam_tutup','keterangan'],
             },
             {
                 model : Kategori_Kuliner,
@@ -275,17 +275,17 @@ router.get('/find', async(req,res)=>{
             {
                 model:Menu,
                 as:'menu',
-                attributes : ['nama_menu','harga','keterangan']
+                attributes : ['id_menu_kuliner','nama_menu','harga','keterangan']
             },
             {
                 model:Fasilitas,
                 as:'fasilitas',
-                attributes:['nama_fasilitas','keterangan']
+                attributes:['id_fasilitas','nama_fasilitas','keterangan']
             },
             {
                 model:Gambar,
                 as:'gambar',
-                attributes:['gambar','keterangan','tanggal']
+                attributes:['id_gambar','gambar','keterangan','tanggal']
             }
         ],
     }
@@ -329,7 +329,7 @@ router.get('/:id', async (req,res)=>{
             {
                 model : Jadwal,
                 as : 'jadwal',
-                attributes : ['hari','jam_buka','jam_tutup'],
+                attributes : ['id_jadwal','hari','jam_buka','jam_tutup','keterangan'],
             },
             {
                 model : Kategori_Kuliner,
@@ -344,17 +344,17 @@ router.get('/:id', async (req,res)=>{
             {
                 model:Menu,
                 as:'menu',
-                attributes : ['nama_menu','harga','keterangan']
+                attributes : ['id_menu_kuliner','nama_menu','harga','keterangan']
             },
             {
                 model:Fasilitas,
                 as:'fasilitas',
-                attributes:['nama_fasilitas','keterangan']
+                attributes:['id_fasilitas','nama_fasilitas','keterangan']
             },
             {
                 model:Gambar,
                 as:'gambar',
-                attributes:['gambar','keterangan','tanggal']
+                attributes:['id_gambar','gambar','keterangan','tanggal']
             }
         ],
     }
