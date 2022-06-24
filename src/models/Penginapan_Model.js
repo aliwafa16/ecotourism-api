@@ -1,10 +1,9 @@
 const { DataTypes, Sequelize } = require("sequelize");
 const sequalize = require("../configs/database");
-const Kategori_Pariwisata = require("./Pariwisata_Model");
 
 const Penginapan = sequalize.define("tbl_penginapan", {
     id_penginapan: {
-        type: DataTypes.CHAR,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull:false
     },
@@ -47,7 +46,7 @@ const Penginapan = sequalize.define("tbl_penginapan", {
     youtube:{
         type:DataTypes.CHAR,
         allowNull:true
-    }, 
+    },
     website: {
         type: DataTypes.CHAR,
         allowNull: true

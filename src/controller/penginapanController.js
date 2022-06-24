@@ -382,7 +382,7 @@ router.get('/:id', async (req,res)=>{
     }
 })
 
-router.post('/', validationPenginapan, runValidation, async (req, res)=>{
+router.post('/',validationPenginapan,runValidation, async (req, res)=>{
 
     const lastest = await Penginapan.findOne({attributes:['id_penginapan'],order:[['created_at','DESC']]})
     const id_penginapan = parseInt(lastest.id_penginapan.slice(1))+1
@@ -401,9 +401,8 @@ router.post('/', validationPenginapan, runValidation, async (req, res)=>{
     });
 
     inputPenginapan['id_penginapan'] = `P` + id_penginapan
+    console.log(id_penginapan)
     
-    console.log(inputPenginapan)
-
     try {
         const penginapan = await Penginapan.create(inputPenginapan)
         response.code = 200;
@@ -418,7 +417,7 @@ router.post('/', validationPenginapan, runValidation, async (req, res)=>{
 
 })
 
-router.put('/', validationPenginapan, runValidation, async (req,res)=>{
+router.put('/',validationPenginapan,runValidation, async (req,res)=>{
     const options = {}
     options.where = {
         id_penginapan : req.body.id_penginapan

@@ -31,6 +31,7 @@ const routes = (app) => {
   app.use("/fasilitas", require("../controller/fasilitasController"));
   app.use('/kategori_kuliner', require('../controller/kategorikulinerController'))
   app.use('/menu_kuliner', require('../controller/menukulinerController'))
+  app.use('/kategori_penginapan', require('../controller/kategoripenginapanController'))
   
 };
 

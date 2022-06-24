@@ -3,7 +3,7 @@ const sequalize = require("../configs/database");
 
 const Kuliner = sequalize.define("tbl_kuliner", {
     id_kuliner: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         primaryKey: true,
         allowNull:false
     },

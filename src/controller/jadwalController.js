@@ -110,6 +110,7 @@ router.put('/', async (req, res) => {
   }
 })
 
+
 router.delete('/', async (req, res) => {
 const options = {};
   options.where = {
