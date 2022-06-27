@@ -32,6 +32,11 @@ const routes = (app) => {
   app.use('/kategori_kuliner', require('../controller/kategorikulinerController'))
   app.use('/menu_kuliner', require('../controller/menukulinerController'))
   app.use('/kategori_penginapan', require('../controller/kategoripenginapanController'))
+  app.use("/jenis_kamar", require("../controller/kamarpenginapanController"));
+  app.use(
+    "/fasilitas_kamar",
+    require("../controller/fasilitaskamarController")
+  );
   
 };
 

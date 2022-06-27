@@ -16,348 +16,445 @@ Penginapan.belongsTo(Kategori_Pariwisata, { as: 'kategori_pariwisata', foreignKe
 Penginapan.belongsTo(Kategori_Penginapan, { as: 'kategori_penginapan', foreignKey: 'kategori_penginapan_id' });
 Penginapan.hasMany(Kamar_Penginapan, { as: 'tipe_kamar', foreignKey: 'penginapan_id' });
 Penginapan.hasMany(Gambar, { as: 'gambar', foreignKey: 'id_pariwisata' });
-Kamar_Penginapan.hasMany(Fasilitas_Kamar, { as: 'fasilitas', foreignKey:'kamar_penginapan_id'})
+Kamar_Penginapan.hasMany(Fasilitas_Kamar, {
+  as: "fasilitas_kamar",
+  foreignKey: "kamar_penginapan_id",
+});
 
-
-router.get('/', async (req, res) => {
-    const options = {
-        include:[
-            {
-                model : Fasilitas,
-                as : 'fasilitas',
-                attributes : ['nama_fasilitas', 'keterangan'],
-            },
-            {
-                model : Kategori_Penginapan,
-                as : 'kategori_penginapan',
-                attributes:[['kategori','jenis_penginapan']]
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:[['kategori','kategori_pariwisata']]
-            },
-            {
-                model:Kamar_Penginapan,
-                as:'tipe_kamar',
-                attributes: ['tipe_kamar', 'kapasitas', 'harga', 'keterangan'],
-                include: [{
-                    model: Fasilitas_Kamar,
-                    as: 'fasilitas',
-                    attributes:['nama_fasilitas','keterangan']
-                }]
-            },
-            {
-                model:Gambar,
-                as:'gambar',
-                attributes:['gambar','keterangan','tanggal']
-            }
+router.get("/", async (req, res) => {
+  const options = {
+    include: [
+      {
+        model: Fasilitas,
+        as: "fasilitas",
+        attributes: [
+          "id_fasilitas",
+          "id_pariwisata",
+          "nama_fasilitas",
+          "keterangan",
         ],
-    }
-
-    try {
-        const penginapan = await Penginapan.findAll(options)
-        response.code = 200;
-        response.message = "Sukses";
-        response.data = penginapan;
-        res.send(response.getResponse());
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
-})
-
-router.get('/search', async (req,res)=>{
-    let search = req.query;
-    const options = {
-        include:[
-            {
-                model : Fasilitas,
-                as : 'fasilitas',
-                attributes : ['nama_fasilitas', 'keterangan'],
-            },
-            {
-                model : Kategori_Penginapan,
-                as : 'kategori_penginapan',
-                attributes:[['kategori','jenis_penginapan']]
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:[['kategori','kategori_pariwisata']]
-            },
-            {
-                model:Kamar_Penginapan,
-                as:'tipe_kamar',
-                attributes: ['tipe_kamar', 'kapasitas', 'harga', 'keterangan'],
-                include: [{
-                    model: Fasilitas_Kamar,
-                    as: 'fasilitas',
-                    attributes:['nama_fasilitas','keterangan']
-                }]
-            },
-            {
-                model:Gambar,
-                as:'gambar',
-                attributes:['gambar','keterangan','tanggal']
-            }
+      },
+      {
+        model: Kategori_Penginapan,
+        as: "kategori_penginapan",
+        attributes: [["kategori", "jenis_penginapan"]],
+      },
+      {
+        model: Kategori_Pariwisata,
+        as: "kategori_pariwisata",
+        attributes: [["kategori", "kategori_pariwisata"]],
+      },
+      {
+        model: Kamar_Penginapan,
+        as: "tipe_kamar",
+        attributes: [
+          "id_kamar_penginapan",
+          "tipe_kamar",
+          "kapasitas",
+          "harga",
+          "keterangan",
         ],
-    }
-
-    options["where"] = {
-        [Op.or]: [
+        include: [
           {
-            nama_penginapan: {
-              [Op.like]: `%${search.nama_penginapan}%`,
-            },
+            model: Fasilitas_Kamar,
+            as: "fasilitas_kamar",
+            attributes: [
+              "id_fasilitas_kamar",
+              "penginapan_id",
+              "kamar_penginapan_id",
+              "nama_fasilitas",
+              "keterangan",
+            ],
           },
-          {
-            alamat_penginapan: {
-              [Op.like]: `%${search.alamat_penginapan}%`,
-            },
-          },
-
-          {
-            latitude: {
-              [Op.like]: `%${search.latitude}%`,
-            },
-          },
-          {
-            longitude: {
-              [Op.like]: `%${search.longitude}%`,
-            },
-          },
-          {
-              kategori_pariwisata_id:{
-                  [Op.like]:`%${search.kategori_pariwisata_id}%`
-              }
-          },
-          {
-            kategori_penginapan_id:{
-                [Op.like]:`%${search.kategori_penginapan_id}%`
-            }
-          },
-          {
-              "$kategori_penginapan.kategori$" : {
-                  [Op.like] : `%${search.jenis_penginapan}%`
-              }
-          },
-          {
-              "$kategori_pariwisata.kategori$":{
-                  [Op.like] : `%${search.kategori_pariwisata}%`
-              }
-          },
-          {
-            "$tipe_kamar.tipe_kamar$":{
-                [Op.like] : `%${search.tipe_kamar}%`
-            }
-          }
         ],
-    };
+      },
+      {
+        model: Gambar,
+        as: "gambar",
+        attributes: ["gambar", "keterangan", "tanggal"],
+      },
+    ],
+  };
 
-    try {
-        const penginapan = await Penginapan.findAll(options)
-        if(penginapan.length != 0){
-            response.code = 200;
-            response.message = "Sukses";
-            response.data = penginapan;
-            res.send(response.getResponse());
-        }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
-        }
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
-})
+  try {
+    const penginapan = await Penginapan.findAll(options);
+    response.code = 200;
+    response.message = "Sukses";
+    response.data = penginapan;
+    res.send(response.getResponse());
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
 
-router.get('/filter', async (req,res)=>{
-    const filter = req.query
-    const options = {
-        include:[
-            {
-                model : Fasilitas,
-                as : 'fasilitas',
-                attributes : ['nama_fasilitas', 'keterangan'],
-            },
-            {
-                model : Kategori_Penginapan,
-                as : 'kategori_penginapan',
-                attributes:[['kategori','jenis_penginapan']]
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:[['kategori','kategori_pariwisata']]
-            },
-            {
-                model:Kamar_Penginapan,
-                as:'tipe_kamar',
-                attributes: ['tipe_kamar', 'kapasitas', 'harga', 'keterangan'],
-                include: [{
-                    model: Fasilitas_Kamar,
-                    as: 'fasilitas',
-                    attributes:['nama_fasilitas','keterangan']
-                }]
-            },
-            {
-                model:Gambar,
-                as:'gambar',
-                attributes:['gambar','keterangan','tanggal']
-            }
+router.get("/search", async (req, res) => {
+  let search = req.query;
+  const options = {
+    include: [
+      {
+        model: Fasilitas,
+        as: "fasilitas",
+        attributes: [
+          "id_fasilitas",
+          "id_pariwisata",
+          "nama_fasilitas",
+          "keterangan",
         ],
-    }
-
-    options["where"] = {
-        ...options.where,
-        [Op.and]: [],
-      };
-    
-      if (filter.kategori_pariwisata_id) {
-        options.where[Op.and].push({
-          kategori_pariwisata_id: filter.kategori_pariwisata_id,
-        });
-      }
-
-      if (filter.kategori_penginapan_id) {
-        options.where[Op.and].push({
-          kategori_penginapan_id: filter.kategori_penginapan_id,
-        });
-      }
-
-      if (filter.status) {
-        options.where[Op.and].push({
-          status: filter.status,
-        });
-      }
-
-      try {
-        const penginapan = await Penginapan.findAll(options)
-        if(penginapan.length!=0){
-            response.code = 200;
-            response.message = "Sukses";
-            response.data = penginapan;
-            res.send(response.getResponse());
-        }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
-        }
-      } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-      }
-})
-
-router.get('/find', async(req,res)=>{
-    const options = {
-        include:[
-            {
-                model : Fasilitas,
-                as : 'fasilitas',
-                attributes : ['nama_fasilitas', 'keterangan'],
-            },
-            {
-                model : Kategori_Penginapan,
-                as : 'kategori_penginapan',
-                attributes:[['kategori','jenis_penginapan']]
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:[['kategori','kategori_pariwisata']]
-            },
-            {
-                model:Kamar_Penginapan,
-                as:'tipe_kamar',
-                attributes: ['tipe_kamar', 'kapasitas', 'harga', 'keterangan'],
-                include: [{
-                    model: Fasilitas_Kamar,
-                    as: 'fasilitas',
-                    attributes:['nama_fasilitas','keterangan']
-                }]
-            },
-            {
-                model:Gambar,
-                as:'gambar',
-                attributes:['gambar','keterangan','tanggal']
-            }
+      },
+      {
+        model: Kategori_Penginapan,
+        as: "kategori_penginapan",
+        attributes: [["kategori", "jenis_penginapan"]],
+      },
+      {
+        model: Kategori_Pariwisata,
+        as: "kategori_pariwisata",
+        attributes: [["kategori", "kategori_pariwisata"]],
+      },
+      {
+        model: Kamar_Penginapan,
+        as: "tipe_kamar",
+        attributes: [
+          "id_kamar_penginapan",
+          "tipe_kamar",
+          "kapasitas",
+          "harga",
+          "keterangan",
         ],
-    }
+        include: [
+          {
+            model: Fasilitas_Kamar,
+            as: "fasilitas_kamar",
+            attributes: [
+              "id_fasilitas_kamar",
+              "penginapan_id",
+              "kamar_penginapan_id",
+              "nama_fasilitas",
+              "keterangan",
+            ],
+          },
+        ],
+      },
+      {
+        model: Gambar,
+        as: "gambar",
+        attributes: ["gambar", "keterangan", "tanggal"],
+      },
+    ],
+  };
 
-    const find = req.query
-    let modelAttr = Penginapan.rawAttributes;
-    const findwhere = {};
-    Object.values(modelAttr).forEach((val) => {
-      Object.entries(find).forEach((f) => {
-        const key = f[0];
-        const value = f[1];
-        if (val.field === key && value) {
-          findwhere[val.field] = value.toString();
-        }
-      });
+  options["where"] = {
+    [Op.or]: [
+      {
+        nama_penginapan: {
+          [Op.like]: `%${search.nama_penginapan}%`,
+        },
+      },
+      {
+        alamat_penginapan: {
+          [Op.like]: `%${search.alamat_penginapan}%`,
+        },
+      },
+
+      {
+        latitude: {
+          [Op.like]: `%${search.latitude}%`,
+        },
+      },
+      {
+        longitude: {
+          [Op.like]: `%${search.longitude}%`,
+        },
+      },
+      {
+        kategori_pariwisata_id: {
+          [Op.like]: `%${search.kategori_pariwisata_id}%`,
+        },
+      },
+      {
+        kategori_penginapan_id: {
+          [Op.like]: `%${search.kategori_penginapan_id}%`,
+        },
+      },
+      {
+        "$kategori_penginapan.kategori$": {
+          [Op.like]: `%${search.jenis_penginapan}%`,
+        },
+      },
+      {
+        "$kategori_pariwisata.kategori$": {
+          [Op.like]: `%${search.kategori_pariwisata}%`,
+        },
+      },
+      {
+        "$tipe_kamar.tipe_kamar$": {
+          [Op.like]: `%${search.tipe_kamar}%`,
+        },
+      },
+    ],
+  };
+
+  try {
+    const penginapan = await Penginapan.findAll(options);
+    if (penginapan.length != 0) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = penginapan;
+      res.send(response.getResponse());
+    } else {
+      response.code = 111;
+      response.message = "Data tidak ditemukan";
+      res.send(response.getResponse());
+    }
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
+
+router.get("/filter", async (req, res) => {
+  const filter = req.query;
+  const options = {
+    include: [
+      {
+        model: Fasilitas,
+        as: "fasilitas",
+        attributes: [
+          "id_fasilitas",
+          "id_pariwisata",
+          "nama_fasilitas",
+          "keterangan",
+        ],
+      },
+      {
+        model: Kategori_Penginapan,
+        as: "kategori_penginapan",
+        attributes: [["kategori", "jenis_penginapan"]],
+      },
+      {
+        model: Kategori_Pariwisata,
+        as: "kategori_pariwisata",
+        attributes: [["kategori", "kategori_pariwisata"]],
+      },
+      {
+        model: Kamar_Penginapan,
+        as: "tipe_kamar",
+        attributes: [
+          "id_kamar_penginapan",
+          "tipe_kamar",
+          "kapasitas",
+          "harga",
+          "keterangan",
+        ],
+        include: [
+          {
+            model: Fasilitas_Kamar,
+            as: "fasilitas_kamar",
+            attributes: [
+              "id_fasilitas_kamar",
+              "penginapan_id",
+              "kamar_penginapan_id",
+              "nama_fasilitas",
+              "keterangan",
+            ],
+          },
+        ],
+      },
+      {
+        model: Gambar,
+        as: "gambar",
+        attributes: ["gambar", "keterangan", "tanggal"],
+      },
+    ],
+  };
+
+  options["where"] = {
+    ...options.where,
+    [Op.and]: [],
+  };
+
+  if (filter.kategori_pariwisata_id) {
+    options.where[Op.and].push({
+      kategori_pariwisata_id: filter.kategori_pariwisata_id,
     });
-    options["where"] = findwhere
+  }
 
-    try {
-        const penginapan = await Penginapan.findAll(options)
-        if(penginapan.length!=0){
-            response.code = 200;
-            response.message = "Sukses";
-            response.data = penginapan;
-            res.send(response.getResponse());
-        }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
-        }
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+  if (filter.kategori_penginapan_id) {
+    options.where[Op.and].push({
+      kategori_penginapan_id: filter.kategori_penginapan_id,
+    });
+  }
+
+  if (filter.status) {
+    options.where[Op.and].push({
+      status: filter.status,
+    });
+  }
+
+  try {
+    const penginapan = await Penginapan.findAll(options);
+    if (penginapan.length != 0) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = penginapan;
+      res.send(response.getResponse());
+    } else {
+      response.code = 111;
+      response.message = "Data tidak ditemukan";
+      res.send(response.getResponse());
     }
-})
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
+
+router.get("/find", async (req, res) => {
+  const options = {
+    include: [
+      {
+        model: Fasilitas,
+        as: "fasilitas",
+        attributes: [
+          "id_fasilitas",
+          "id_pariwisata",
+          "nama_fasilitas",
+          "keterangan",
+        ],
+      },
+      {
+        model: Kategori_Penginapan,
+        as: "kategori_penginapan",
+        attributes: [["kategori", "jenis_penginapan"]],
+      },
+      {
+        model: Kategori_Pariwisata,
+        as: "kategori_pariwisata",
+        attributes: [["kategori", "kategori_pariwisata"]],
+      },
+      {
+        model: Kamar_Penginapan,
+        as: "tipe_kamar",
+        attributes: [
+          "id_kamar_penginapan",
+          "tipe_kamar",
+          "kapasitas",
+          "harga",
+          "keterangan",
+        ],
+        include: [
+          {
+            model: Fasilitas_Kamar,
+            as: "fasilitas_kamar",
+            attributes: [
+              "id_fasilitas_kamar",
+              "penginapan_id",
+              "kamar_penginapan_id",
+              "nama_fasilitas",
+              "keterangan",
+            ],
+          },
+        ],
+      },
+      {
+        model: Gambar,
+        as: "gambar",
+        attributes: ["gambar", "keterangan", "tanggal"],
+      },
+    ],
+  };
+
+  const find = req.query;
+  let modelAttr = Penginapan.rawAttributes;
+  const findwhere = {};
+  Object.values(modelAttr).forEach((val) => {
+    Object.entries(find).forEach((f) => {
+      const key = f[0];
+      const value = f[1];
+      if (val.field === key && value) {
+        findwhere[val.field] = value.toString();
+      }
+    });
+  });
+  options["where"] = findwhere;
+
+  try {
+    const penginapan = await Penginapan.findAll(options);
+    if (penginapan.length != 0) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = penginapan;
+      res.send(response.getResponse());
+    } else {
+      response.code = 111;
+      response.message = "Data tidak ditemukan";
+      res.send(response.getResponse());
+    }
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
 
 router.get('/:id', async (req,res)=>{
-    const options = {
-        include:[
-            {
-                model : Fasilitas,
-                as : 'fasilitas',
-                attributes : ['nama_fasilitas', 'keterangan'],
-            },
-            {
-                model : Kategori_Penginapan,
-                as : 'kategori_penginapan',
-                attributes:[['kategori','jenis_penginapan']]
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:[['kategori','kategori_pariwisata']]
-            },
-            {
-                model:Kamar_Penginapan,
-                as:'tipe_kamar',
-                attributes: ['tipe_kamar', 'kapasitas', 'harga', 'keterangan'],
-                include: [{
-                    model: Fasilitas_Kamar,
-                    as: 'fasilitas',
-                    attributes:['nama_fasilitas','keterangan']
-                }]
-            },
-            {
-                model:Gambar,
-                as:'gambar',
-                attributes:['gambar','keterangan','tanggal']
-            }
+  const options = {
+    include: [
+      {
+        model: Fasilitas,
+        as: "fasilitas",
+        attributes: [
+          "id_fasilitas",
+          "id_pariwisata",
+          "nama_fasilitas",
+          "keterangan",
         ],
-    }
+      },
+      {
+        model: Kategori_Penginapan,
+        as: "kategori_penginapan",
+        attributes: [["kategori", "jenis_penginapan"]],
+      },
+      {
+        model: Kategori_Pariwisata,
+        as: "kategori_pariwisata",
+        attributes: [["kategori", "kategori_pariwisata"]],
+      },
+      {
+        model: Kamar_Penginapan,
+        as: "tipe_kamar",
+        attributes: [
+          "id_kamar_penginapan",
+          "tipe_kamar",
+          "kapasitas",
+          "harga",
+          "keterangan",
+        ],
+        include: [
+          {
+            model: Fasilitas_Kamar,
+            as: "fasilitas_kamar",
+            attributes: [
+              "id_fasilitas_kamar",
+              "penginapan_id",
+              "kamar_penginapan_id",
+              "nama_fasilitas",
+              "keterangan",
+            ],
+          },
+        ],
+      },
+      {
+        model: Gambar,
+        as: "gambar",
+        attributes: ["gambar", "keterangan", "tanggal"],
+      },
+    ],
+  };
 
     options['where'] = {
         id_penginapan : req.params.id
