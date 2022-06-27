@@ -37,6 +37,7 @@ const routes = (app) => {
     "/fasilitas_kamar",
     require("../controller/fasilitaskamarController")
   );
+  app.use("/oleh_oleh", require('../controller/oleholehController'))
   
 };
 

@@ -7,8 +7,10 @@ exports.runValidation = (req,res,next)=>{
         response.message= errors.array()[0].msg
         response.code = 110;
         res.send(response.getResponse());
+    } else {
+        next()
     }
-    next()
+    
 }
 
 exports.validationPariwisata = [
@@ -50,6 +52,18 @@ exports.validationPenginapan = [
     check('kategori_penginapan_id', 'Id Kategori Penginapan is required').notEmpty(),
     check('kategori_pariwisata_id', 'Id Kategori Pariwisata is required').notEmpty(),
 ]
+
+exports.validationOlehOleh = [
+    check('nama_oleh_oleh', 'Nama Oleh-oleh is required').notEmpty(),
+    check('deskripsi_oleh_oleh', 'Deskripsi Oleh-oleh is required').notEmpty(),
+    check('alamat_oleh_oleh', 'Alamat Oleh-oleh is required').notEmpty(),
+    check('latitude', 'Latitude is required').notEmpty(),
+    check('longitude', 'Longitude is required').notEmpty(),
+    check('status', 'Status is required').notEmpty(),
+    check('pengguna_id', 'Id Pengguna is required').notEmpty(),
+    check('kategori_pariwisata_id', 'Id Kategori Pariwisata is required').notEmpty(),
+]
+
 
 exports.validationLogin = [
     check('email', 'Email is required').notEmpty().isEmail().withMessage('Email is not valid'),
