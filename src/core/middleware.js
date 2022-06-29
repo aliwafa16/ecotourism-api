@@ -31,9 +31,11 @@ const token = async (req, res, next) => {
         if (!token) {
             response.message = "Tidak ada token"
             res.send(response.getResponse());
-        }
-        const decode = jsonwebtoken.verify(token, process.env.ECOTOURISM_TOKEN)
+        } else {
+                    const decode = jsonwebtoken.verify(token, process.env.ECOTOURISM_TOKEN)
         req.id_pengguna = decode.id_pengguna
+        }
+
         next()
     } catch (error) {
         response.message = "Tidak ada token"

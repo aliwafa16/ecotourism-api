@@ -398,7 +398,7 @@ router.post("/", validationOlehOleh, runValidation, async (req, res) => {
   try {
     const oleh_oleh = await Oleh_Oleh.create(inputOlehOleh);
     response.code = 200;
-    response.message = "Sukses";
+    response.message = "Tambah Data Wisata Oleh-Oleh Berhasil";
     response.data = inputOlehOleh;
     res.send(response.getResponse());
   } catch (error) {
@@ -432,7 +432,7 @@ router.put("/", validationOlehOleh, runValidation, async (req, res) => {
       try {
         const oleh_oleh = await Oleh_Oleh.update(inputOlehOleh, options);
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Ubah Data Wisata Oleh-Oleh Berhasil";
         response.data = inputOlehOleh;
         res.send(response.getResponse());
       } catch (error) {

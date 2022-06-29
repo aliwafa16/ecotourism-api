@@ -406,7 +406,7 @@ router.post('/', validationKuliner, runValidation, async (req, res)=>{
     try {
         const kuliner = await Kuliner.create(inputKuliner)
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Tambah Data Wisata Kuliner Berhasil";
         response.data = inputKuliner;
         res.send(response.getResponse());
     } catch (error) {
@@ -439,7 +439,7 @@ router.put('/', validationKuliner, runValidation, async (req,res)=>{
     try {
         const kuliner = await Kuliner.update(inputKuliner, options);
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Ubah Data Wisata Kuliner Berhasil";
         response.data = inputKuliner;
         res.send(response.getResponse());
     } catch (error) {
@@ -462,7 +462,7 @@ router.delete('/', async(req,res)=>{
     try {
         const kuliner = await Kuliner.destroy(options)
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Data wisata kuliner berhasil dihapus";
         response.data = kuliner;
         res.send(response.getResponse());
     } catch (error) {

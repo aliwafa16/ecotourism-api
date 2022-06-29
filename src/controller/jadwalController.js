@@ -16,6 +16,41 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get("/find", async (req, res) => {
+  const options = {}
+  const find = req.query;
+  let modelAttr = Jadwal.rawAttributes;
+  const findwhere = {};
+  Object.values(modelAttr).forEach((val) => {
+    Object.entries(find).forEach((f) => {
+      const key = f[0];
+      const value = f[1];
+      if (val.field === key && value) {
+        findwhere[val.field] = value.toString();
+      }
+    });
+  });
+  options["where"] = findwhere;
+
+  try {
+    const jadwal = await Jadwal.findAll(options);
+    if (jadwal.length != 0) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = jadwal;
+      res.send(response.getResponse());
+    } else {
+      response.code = 111;
+      response.message = "Data tidak ditemukan";
+      res.send(response.getResponse());
+    }
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
+
 router.post('/', async (req, res) => {
     const modelAttr = Jadwal.rawAttributes;
     const inputJadwal = {};
@@ -34,7 +69,7 @@ router.post('/', async (req, res) => {
     try {
         const jadwal = await Jadwal.create(inputJadwal)
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Tambah Data Jadwal Berhasil";
         response.data = inputJadwal;
         res.send(response.getResponse());
     } catch (error) {
@@ -89,7 +124,7 @@ router.put('/', async (req, res) => {
       try {
         const jadwal = await Jadwal.update(inputJadwal, options);
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Ubah Data Jadwal Berhasil";
         response.data = inputJadwal;
         res.send(response.getResponse());
       } catch (error) {

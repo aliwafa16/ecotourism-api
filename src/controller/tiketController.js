@@ -16,6 +16,41 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get("/find", async (req, res) => {
+  const options = {}
+  const find = req.query;
+  let modelAttr = Tiket.rawAttributes;
+  const findwhere = {};
+  Object.values(modelAttr).forEach((val) => {
+    Object.entries(find).forEach((f) => {
+      const key = f[0];
+      const value = f[1];
+      if (val.field === key && value) {
+        findwhere[val.field] = value.toString();
+      }
+    });
+  });
+  options["where"] = findwhere;
+
+  try {
+    const tiket = await Tiket.findAll(options);
+    if (tiket.length != 0) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = tiket;
+      res.send(response.getResponse());
+    } else {
+      response.code = 111;
+      response.message = "Data tidak ditemukan";
+      res.send(response.getResponse());
+    }
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
+
 router.get('/:id', async (req, res) => {
     try {
         const tiket = await Tiket.findOne({
@@ -55,7 +90,7 @@ router.post('/', async (req, res) => {
     try {
         const tiket = await Tiket.create(inputTiket)
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Tambah Data Tiket Berhasil";
         response.data = inputTiket;
         res.send(response.getResponse());
     } catch (error) {
@@ -89,7 +124,7 @@ router.put('/', async (req, res) => {
       try {
         const tiket = await Tiket.update(inputTiket, options);
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Ubah Data Tiket Berhasil";
         response.data = inputTiket;
         res.send(response.getResponse());
       } catch (error) {
@@ -120,7 +155,7 @@ const options = {};
   try {
     const tiket = await Tiket.destroy(options);
     response.code = 200;
-    response.message = "Data fasilitas berhasil dihapus";
+    response.message = "Data tiket berhasil dihapus";
     response.data = tiket;
     res.send(response.getResponse());
   } catch (error) {

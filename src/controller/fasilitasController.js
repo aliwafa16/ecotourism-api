@@ -16,6 +16,41 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get("/find", async (req, res) => {
+  const options = {}
+  const find = req.query;
+  let modelAttr = Fasilitas.rawAttributes;
+  const findwhere = {};
+  Object.values(modelAttr).forEach((val) => {
+    Object.entries(find).forEach((f) => {
+      const key = f[0];
+      const value = f[1];
+      if (val.field === key && value) {
+        findwhere[val.field] = value.toString();
+      }
+    });
+  });
+  options["where"] = findwhere;
+
+  try {
+    const fasilitas = await Fasilitas.findAll(options);
+    if (fasilitas.length != 0) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = fasilitas;
+      res.send(response.getResponse());
+    } else {
+      response.code = 111;
+      response.message = "Data tidak ditemukan";
+      res.send(response.getResponse());
+    }
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
+
 
 router.get('/:id', async (req, res) => {
   try {
@@ -55,7 +90,7 @@ router.post('/', async (req, res) => {
     try {
         const fasilitas = await Fasilitas.create(inputFasilitas)
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Tambah Data Fasilitas Berhasil";
         response.data = inputFasilitas;
         res.send(response.getResponse());
     } catch (error) {
@@ -90,7 +125,7 @@ router.put('/', async (req, res) => {
       try {
         const fasilitas = await Fasilitas.update(inputFasilitas, options);
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Ubah Data Fasilitas Berhasil";
         response.data = inputFasilitas;
         res.send(response.getResponse());
       } catch (error) {

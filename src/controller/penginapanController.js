@@ -503,7 +503,7 @@ router.post('/',validationPenginapan,runValidation, async (req, res)=>{
     try {
         const penginapan = await Penginapan.create(inputPenginapan)
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Tambah Data Wisata Penginapan Berhasil";
         response.data = inputPenginapan;
         res.send(response.getResponse());
     } catch (error) {
@@ -536,7 +536,7 @@ router.put('/',validationPenginapan,runValidation, async (req,res)=>{
     try {
         const penginapan = await Penginapan.update(inputPenginapan, options);
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Ubah Data Wisata Penginapan Berhasil";
         response.data = inputPenginapan;
         res.send(response.getResponse());
     } catch (error) {
@@ -558,7 +558,7 @@ router.delete('/', async(req,res)=>{
     try {
         const penginapan = await Penginapan.destroy(options)
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Data wisata penginapan berhasil dihapus";
         response.data = penginapan;
         res.send(response.getResponse());
     } catch (error) {

@@ -429,7 +429,7 @@ router.post("/", validationWisata, runValidation, async (req, res) => {
   try {
     const wisata = await Wisata.create(inputWisata);
     response.code = 200;
-    response.message = "Sukses";
+    response.message = "Tambah Data Wisata Berhasil";
     response.data = inputWisata;
     res.send(response.getResponse());
   } catch (error) {
@@ -463,7 +463,7 @@ router.put("/", validationWisata, runValidation, async (req, res) => {
       try {
         const wisata = await Wisata.update(inputWisata, options);
         response.code = 200;
-        response.message = "Sukses";
+        response.message = "Ubah Data Wisata Berhasil";
         response.data = inputWisata;
         res.send(response.getResponse());
       } catch (error) {
