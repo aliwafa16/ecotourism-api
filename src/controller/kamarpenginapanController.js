@@ -97,7 +97,7 @@ router.post("/", async (req, res) => {
   try {
     const kamar_penginapan = await Kamar_Penginapan.create(inputKamar);
     response.code = 200;
-    response.message = "Sukses";
+    response.message = "Tambah Data Jenis Kamar Berhasil";
     response.data = inputKamar;
     res.send(response.getResponse());
   } catch (error) {
@@ -129,7 +129,7 @@ router.put("/", async (req, res) => {
   try {
     const kamar_penginapan = await Kamar_Penginapan.update(inputKamar, options);
     response.code = 200;
-    response.message = "Sukses";
+    response.message = "Ubah Data Jenis Kamar Berhasil";
     response.data = inputKamar;
     res.send(response.getResponse());
   } catch (error) {
@@ -148,7 +148,7 @@ router.delete("/", async (req, res) => {
   try {
     const kamar_penginapan = await Kamar_Penginapan.destroy(options);
     response.code = 200;
-    response.message = "Sukses";
+    response.message = "Data Jenis Kamar Berhasil Dihapus";
     response.data = kamar_penginapan;
     res.send(response.getResponse());
   } catch (error) {
