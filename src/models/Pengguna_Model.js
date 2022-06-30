@@ -47,7 +47,12 @@ const Pengguna = sequalize.define("tbl_pengguna", {
     link_verifikasi: {
         type: DataTypes.TEXT,
         allowNull:false
+    },
+    reset_password: {
+        type: DataTypes.TEXT,
+        allowNull:true
     }
+    
 }, {
     tableName: 'tbl_pengguna',
     modelName: 'tbl_pengguna',
