@@ -14,9 +14,14 @@ router.get('/:id_role', (req, res) => {
             model: Access, 
             where: {
             id_role:role_id
-        }},
+            }
+        },
+            
     ],
-    order:[['sort','asc']]
+        order: [['sort', 'asc']],
+        where: {
+        is_active:1
+    }
     }).then(data => {
         response.code = 200;
         response.message = "Sukses";
