@@ -47,17 +47,20 @@ const Pengguna = sequalize.define(
       allowNull: false,
     },
     link_verifikasi: {
-      type: DataTypes.TEXT,
-      allowNull: true,
+        type: DataTypes.TEXT,
+        allowNull:false
     },
-  },
-  {
-    tableName: "tbl_pengguna",
-    modelName: "tbl_pengguna",
-    createdAt: "created_at",
-    updatedAt: "updated_at",
-    deletedAt: "deleted_at",
-  }
-);
+    reset_password: {
+        type: DataTypes.TEXT,
+        allowNull:true
+    }
+    
+}, {
+    tableName: 'tbl_pengguna',
+    modelName: 'tbl_pengguna',
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    deletedAt: 'deleted_at'
+})
 
 module.exports = Pengguna

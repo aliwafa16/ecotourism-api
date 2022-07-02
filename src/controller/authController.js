@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const Pengguna = require("../models/Pengguna_Model");
 const { runValidation, validationLogin, validationRegistrasi } = require('../validation/index');
 const jsonwebtoken = require('jsonwebtoken')
-const { kirimEmail } = require('../helpers/index')
+const { kirimEmail } = require('../helpers/index');
 require('dotenv').config();
 
 
@@ -251,6 +251,64 @@ router.post('/cekEmail', async (req, res) => {
     res.send(response.getResponse());
   }
  
+})
+
+router.post('/lupa_password', async (req, res) => {
+
+  try {
+  const email = req.body.email;
+  let pengguna = await Pengguna.findOne({
+    where: {
+      email:email
+    }
+  })
+    if (pengguna) {
+      const data = {
+        id_pengguna: pengguna.id_pengguna
+      };
+      const reset_password = await jsonwebtoken.sign(data, process.env.ECOTOURISM_TOKEN)
+      Pengguna.update({ reset_password:reset_password }, { where: { email } })
+        const templateEMail = {
+        from: 'Team Ecotourism',
+        to: email,
+        subject: 'Kode reset password',
+        html : `<p>silahkan klik link dibawah untuk mengubah kata sandi akun</p> <p>${process.env.CLIENT_URL}Auth/reset_password/${reset_password}</p>`
+      }
+        kirimEmail(templateEMail)
+        response.code = 200;
+        response.message = "Kode reset password berhasil dikirim !";
+        response.data = {};
+        res.send(response.getResponse());
+    } else {
+      throw new Error('Email pengguna tidak ditemukan !')
+  }
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+})
+
+router.post('/reset_password', async (req, res) => {
+  let { email, reset_password, password } = req.body;
+  try {
+    let pengguna = await Pengguna.findOne({ where: { reset_password:reset_password } });
+    if (pengguna) {
+      let new_password = crypto.createHash("md5").update(password).digest("hex")
+      let update = await Pengguna.update({ password: new_password }, { where: { reset_password: reset_password } })
+       response.code = 200;
+        response.message = "Ubah kata sandi berhasil";
+        response.data = update;
+        res.send(response.getResponse());
+    } else {
+      throw new Error('Email tidak ditemukan')
+    }
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+
 })
 
 

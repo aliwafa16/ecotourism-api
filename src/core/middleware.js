@@ -29,17 +29,18 @@ const token = async (req, res, next) => {
 
     try {
         if (!token) {
-            response.message = "Tidak ada token"
-            res.send(response.getResponse());
+            // response.message = "Tidak ada token"
+            // res.send(response.getResponse());
+            throw new Error('Tidak ada token')
         } else {
-                    const decode = jsonwebtoken.verify(token, process.env.ECOTOURISM_TOKEN)
+        const decode = jsonwebtoken.verify(token, process.env.ECOTOURISM_TOKEN)
         req.id_pengguna = decode.id_pengguna
         }
 
         next()
     } catch (error) {
-        response.message = "Tidak ada token"
-        res.send(response.getResponse());
+        response.message = error.message
+        return res.send(response.getResponse());
     }
 
  }
