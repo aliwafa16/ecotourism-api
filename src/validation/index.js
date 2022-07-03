@@ -82,3 +82,15 @@ exports.validationPengguna = [
     check('email','Email is required').notEmpty(),
     check('password','Password is required').notEmpty().isLength({ min: 5 }).withMessage('Password min 5 characters'),
 ]
+
+exports.validationKategoriWisata = [
+  check("kategori", "kategori wisata is required").notEmpty(),
+];
+
+exports.validationKategoriKuliner = [
+  check("jenis_kuliner", "kategori kuliner is required").notEmpty(),
+];
+
+exports.validationKategoriPenginapan = [
+  check("kategori", "kategori penginapan is required").notEmpty(),
+];
