@@ -10,7 +10,7 @@ const routes = (app) => {
   // app.use("/item", require("../controller/itemwisataController"));
   // app.use("/jadwal", require("../controller/jadwalwisatakulinerController"));
   // app.use("/fasilitas", require("../controller/fasilitasController"));
-  // app.use("/gambar", require("../controller/gambarController"));
+  app.use("/gambar", require("../controller/gambarController"));
 
   app.use("/auth", require("../controller/authController"));
   app.use("/role", require("../controller/roleController"));

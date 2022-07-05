@@ -2,7 +2,30 @@ const router = require("express").Router();
 const response = require("../core/response");
 const {Op} = require('sequelize')
 const crypto = require("crypto");
-const {runValidation, validationPengguna} = require('../validation/index');
+const { runValidation, validationPengguna } = require('../validation/index');
+const fs = require('fs')
+
+const multer = require('multer');
+const path = require('path');
+const { diskStorage } = require('multer');
+
+const storage = multer.diskStorage({ 
+    destination: (req, file, cb) => {
+        cb(null, path.join('public/profilpengguna'));
+    },
+    filename: (req, file, cb) => {
+        cb(null, 'pengguna' + '-' + Date.now() + path.extname(file.originalname))        
+    }
+});
+
+
+const fileFilter = (req, file, cb) => {
+    if(file.mimetype === 'image/png'|| file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' ){
+        cb(null, true);
+    }else{
+        cb(null, false);
+    }
+}
 
 
 const Pengguna = require('../models/Pengguna_Model');
@@ -210,7 +233,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", validationPengguna, runValidation, async (req, res) => {
+router.post("/", multer({ storage: storage, fileFilter: fileFilter }).single('foto_profil'),validationPengguna, runValidation,async (req, res) => {
   const modelAttr = Pengguna.rawAttributes;
   const inputPengguna = {};
 
@@ -226,6 +249,14 @@ router.post("/", validationPengguna, runValidation, async (req, res) => {
           }
         }
       });
+
+      if (req.file) {
+        inputPengguna['foto_profil'] = req.file.path.split("\\").join('/')
+      } else {
+        inputPengguna['foto_profil'] = 'public/profilpengguna/default.jpg'
+      }
+
+
       inputPengguna.password = crypto
         .createHash("md5")
         .update(req.body.password)
@@ -246,7 +277,7 @@ router.post("/", validationPengguna, runValidation, async (req, res) => {
   }
 });
 
-router.put("/", validationPengguna, runValidation, async (req, res) => {
+router.put("/",multer({ storage: storage, fileFilter: fileFilter }).single('foto_profil'), validationPengguna, runValidation, async (req, res) => {
   const options = {};
   options.where = {
     id_pengguna: req.body.id_pengguna,
@@ -267,6 +298,15 @@ router.put("/", validationPengguna, runValidation, async (req, res) => {
           }
         }
       });
+
+      if (req.file) {
+         fs.unlink(data.dataValues.foto_profil, (errors) => {
+          console.log(errors)
+        });
+        inputPengguna['foto_profil'] = req.file.path.split("\\").join('/')
+      } else {
+        inputPengguna['foto_profil'] = data.dataValues.foto_profil
+      }
 
       let check_data = await Pengguna.count({
         attributes: ["email"],

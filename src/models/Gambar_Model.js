@@ -5,7 +5,8 @@ const Gambar = sequalize.define('tbl_gambar', {
     id_gambar: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
+        autoIncrement:true
     },
     id_pariwisata: {
         type: DataTypes.CHAR,
@@ -17,7 +18,7 @@ const Gambar = sequalize.define('tbl_gambar', {
     },
     keterangan: {
         type: DataTypes.TEXT,
-        allowNull:false
+        allowNull:true
     },
     tanggal: {
         type: DataTypes.CHAR,

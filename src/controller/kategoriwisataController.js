@@ -19,11 +19,14 @@ router.get("/", async (req, res) => {
       response.data = kategori_wisata;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data kategori wisata tidak ditemukan");
+      throw new Error("101|Data kategori wisata tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -43,11 +46,14 @@ router.get("/:id", async (req, res) => {
       response.data = kategori_wisata;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data kategori wisata tidak ditemukan");
+      throw new Error("101|Data kategori wisata tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+     let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
