@@ -5,33 +5,22 @@ const Item_Pariwisata = sequalize.define('tbl_item_pariwisata', {
     id_item_pariwisata: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
+        autoIncrement:true,
     },
     id_pariwisata: {
         type: DataTypes.CHAR,
         allowNull:false
     },
     qr_code: {
-        type: DataTypes.CHAR,
+        type: DataTypes.TEXT,
         allowNull: false
     },
-    audio1: {
+    audio: {
         type: DataTypes.CHAR,
         allowNull:true
     },
-    audio2: {
-        type: DataTypes.CHAR,
-        allowNull:true
-    },
-    video1: {
-        type: DataTypes.CHAR,
-        allowNull:true
-    },
-    video2: {
-        type: DataTypes.CHAR,
-        allowNull:true
-    },
-    keterangan: {
+    deskripsi: {
         type: DataTypes.CHAR,
         allowNull:true
     }

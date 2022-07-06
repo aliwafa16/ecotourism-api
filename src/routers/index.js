@@ -7,7 +7,7 @@ const routes = (app) => {
   // app.use("/simpan_wisata_kuliner", require("../controller/simpanwisatakulinerController"));
   // app.use("/suka_wisata_kuliner",require("../controller/sukawisatakulinerController"));
   // app.use("/tiket", require("../controller/tiketController"));
-  // app.use("/item", require("../controller/itemwisataController"));
+  app.use("/item", require("../controller/itemwisataController"));
   // app.use("/jadwal", require("../controller/jadwalwisatakulinerController"));
   // app.use("/fasilitas", require("../controller/fasilitasController"));
   app.use("/gambar", require("../controller/gambarController"));
