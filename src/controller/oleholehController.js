@@ -29,17 +29,24 @@ router.get("/", async (req, res) => {
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup", 'keterangan'],
+        attributes: [
+          "id_jadwal",
+          "id_pariwisata",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
+        ],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Pariwisata,
@@ -49,13 +56,25 @@ router.get("/", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
-          },
-          {
-              model: Item_Oleh,
-              as: 'item_oleh_oleh',
-              attributes:['id_item_oleh_oleh','oleh_oleh_id','nama_item', 'harga','keterangan']
-        }
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
+      },
+      {
+        model: Item_Oleh,
+        as: "item_oleh_oleh",
+        attributes: [
+          "id_item_oleh_oleh",
+          "oleh_oleh_id",
+          "nama_item",
+          "harga",
+          "keterangan",
+        ],
+      },
     ],
     order: [["created_at", "DESC"]],
   };
@@ -73,7 +92,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-
 router.get("/search", async (req, res) => {
   let search = req.query;
   const options = {
@@ -81,17 +99,24 @@ router.get("/search", async (req, res) => {
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup", 'keterangan'],
+        attributes: [
+          "id_jadwal",
+          "id_pariwisata",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
+        ],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Pariwisata,
@@ -101,13 +126,25 @@ router.get("/search", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
-          },
-          {
-              model: Item_Oleh,
-              as: 'item_oleh_oleh',
-              attributes:['id_item_oleh_oleh','oleh_oleh_id','nama_item', 'harga','keterangan']
-        }
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
+      },
+      {
+        model: Item_Oleh,
+        as: "item_oleh_oleh",
+        attributes: [
+          "id_item_oleh_oleh",
+          "oleh_oleh_id",
+          "nama_item",
+          "harga",
+          "keterangan",
+        ],
+      },
     ],
     order: [["created_at", "DESC"]],
   };
@@ -167,25 +204,31 @@ router.get("/search", async (req, res) => {
   }
 });
 
-
 router.get("/filter", async (req, res) => {
   const filter = req.query;
- const options = {
+  const options = {
     include: [
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup", 'keterangan'],
+        attributes: [
+          "id_jadwal",
+          "id_pariwisata",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
+        ],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Pariwisata,
@@ -195,17 +238,28 @@ router.get("/filter", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
-          },
-          {
-              model: Item_Oleh,
-              as: 'item_oleh_oleh',
-              attributes:['id_item_oleh_oleh','oleh_oleh_id','nama_item', 'harga','keterangan']
-        }
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
+      },
+      {
+        model: Item_Oleh,
+        as: "item_oleh_oleh",
+        attributes: [
+          "id_item_oleh_oleh",
+          "oleh_oleh_id",
+          "nama_item",
+          "harga",
+          "keterangan",
+        ],
+      },
     ],
     order: [["created_at", "DESC"]],
   };
-
 
   options["where"] = {
     ...options.where,
@@ -243,24 +297,30 @@ router.get("/filter", async (req, res) => {
   }
 });
 
-
 router.get("/find", async (req, res) => {
- const options = {
+  const options = {
     include: [
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup", 'keterangan'],
+        attributes: [
+          "id_jadwal",
+          "id_pariwisata",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
+        ],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Pariwisata,
@@ -270,13 +330,25 @@ router.get("/find", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
-          },
-          {
-              model: Item_Oleh,
-              as: 'item_oleh_oleh',
-              attributes:['id_item_oleh_oleh','oleh_oleh_id','nama_item', 'harga','keterangan']
-        }
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
+      },
+      {
+        model: Item_Oleh,
+        as: "item_oleh_oleh",
+        attributes: [
+          "id_item_oleh_oleh",
+          "oleh_oleh_id",
+          "nama_item",
+          "harga",
+          "keterangan",
+        ],
+      },
     ],
     order: [["created_at", "DESC"]],
   };
@@ -315,22 +387,29 @@ router.get("/find", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
- const options = {
+  const options = {
     include: [
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup", 'keterangan'],
+        attributes: [
+          "id_jadwal",
+          "id_pariwisata",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
+        ],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Pariwisata,
@@ -340,13 +419,25 @@ router.get("/:id", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
-          },
-          {
-              model: Item_Oleh,
-              as: 'item_oleh_oleh',
-              attributes:['id_item_oleh_oleh','oleh_oleh_id','nama_item', 'harga','keterangan']
-        }
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
+      },
+      {
+        model: Item_Oleh,
+        as: "item_oleh_oleh",
+        attributes: [
+          "id_item_oleh_oleh",
+          "oleh_oleh_id",
+          "nama_item",
+          "harga",
+          "keterangan",
+        ],
+      },
     ],
     order: [["created_at", "DESC"]],
   };

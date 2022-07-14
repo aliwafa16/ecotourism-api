@@ -11,376 +11,469 @@ const Kategori_Kuliner = require('../models/KategoriKuliner_Model');
 const Fasilitas = require('../models/Fasilitas_Model');
 const Gambar = require('../models/Gambar_Model');
 const Kategori_Pariwisata = require('../models/Pariwisata_Model');
+const Item = require("../models/ItemPariwisata_Model");
 
-Kuliner.hasMany(Jadwal,{as:'jadwal', foreignKey:'id_pariwisata'});
-Kuliner.hasMany(Menu,{as:'menu',foreignKey:'kuliner_id'});
-Kuliner.belongsTo(Kategori_Kuliner,{as:'kategori_kuliner', foreignKey:'kategori_kuliner_id'});
-Kuliner.hasMany(Fasilitas,{as:'fasilitas', foreignKey:'id_pariwisata'});
-Kuliner.hasMany(Gambar,{as:'gambar', foreignKey:'id_pariwisata'});
-Kuliner.belongsTo(Kategori_Pariwisata, {as:'kategori_pariwisata',foreignKey:'kategori_pariwisata_id'})
+Kuliner.hasMany(Jadwal, { as: "jadwal", foreignKey: "id_pariwisata" });
+Kuliner.hasMany(Menu, { as: "menu", foreignKey: "kuliner_id" });
+Kuliner.belongsTo(Kategori_Kuliner, {
+  as: "kategori_kuliner",
+  foreignKey: "kategori_kuliner_id",
+});
+Kuliner.hasMany(Fasilitas, { as: "fasilitas", foreignKey: "id_pariwisata" });
+Kuliner.hasMany(Gambar, { as: "gambar", foreignKey: "id_pariwisata" });
+Kuliner.belongsTo(Kategori_Pariwisata, {
+  as: "kategori_pariwisata",
+  foreignKey: "kategori_pariwisata_id",
+});
+Kuliner.hasMany(Item, { as: "item", foreignKey: "id_pariwisata" });
 
-router.get('/', async (req, res) => {
-    const options = {
-        include:[
-            {
-                model : Jadwal,
-                as : 'jadwal',
-                attributes : ['id_jadwal','hari','jam_buka','jam_tutup','keterangan'],
-            },
-            {
-                model : Kategori_Kuliner,
-                as : 'kategori_kuliner',
-                attributes:['jenis_kuliner']
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:['kategori']
-            },
-            {
-                model:Menu,
-                as:'menu',
-                attributes : ['id_menu_kuliner','nama_menu','harga','keterangan']
-            },
-            {
-                model:Fasilitas,
-                as:'fasilitas',
-                attributes:['id_fasilitas','nama_fasilitas','keterangan']
-            },
-            {
-                model:Gambar,
-                as:'gambar',
-                attributes:['id_gambar','gambar','keterangan','tanggal']
-            }
+router.get("/", async (req, res) => {
+  const options = {
+    include: [
+      {
+        model: Jadwal,
+        as: "jadwal",
+        attributes: [
+          "id_jadwal",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
         ],
-    }
-
-    try {
-        const kuliner = await Kuliner.findAll(options)
-        response.code = 200;
-        response.message = "Sukses";
-        response.data = kuliner;
-        res.send(response.getResponse());
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
-})
-
-router.get('/search', async (req,res)=>{
-    let search = req.query;
-    const options = {
-        include:[
-            {
-                model : Jadwal,
-                as : 'jadwal',
-                attributes : ['id_jadwal','hari','jam_buka','jam_tutup','keterangan'],
-            },
-            {
-                model : Kategori_Kuliner,
-                as : 'kategori_kuliner',
-                attributes:['jenis_kuliner']
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:['kategori']
-            },
-            {
-                model:Menu,
-                as:'menu',
-                attributes : ['id_menu_kuliner','nama_menu','harga','keterangan']
-            },
-            {
-                model:Fasilitas,
-                as:'fasilitas',
-                attributes:['id_fasilitas','nama_fasilitas','keterangan']
-            },
-            {
-                model:Gambar,
-                as:'gambar',
-                attributes:['id_gambar','gambar','keterangan','tanggal']
-            }
+      },
+      {
+        model: Kategori_Kuliner,
+        as: "kategori_kuliner",
+        attributes: ["jenis_kuliner"],
+      },
+      {
+        model: Kategori_Pariwisata,
+        as: "kategori_pariwisata",
+        attributes: ["kategori"],
+      },
+      {
+        model: Menu,
+        as: "menu",
+        attributes: ["id_menu_kuliner", "nama_menu", "harga", "keterangan"],
+      },
+      {
+        model: Fasilitas,
+        as: "fasilitas",
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
+      },
+      {
+        model: Gambar,
+        as: "gambar",
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
         ],
-    }
+      },
+    ],
+  };
 
-    options["where"] = {
-        [Op.or]: [
-          {
-            nama_kuliner: {
-              [Op.like]: `%${search.nama_kuliner}%`,
-            },
-          },
-          {
-            alamat_kuliner: {
-              [Op.like]: `%${search.alamat_kuliner}%`,
-            },
-          },
+  try {
+    const kuliner = await Kuliner.findAll(options);
+    response.code = 200;
+    response.message = "Sukses";
+    response.data = kuliner;
+    res.send(response.getResponse());
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
 
-          {
-            latitude: {
-              [Op.like]: `%${search.latitude}%`,
-            },
-          },
-          {
-            longitude: {
-              [Op.like]: `%${search.longitude}%`,
-            },
-          },
-          {
-              kategori_pariwisata_id:{
-                  [Op.like]:`%${search.kategori_pariwisata_id}%`
-              }
-          },
-          {
-            kategori_kuliner_id:{
-                [Op.like]:`%${search.kategori_kuliner_id}%`
-            }
-          },
-          {
-              "$kategori_kuliner.jenis_kuliner$" : {
-                  [Op.like] : `%${search.jenis_kuliner}%`
-              }
-          },
-          {
-              "$menu.nama_menu$":{
-                  [Op.like] : `%${search.nama_menu}%`
-              }
-          },
-          {
-            "$menu.harga$":{
-                [Op.like] : `%${search.harga}%`
-            }
-          }
+router.get("/search", async (req, res) => {
+  let search = req.query;
+  const options = {
+    include: [
+      {
+        model: Jadwal,
+        as: "jadwal",
+        attributes: [
+          "id_jadwal",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
         ],
-    };
-
-    try {
-        const kuliner = await Kuliner.findAll(options)
-        if(kuliner.length != 0){
-            response.code = 200;
-            response.message = "Sukses";
-            response.data = kuliner;
-            res.send(response.getResponse());
-        }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
-        }
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
-})
-
-router.get('/filter', async (req,res)=>{
-    const filter = req.query
-    const options = {
-        include:[
-            {
-                model : Jadwal,
-                as : 'jadwal',
-                attributes : ['id_jadwal','hari','jam_buka','jam_tutup','keterangan'],
-            },
-            {
-                model : Kategori_Kuliner,
-                as : 'kategori_kuliner',
-                attributes:['jenis_kuliner']
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:['kategori']
-            },
-            {
-                model:Menu,
-                as:'menu',
-                attributes : ['id_menu_kuliner','nama_menu','harga','keterangan']
-            },
-            {
-                model:Fasilitas,
-                as:'fasilitas',
-                attributes:['id_fasilitas','nama_fasilitas','keterangan']
-            },
-            {
-                model:Gambar,
-                as:'gambar',
-                attributes:['id_gambar','gambar','keterangan','tanggal']
-            }
+      },
+      {
+        model: Kategori_Kuliner,
+        as: "kategori_kuliner",
+        attributes: ["jenis_kuliner"],
+      },
+      {
+        model: Kategori_Pariwisata,
+        as: "kategori_pariwisata",
+        attributes: ["kategori"],
+      },
+      {
+        model: Menu,
+        as: "menu",
+        attributes: ["id_menu_kuliner", "nama_menu", "harga", "keterangan"],
+      },
+      {
+        model: Fasilitas,
+        as: "fasilitas",
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
+      },
+      {
+        model: Gambar,
+        as: "gambar",
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
         ],
+      },
+    ],
+  };
+
+  options["where"] = {
+    [Op.or]: [
+      {
+        nama_kuliner: {
+          [Op.like]: `%${search.nama_kuliner}%`,
+        },
+      },
+      {
+        alamat_kuliner: {
+          [Op.like]: `%${search.alamat_kuliner}%`,
+        },
+      },
+
+      {
+        latitude: {
+          [Op.like]: `%${search.latitude}%`,
+        },
+      },
+      {
+        longitude: {
+          [Op.like]: `%${search.longitude}%`,
+        },
+      },
+      {
+        kategori_pariwisata_id: {
+          [Op.like]: `%${search.kategori_pariwisata_id}%`,
+        },
+      },
+      {
+        kategori_kuliner_id: {
+          [Op.like]: `%${search.kategori_kuliner_id}%`,
+        },
+      },
+      {
+        "$kategori_kuliner.jenis_kuliner$": {
+          [Op.like]: `%${search.jenis_kuliner}%`,
+        },
+      },
+      {
+        "$menu.nama_menu$": {
+          [Op.like]: `%${search.nama_menu}%`,
+        },
+      },
+      {
+        "$menu.harga$": {
+          [Op.like]: `%${search.harga}%`,
+        },
+      },
+    ],
+  };
+
+  try {
+    const kuliner = await Kuliner.findAll(options);
+    if (kuliner.length != 0) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = kuliner;
+      res.send(response.getResponse());
+    } else {
+      response.code = 111;
+      response.message = "Data tidak ditemukan";
+      res.send(response.getResponse());
     }
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
 
-    options["where"] = {
-        ...options.where,
-        [Op.and]: [],
-      };
-    
-      if (filter.kategori_pariwisata_id) {
-        options.where[Op.and].push({
-          kategori_pariwisata_id: filter.kategori_pariwisata_id,
-        });
-      }
-
-      if (filter.kategori_kuliner_id) {
-        options.where[Op.and].push({
-          kategori_kuliner_id: filter.kategori_kuliner_id,
-        });
-      }
-
-      if (filter.status) {
-        options.where[Op.and].push({
-          status: filter.status,
-        });
-      }
-
-      try {
-        const kuliner = await Kuliner.findAll(options)
-        if(kuliner.length!=0){
-            response.code = 200;
-            response.message = "Sukses";
-            response.data = kuliner;
-            res.send(response.getResponse());
-        }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
-        }
-      } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-      }
-})
-
-router.get('/find', async(req,res)=>{
-    const options = {
-        include:[
-            {
-                model : Jadwal,
-                as : 'jadwal',
-                attributes : ['id_jadwal','hari','jam_buka','jam_tutup','keterangan'],
-            },
-            {
-                model : Kategori_Kuliner,
-                as : 'kategori_kuliner',
-                attributes:['jenis_kuliner']
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:['kategori']
-            },
-            {
-                model:Menu,
-                as:'menu',
-                attributes : ['id_menu_kuliner','nama_menu','harga','keterangan']
-            },
-            {
-                model:Fasilitas,
-                as:'fasilitas',
-                attributes:['id_fasilitas','nama_fasilitas','keterangan']
-            },
-            {
-                model:Gambar,
-                as:'gambar',
-                attributes:['id_gambar','gambar','keterangan','tanggal']
-            }
+router.get("/filter", async (req, res) => {
+  const filter = req.query;
+  const options = {
+    include: [
+      {
+        model: Jadwal,
+        as: "jadwal",
+        attributes: [
+          "id_jadwal",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
         ],
-    }
+      },
+      {
+        model: Kategori_Kuliner,
+        as: "kategori_kuliner",
+        attributes: ["jenis_kuliner"],
+      },
+      {
+        model: Kategori_Pariwisata,
+        as: "kategori_pariwisata",
+        attributes: ["kategori"],
+      },
+      {
+        model: Menu,
+        as: "menu",
+        attributes: ["id_menu_kuliner", "nama_menu", "harga", "keterangan"],
+      },
+      {
+        model: Fasilitas,
+        as: "fasilitas",
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
+      },
+      {
+        model: Gambar,
+        as: "gambar",
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
+      },
+    ],
+  };
 
-    const find = req.query
-    let modelAttr = Kuliner.rawAttributes;
-    const findwhere = {};
-    Object.values(modelAttr).forEach((val) => {
-      Object.entries(find).forEach((f) => {
-        const key = f[0];
-        const value = f[1];
-        if (val.field === key && value) {
-          findwhere[val.field] = value.toString();
-        }
-      });
+  options["where"] = {
+    ...options.where,
+    [Op.and]: [],
+  };
+
+  if (filter.kategori_pariwisata_id) {
+    options.where[Op.and].push({
+      kategori_pariwisata_id: filter.kategori_pariwisata_id,
     });
-    options["where"] = findwhere
+  }
 
-    try {
-        const kuliner = await Kuliner.findAll(options)
-        if(kuliner.length!=0){
-            response.code = 200;
-            response.message = "Sukses";
-            response.data = kuliner;
-            res.send(response.getResponse());
-        }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
-        }
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+  if (filter.kategori_kuliner_id) {
+    options.where[Op.and].push({
+      kategori_kuliner_id: filter.kategori_kuliner_id,
+    });
+  }
+
+  if (filter.status) {
+    options.where[Op.and].push({
+      status: filter.status,
+    });
+  }
+
+  try {
+    const kuliner = await Kuliner.findAll(options);
+    if (kuliner.length != 0) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = kuliner;
+      res.send(response.getResponse());
+    } else {
+      response.code = 111;
+      response.message = "Data tidak ditemukan";
+      res.send(response.getResponse());
     }
-})
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
 
-router.get('/:id', async (req,res)=>{
-    const options = {
-        include:[
-            {
-                model : Jadwal,
-                as : 'jadwal',
-                attributes : ['id_jadwal','hari','jam_buka','jam_tutup','keterangan'],
-            },
-            {
-                model : Kategori_Kuliner,
-                as : 'kategori_kuliner',
-                attributes:['jenis_kuliner']
-            },
-            {
-                model : Kategori_Pariwisata,
-                as : 'kategori_pariwisata',
-                attributes:['kategori']
-            },
-            {
-                model:Menu,
-                as:'menu',
-                attributes : ['id_menu_kuliner','nama_menu','harga','keterangan']
-            },
-            {
-                model:Fasilitas,
-                as:'fasilitas',
-                attributes:['id_fasilitas','nama_fasilitas','keterangan']
-            },
-            {
-                model:Gambar,
-                as:'gambar',
-                attributes:['id_gambar','gambar','keterangan','tanggal']
-            }
+router.get("/find", async (req, res) => {
+  const options = {
+    include: [
+      {
+        model: Jadwal,
+        as: "jadwal",
+        attributes: [
+          "id_jadwal",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
         ],
-    }
+      },
+      {
+        model: Kategori_Kuliner,
+        as: "kategori_kuliner",
+        attributes: ["jenis_kuliner"],
+      },
+      {
+        model: Kategori_Pariwisata,
+        as: "kategori_pariwisata",
+        attributes: ["kategori"],
+      },
+      {
+        model: Menu,
+        as: "menu",
+        attributes: ["id_menu_kuliner", "nama_menu", "harga", "keterangan"],
+      },
+      {
+        model: Fasilitas,
+        as: "fasilitas",
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
+      },
+      {
+        model: Gambar,
+        as: "gambar",
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
+      },
+    ],
+  };
 
-    options['where'] = {
-        id_kuliner : req.params.id
-    }
+  const find = req.query;
+  let modelAttr = Kuliner.rawAttributes;
+  const findwhere = {};
+  Object.values(modelAttr).forEach((val) => {
+    Object.entries(find).forEach((f) => {
+      const key = f[0];
+      const value = f[1];
+      if (val.field === key && value) {
+        findwhere[val.field] = value.toString();
+      }
+    });
+  });
+  options["where"] = findwhere;
 
-    try {
-        const kuliner = await Kuliner.findOne(options)
-        if(kuliner){
-            response.code = 200;
-            response.message = "Sukses";
-            response.data = kuliner;
-            res.send(response.getResponse());
-        }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
-        }
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+  try {
+    const kuliner = await Kuliner.findAll(options);
+    if (kuliner.length != 0) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = kuliner;
+      res.send(response.getResponse());
+    } else {
+      response.code = 111;
+      response.message = "Data tidak ditemukan";
+      res.send(response.getResponse());
     }
-})
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  const options = {
+    include: [
+      {
+        model: Jadwal,
+        as: "jadwal",
+        attributes: [
+          "id_jadwal",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
+        ],
+      },
+      {
+        model: Kategori_Kuliner,
+        as: "kategori_kuliner",
+        attributes: ["jenis_kuliner"],
+      },
+      {
+        model: Kategori_Pariwisata,
+        as: "kategori_pariwisata",
+        attributes: ["kategori"],
+      },
+      {
+        model: Menu,
+        as: "menu",
+        attributes: ["id_menu_kuliner", "nama_menu", "harga", "keterangan"],
+      },
+      {
+        model: Fasilitas,
+        as: "fasilitas",
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
+      },
+      {
+        model: Gambar,
+        as: "gambar",
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
+      },
+    ],
+  };
+
+  options["where"] = {
+    id_kuliner: req.params.id,
+  };
+
+  try {
+    const kuliner = await Kuliner.findOne(options);
+    if (kuliner) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = kuliner;
+      res.send(response.getResponse());
+    } else {
+      response.code = 111;
+      response.message = "Data tidak ditemukan";
+      res.send(response.getResponse());
+    }
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
 
 router.post('/', validationKuliner, runValidation, async (req, res)=>{
 

@@ -38,6 +38,8 @@ const routes = (app) => {
     require("../controller/fasilitaskamarController")
   );
   app.use("/oleh_oleh", require('../controller/oleholehController'))
+
+  app.use("/item_oleh_oleh", require("../controller/itemoleholehController"));
   
 };
 
