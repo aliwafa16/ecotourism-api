@@ -62,7 +62,7 @@ router.get("/", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
+        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio','deskripsi'],
       },
     ],
     order: [["created_at", "DESC"]],
@@ -118,7 +118,7 @@ router.get("/search", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
+        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code','audio','deskripsi'],
       },
     ],
   };
@@ -220,7 +220,7 @@ router.get("/filter", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
+        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code','audio','deskripsi'],
       },
     ],
   };
@@ -303,7 +303,7 @@ router.get("/find", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
+        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code','audio','deskripsi'],
       },
     ],
   };
@@ -377,7 +377,7 @@ router.get("/:id", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio1', 'audio2', 'video1', 'video2','keterangan'],
+        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code','audio','deskripsi'],
       },
     ],
   };

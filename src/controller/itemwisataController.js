@@ -171,19 +171,111 @@ router.post('/:id', multer({ storage: storage, fileFilter: fileFilter }).single(
 
         const qr = await Qrcode.toDataURL(file_qr)
 
+        inputItem['id_pariwisata'] = req.params.id
         inputItem['qr_code'] = qr
         inputItem['audio'] = audio_pariwisata
         console.log(inputItem)
         let item = await Item.create(inputItem);
         response.code = 200;
         response.message = "Tambah data item berhasil";
-        response.data = item;
+        response.data = inputItem;
         res.send(response.getResponse());
       }
     } else {
       throw new Error("110|File tidak ditemukan")
     }
     
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
+    res.send(response.getResponse());
+  }
+})
+
+router.delete('/', async (req, res) => {
+   const options = {};
+    options.where = {
+      id_item_pariwisata: req.body.id_item_pariwisata,
+    };
+  try {
+    let data = await Item.findOne(options)
+    if (data) {
+      fs.unlink(data.dataValues.audio, (errors) => {
+        console.log(errors)
+      });
+      const item = await Item.destroy(options);
+      response.code = 200;
+      response.message = "Data item berhasil dihapus";
+      response.data = item;
+      res.send(response.getResponse());
+    } else {
+      throw new Error("110|File tidak ditemukan")
+    }
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
+    res.send(response.getResponse());
+  }
+})
+
+router.put('/:id', multer({ storage: storage, fileFilter: fileFilter }).single('audio'), async (req, res) => {
+   const options = {};
+    options.where = {
+      id_item_pariwisata: req.body.id_item_pariwisata,
+  };
+  let audio = ''
+  let deskripsi = ''
+
+  try {
+    let data = await Item.findOne(options)
+    if (data) {
+      if (req.file) {
+        fs.unlink(data.dataValues.audio, (errors) => {
+          console.log(errors)
+        });
+        audio = req.file.path.split("\\").join('/')
+      } else {
+        audio = data.dataValues.audio
+      }
+
+      const modelAttr = Item.rawAttributes;
+      const inputItem = {};
+
+      Object.values(modelAttr).forEach((val) => {
+        if (val.field != "id_item_pariwisata") {
+          if (req.body[val.field] != "") {
+            inputItem[val.fieldName] = req.body[val.field];
+          } else {
+            inputItem[val.fieldName] = null;
+          }
+        }
+      });
+
+      let filename = audio.split('/')
+      let filepath = filename[0]+'/'+filename[1]+'/'+filename[2]+'/'
+
+      let file_qr = JSON.stringify({ filename: `${filename[3]}`, filepath: `${filepath}`, code: "ecotourismid" }) 
+
+      const qr = await Qrcode.toDataURL(file_qr)
+        inputItem['id_pariwisata'] = req.params.id
+        inputItem['qr_code'] = qr
+        inputItem['audio'] = audio
+        console.log(inputItem)
+        let item = await Item.update(inputItem, options);
+        response.code = 200;
+        response.message = "Ubah data item berhasil";
+        response.data = inputItem;
+        res.send(response.getResponse());
+
+    } else {
+      throw new Error('110|File tidak ditemukan')
+    }
   } catch (error) {
     let errors = error.message || "";
     errors = errors.split('|');

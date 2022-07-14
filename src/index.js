@@ -32,6 +32,8 @@ app.listen(port, () => {
     next();
 });
 
+app.use('/public',express.static('public'))
+
   app.get("/download", function(req,res) {
    
     var file = __dirname + '/assets/apk/eCotourism.apk';
