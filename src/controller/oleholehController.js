@@ -46,7 +46,13 @@ router.get("/", async (req, res) => {
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
+        attributes: [
+          "id_gambar",
+          "id_pariwisata",
+          "gambar",
+          "keterangan",
+          "tanggal",
+        ],
       },
       {
         model: Kategori_Pariwisata,
@@ -116,7 +122,13 @@ router.get("/search", async (req, res) => {
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
+        attributes: [
+          "id_gambar",
+          "id_pariwisata",
+          "gambar",
+          "keterangan",
+          "tanggal",
+        ],
       },
       {
         model: Kategori_Pariwisata,
@@ -228,7 +240,13 @@ router.get("/filter", async (req, res) => {
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
+        attributes: [
+          "id_gambar",
+          "id_pariwisata",
+          "gambar",
+          "keterangan",
+          "tanggal",
+        ],
       },
       {
         model: Kategori_Pariwisata,
@@ -320,7 +338,13 @@ router.get("/find", async (req, res) => {
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
+        attributes: [
+          "id_gambar",
+          "id_pariwisata",
+          "gambar",
+          "keterangan",
+          "tanggal",
+        ],
       },
       {
         model: Kategori_Pariwisata,
@@ -409,7 +433,13 @@ router.get("/:id", async (req, res) => {
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
+        attributes: [
+          "id_gambar",
+          "id_pariwisata",
+          "gambar",
+          "keterangan",
+          "tanggal",
+        ],
       },
       {
         model: Kategori_Pariwisata,

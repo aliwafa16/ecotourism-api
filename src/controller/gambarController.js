@@ -87,6 +87,39 @@ router.get('/find', async (req, res) => {
   }
 })
 
+router.get("/:id", async (req, res) => {
+  const options = {
+    attributes: [
+      "id_gambar",
+      "id_pariwisata",
+      "gambar",
+      "keterangan",
+      "tanggal",
+    ],
+    where: {
+      id_gambar: req.params.id,
+    },
+  };
+  try {
+    const gambar = await Gambar.findOne(options);
+    if (gambar) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = gambar;
+      res.send(response.getResponse());
+    } else {
+      throw new Error("101|Data tidak ditemukan");
+    }
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
+
 router.post('/', multer({ storage: storage, fileFilter: fileFilter }).single('gambar'), async (req, res) => {
   try {
     if (req.file) {
