@@ -49,7 +49,7 @@ router.get('/', async (req, res) => {
       response.data = item;
       res.send(response.getResponse());
     } else {
-      throw new Error("101|Data item pariwisata tidak ditemukan");
+      throw new Error("404|Item tidak ditemukan");
     }
   } catch (error) {
     let errors = error.message || "";
@@ -86,13 +86,14 @@ router.get('/find', async (req, res) => {
       response.data = item;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error('404|Item tidak ditemukan')
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })
@@ -115,7 +116,7 @@ router.get('/:id', async (req, res) => {
         response.data = item;
         res.send(response.getResponse());
     } else {
-      throw new Error('101|Data item pariwisata tidak ditemukan')
+      throw new Error('404|Item tidak ditemukan')
     }
 
    
@@ -148,7 +149,7 @@ router.post('/:id', multer({ storage: storage, fileFilter: fileFilter }).single(
       const audio = req.file
       const audio_pariwisata = req.file.path.split("\\").join('/')
       if (!audio) {
-        throw new Error("110|Audio pariwisata kosong")
+        throw new Error("110|File kosong")
       } else {
         const modelAttr = Item.rawAttributes;
         const inputItem = {};
@@ -177,12 +178,12 @@ router.post('/:id', multer({ storage: storage, fileFilter: fileFilter }).single(
         console.log(inputItem)
         let item = await Item.create(inputItem);
         response.code = 200;
-        response.message = "Tambah data item berhasil";
+        response.message = "Item berhasil ditambahkan";
         response.data = inputItem;
         res.send(response.getResponse());
       }
     } else {
-      throw new Error("110|File tidak ditemukan")
+      throw new Error("403|Format file salah")
     }
     
   } catch (error) {
@@ -208,11 +209,11 @@ router.delete('/', async (req, res) => {
       });
       const item = await Item.destroy(options);
       response.code = 200;
-      response.message = "Data item berhasil dihapus";
+      response.message = "Item berhasil dihapus";
       response.data = item;
       res.send(response.getResponse());
     } else {
-      throw new Error("110|File tidak ditemukan")
+      throw new Error("404|Item tidak ditemukan")
     }
   } catch (error) {
     let errors = error.message || "";
@@ -269,12 +270,12 @@ router.put('/:id', multer({ storage: storage, fileFilter: fileFilter }).single('
         console.log(inputItem)
         let item = await Item.update(inputItem, options);
         response.code = 200;
-        response.message = "Ubah data item berhasil";
+        response.message = "Item berhasil diubah";
         response.data = inputItem;
         res.send(response.getResponse());
 
     } else {
-      throw new Error('110|File tidak ditemukan')
+      throw new Error('404|Item tidak ditemukan')
     }
   } catch (error) {
     let errors = error.message || "";

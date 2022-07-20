@@ -5,13 +5,20 @@ const Jadwal = require("../models/Jadwal_Model");
 router.get('/', async (req, res) => {
   try {
     const jadwal = await Jadwal.findAll();
-    response.code = 200;
-    response.message = "Sukses";
-    response.data = jadwal;
-    res.send(response.getResponse());
+    if (jadwal) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = jadwal;
+      res.send(response.getResponse());
+    } else {
+      throw new Error('404|Jadwal tidak ditemukan')
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })
@@ -40,13 +47,14 @@ router.get("/find", async (req, res) => {
       response.data = jadwal;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error('404|Jadwal tidak ditemukan')
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -69,13 +77,16 @@ router.post('/', async (req, res) => {
     try {
         const jadwal = await Jadwal.create(inputJadwal)
         response.code = 200;
-        response.message = "Tambah Data Jadwal Berhasil";
+        response.message = "Jadwal berhasil ditambahkan";
         response.data = inputJadwal;
         res.send(response.getResponse());
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
+    res.send(response.getResponse());
     }
 })
 
@@ -87,14 +98,20 @@ router.get('/:id', async (req, res) => {
             }
         })
 
+      if (jadwal) {
         response.code = 200;
         response.message = "Sukses";
         response.data = jadwal;
         res.send(response.getResponse());
-
+      } else {
+        throw new Error('404|Jadwal tidak ditemukan')
+      }
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
+       let errors = error.message || "";
+        errors = errors.split('|');
+        console.log(errors)
+        response.code = errors.length>1?errors[0]:500
+        response.message = errors.length>1?errors[1]:errors[0];
         res.send(response.getResponse());
     }
 })
@@ -121,27 +138,23 @@ router.put('/', async (req, res) => {
           }
         }
       });
-      try {
-        const jadwal = await Jadwal.update(inputJadwal, options);
-        response.code = 200;
-        response.message = "Ubah Data Jadwal Berhasil";
-        response.data = inputJadwal;
-        res.send(response.getResponse());
-      } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-      }
-    } else {
-      response.code = 110;
-      response.message = "Data jadwal tidak ditemukan";
-      res.send(response.getResponse());
-    }
 
+      const jadwal = await Jadwal.update(inputJadwal, options);
+      response.code = 200;
+      response.message = "Jadwal berhasil diubah";
+      response.data = inputJadwal;
+      res.send(response.getResponse());
+
+    } else {
+      throw new Error('404|Jadwal tidak ditemukan')
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
-    res.send(response.getResponse());
+    let errors = error.message || "";
+        errors = errors.split('|');
+        console.log(errors)
+        response.code = errors.length>1?errors[0]:500
+        response.message = errors.length>1?errors[1]:errors[0];
+        res.send(response.getResponse());
   }
 })
 
@@ -153,15 +166,24 @@ const options = {};
   };
 
   try {
-    const jadwal = await Jadwal.destroy(options);
-    response.code = 200;
-    response.message = "Data jadwal berhasil dihapus";
-    response.data = jadwal;
-    res.send(response.getResponse());
+    let data = await Jadwal.findOne(options)
+    if (data) {
+      const jadwal = await Jadwal.destroy(options);
+      response.code = 200;
+      response.message = "Jadwal berhasil dihapus";
+      response.data = jadwal;
+      res.send(response.getResponse());
+    } else {
+      throw new Error('404|Jadwal tidak ditemukan')
+    }
+    
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
-    res.send(response.getResponse());
+     let errors = error.message || "";
+        errors = errors.split('|');
+        console.log(errors)
+        response.code = errors.length>1?errors[0]:500
+        response.message = errors.length>1?errors[1]:errors[0];
+        res.send(response.getResponse());
   }
 })
 

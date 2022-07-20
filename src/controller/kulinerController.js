@@ -57,13 +57,20 @@ router.get('/', async (req, res) => {
 
     try {
         const kuliner = await Kuliner.findAll(options)
-        response.code = 200;
-        response.message = "Sukses";
-        response.data = kuliner;
-        res.send(response.getResponse());
+        if (kuliner) {
+            response.code = 200;
+            response.message = "Sukses";
+            response.data = kuliner;
+            res.send(response.getResponse());
+        } else {
+            throw new Error('404|Kuliner tidak ditemukan')
+        }
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
+        let errors = error.message || "";
+        errors = errors.split('|');
+        console.log(errors)
+        response.code = errors.length>1?errors[0]:500
+        response.message = errors.length>1?errors[1]:errors[0];
         res.send(response.getResponse());
     }
 })
@@ -164,13 +171,14 @@ router.get('/search', async (req,res)=>{
             response.data = kuliner;
             res.send(response.getResponse());
         }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
+          throw new Error('404|Kuliner tidak ditemukan')
         }
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
+        let errors = error.message || "";
+        errors = errors.split('|');
+        console.log(errors)
+        response.code = errors.length>1?errors[0]:500
+        response.message = errors.length>1?errors[1]:errors[0];
         res.send(response.getResponse());
     }
 })
@@ -243,13 +251,14 @@ router.get('/filter', async (req,res)=>{
             response.data = kuliner;
             res.send(response.getResponse());
         }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
+            throw new Error('404|Kuliner tidak ditemukan')
         }
       } catch (error) {
-        response.code = 110;
-        response.message = error.message;
+        let errors = error.message || "";
+        errors = errors.split('|');
+        console.log(errors)
+        response.code = errors.length>1?errors[0]:500
+        response.message = errors.length>1?errors[1]:errors[0];
         res.send(response.getResponse());
       }
 })
@@ -312,13 +321,14 @@ router.get('/find', async(req,res)=>{
             response.data = kuliner;
             res.send(response.getResponse());
         }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
+            throw new Error('Kuliner tidak ditemukan')
         }
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
+        let errors = error.message || "";
+        errors = errors.split('|');
+        console.log(errors)
+        response.code = errors.length>1?errors[0]:500
+        response.message = errors.length>1?errors[1]:errors[0];
         res.send(response.getResponse());
     }
 })
@@ -371,19 +381,20 @@ router.get('/:id', async (req,res)=>{
             response.data = kuliner;
             res.send(response.getResponse());
         }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
+            throw new Error('404|Kuliner tidak ditemukan')
         }
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
+        let errors = error.message || "";
+        errors = errors.split('|');
+        console.log(errors)
+        response.code = errors.length>1?errors[0]:500
+        response.message = errors.length>1?errors[1]:errors[0];
         res.send(response.getResponse());
     }
 })
 
 router.post('/', validationKuliner, runValidation, async (req, res)=>{
-
+try {
     const lastest = await Kuliner.findOne({attributes:['id_kuliner'],order:[['created_at','DESC']]})
     const id_kuliner = parseInt(lastest.id_kuliner.slice(1))+1
 
@@ -400,18 +411,19 @@ router.post('/', validationKuliner, runValidation, async (req, res)=>{
         }
     });
 
-    inputKuliner['id_kuliner'] = `K`+id_kuliner
+    inputKuliner['id_kuliner'] = `K` + id_kuliner
 
-    
-    try {
         const kuliner = await Kuliner.create(inputKuliner)
         response.code = 200;
-        response.message = "Tambah Data Wisata Kuliner Berhasil";
+        response.message = "Kuliner berhasil ditambahkan";
         response.data = inputKuliner;
         res.send(response.getResponse());
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
+        let errors = error.message || "";
+        errors = errors.split('|');
+        console.log(errors)
+        response.code = errors.length>1?errors[0]:500
+        response.message = errors.length>1?errors[1]:errors[0];
         res.send(response.getResponse());
     }
 
@@ -439,12 +451,15 @@ router.put('/', validationKuliner, runValidation, async (req,res)=>{
     try {
         const kuliner = await Kuliner.update(inputKuliner, options);
         response.code = 200;
-        response.message = "Ubah Data Wisata Kuliner Berhasil";
+        response.message = "Kuliner berhasil diubah";
         response.data = inputKuliner;
         res.send(response.getResponse());
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
+       let errors = error.message || "";
+        errors = errors.split('|');
+        console.log(errors)
+        response.code = errors.length>1?errors[0]:500
+        response.message = errors.length>1?errors[1]:errors[0];
         res.send(response.getResponse());
     }
     
@@ -462,12 +477,15 @@ router.delete('/', async(req,res)=>{
     try {
         const kuliner = await Kuliner.destroy(options)
         response.code = 200;
-        response.message = "Data wisata kuliner berhasil dihapus";
+        response.message = "Kuliner berhasil dihapus";
         response.data = kuliner;
         res.send(response.getResponse());
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
+       let errors = error.message || "";
+        errors = errors.split('|');
+        console.log(errors)
+        response.code = errors.length>1?errors[0]:500
+        response.message = errors.length>1?errors[1]:errors[0];
         res.send(response.getResponse());
     }
 })

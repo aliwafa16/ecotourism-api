@@ -19,11 +19,14 @@ router.get("/", async (req, res) => {
       response.data = kategori_kuliner;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data kategori kuliner tidak ditemukan");
+      throw new Error("404|Kategori kuliner tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -43,11 +46,14 @@ router.get("/:id", async (req, res) => {
       response.data = kategori_kuliner;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data kategori kuliner tidak ditemukan");
+      throw new Error("404|Kategori kuliner tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -72,17 +78,20 @@ router.post("/", validationKategoriKuliner, runValidation, async (req, res) => {
 
   try {
     if (data) {
-      throw new Error("Kategori kuliner sudah ada");
+      throw new Error("403|Kategori kuliner sudah ada");
     } else {
       const kategori = await Kategori_Kuliner.create(inputKategori);
       response.code = 200;
-      response.message = "Tambah data kategori kuliner berhasil";
+      response.message = "Kategori kuliner berhasil ditambahkan";
       response.data = kategori;
       res.send(response.getResponse());
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -96,7 +105,7 @@ router.put("/", validationKategoriKuliner, runValidation, async (req, res) => {
   try {
     let data = await Kategori_Kuliner.findOne(options);
     if (!data) {
-      throw new Error("Data katagori kuliner tidak ditemukan");
+      throw new Error("404|Kategori kuliner tidak ditemukan");
     } else {
       const modelAttr = Kategori_Kuliner.rawAttributes;
       const inputKategori = {};
@@ -119,18 +128,21 @@ router.put("/", validationKategoriKuliner, runValidation, async (req, res) => {
       });
 
       if (check_data) {
-        throw new Error("Data kategori sudah ada");
+        throw new Error("403|Kategori kuliner sudah ada");
       } else {
         const kategori = await Kategori_Kuliner.update(inputKategori, options);
         response.code = 200;
-        response.message = "Ubah data kategori kuliner berhasil";
+        response.message = "Kategori kuliner berhasil diubah";
         response.data = inputKategori;
         res.send(response.getResponse());
       }
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -146,15 +158,18 @@ router.delete("/", async (req, res) => {
     if (data) {
       const kategori = await Kategori_Kuliner.destroy(options);
       response.code = 200;
-      response.message = "Data kategori kuliner berhasil dihapus";
+      response.message = "Kategori kuliner berhasil dihapus";
       response.data = kategori;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data kategori kuliner tidak ditemukan");
+      throw new Error("404|Kategori kuliner tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });

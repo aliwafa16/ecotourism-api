@@ -36,30 +36,23 @@ router.post("/", validationLogin, runValidation, async (req, res) => {
                     response.data = pengguna;
                     res.send(response.getResponse());
                 } else {
-                  response.code = 110;
-                  response.message = "Akun tidak terdaftar";
-                  res.send(response.getResponse());
+                  throw new Error('404|Email tidak ditemukan')
                 }
             } else {
-              response.code = 110;
-              response.message = "Password salah";
-              res.send(response.getResponse());
+              throw new Error('403|Email atau kata sandi salah')
             }
         } else {
-          response.code = 110;
-          response.message = "Email belum diverifikasi";
-          res.send(response.getResponse());
+          throw new Error('403|Email belum diverifikasi')
         }
     } else {
-      response.code = 110;
-      response.message = "Email tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error('404|Email tidak ditemukan')
     }
-
-
-  } catch (err) {
-    response.code = 110;
-    response.message = err.message;
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -90,36 +83,30 @@ router.post("/sign-in", validationLogin, runValidation, async (req, res) => {
                   response.data = pengguna;
                   res.send(response.getResponse());
               } else {
-                response.code = 110;
-                response.message = "Akun tidak terdaftar";
-                res.send(response.getResponse());
+                throw new Error('404|Email tidak ditemukan')
               }
           } else {
-            response.code = 110;
-            response.message = "Password salah";
-            res.send(response.getResponse());
+            throw new Error('403|Email atau kata sandi salah')
           }
       } else {
-        response.code = 110;
-        response.message = "Email belum diverifikasi";
-        res.send(response.getResponse());
+        throw new Error('403|Email belum diverifikasi')
       }
     } else {
-      response.code = 110;
-      response.message = "Email tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error('404|Email tidak ditemukan')
     }
 
 
-  } catch (err) {
-    response.code = 110;
-    response.message = err.message;
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })
 
 router.post('/registration', validationRegistrasi, runValidation ,async (req, res) => {
-
   try {
       const { pengelola, wisatawan } = req.body
       const inputRegistrasi = {}
@@ -163,26 +150,23 @@ router.post('/registration', validationRegistrasi, runValidation ,async (req, re
       }
       kirimEmail(templateEMail)
       
-      try {
-        const registasi = await Pengguna.create(inputRegistrasi)
-        response.code = 200;
-        response.message = "Registrasi berhasil";
-        response.data = inputRegistrasi;
-        res.send(response.getResponse());
-      } catch (error) {
-         response.code = 110;
-          response.message = error.message;
-          res.send(response.getResponse());
-      }
-      
+
+      const registasi = await Pengguna.create(inputRegistrasi)
+      response.code = 200;
+      response.message = "Registrasi berhasil";
+      response.data = inputRegistrasi;
+      res.send(response.getResponse());
+    
+        
       } else {
-        response.code = 110;
-        response.message = "Email sudah digunakan";
-        res.send(response.getResponse());
+       throw new Error('403|Email sudah digunakan')
       }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 
@@ -190,7 +174,6 @@ router.post('/registration', validationRegistrasi, runValidation ,async (req, re
 
 router.post('/verifikasi', async(req,res)=>{
   let token = req.body.token
-
   try {
     const pengguna = await Pengguna.findOne({
       where:{
@@ -210,24 +193,22 @@ router.post('/verifikasi', async(req,res)=>{
         response.data = pengguna;
         res.send(response.getResponse());
       }else{
-        response.code = 110;
-        response.message = "Email sudah diverifikasi !";
-        res.send(response.getResponse());
+        throw new Error('100|Email sudah diverifikasi')
       }
     }else{
-      response.code = 110;
-      response.message = "Token verifikasi salah !";
-      res.send(response.getResponse());
+      throw new Error('403|Token verifikasi salah')
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })
 
 router.post('/cekEmail', async (req, res) => {
-  
   try {
   
   const email =  await Pengguna.findOne({
@@ -237,24 +218,25 @@ router.post('/cekEmail', async (req, res) => {
   })
 
     if (email) {
-      response.code = 110;
-      response.message = "Email sudah terdaftar";
-      res.send(response.getResponse());
+      throw new Error('403|Email sudah digunakan')
     } else {
       response.code = 200;
       response.message = "Email belum terdaftar";
+      response.data = {};
       res.send(response.getResponse());
     }   
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+   let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
  
 })
 
 router.post('/lupa_password', async (req, res) => {
-
   try {
   const email = req.body.email;
   let pengguna = await Pengguna.findOne({
@@ -276,15 +258,18 @@ router.post('/lupa_password', async (req, res) => {
       }
         kirimEmail(templateEMail)
         response.code = 200;
-        response.message = "Kode reset password berhasil dikirim !";
+        response.message = "Kode reset kata sandi berhasil dikirim !";
         response.data = {};
         res.send(response.getResponse());
     } else {
-      throw new Error('Email pengguna tidak ditemukan !')
+      throw new Error('404|Email pengguna tidak ditemukan !')
   }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })
@@ -297,15 +282,18 @@ router.post('/reset_password', async (req, res) => {
       let new_password = crypto.createHash("md5").update(password).digest("hex")
       let update = await Pengguna.update({ password: new_password }, { where: { reset_password: reset_password } })
        response.code = 200;
-        response.message = "Ubah kata sandi berhasil";
+        response.message = "Reset kata sandi berhasil";
         response.data = update;
         res.send(response.getResponse());
     } else {
-      throw new Error('Email tidak ditemukan')
+      throw new Error('404|Email tidak ditemukan')
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 

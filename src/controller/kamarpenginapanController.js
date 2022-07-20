@@ -3,25 +3,23 @@ const response = require("../core/response");
 const Kamar_Penginapan = require("../models/KamarPenginapan_Model");
 
 router.get("/", async (req, res) => {
-  const { id_penginapan } = req.body;
-
-  const options = {};
-
-  if (id_penginapan) {
-    options.where = {
-      penginapan_id: id_penginapan,
-    };
-  }
 
   try {
-    const kamar_penginapan = await Kamar_Penginapan.findAll(options);
-    response.code = 200;
-    response.message = "Sukses";
-    response.data = kamar_penginapan;
-    res.send(response.getResponse());
+    const kamar_penginapan = await Kamar_Penginapan.findAll();
+    if (kamar_penginapan) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = kamar_penginapan;
+      res.send(response.getResponse());
+    } else {
+      throw new Error('404|Kamar penginapan tidak ditemukan')
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -50,13 +48,14 @@ router.get("/find", async (req, res) => {
       response.data = kamar_penginapan;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error('404|Kamar penginapan tidak ditemukan')
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -97,12 +96,15 @@ router.post("/", async (req, res) => {
   try {
     const kamar_penginapan = await Kamar_Penginapan.create(inputKamar);
     response.code = 200;
-    response.message = "Tambah Data Jenis Kamar Berhasil";
+    response.message = "Kamar penginapan berhasil ditambahkan";
     response.data = inputKamar;
     res.send(response.getResponse());
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -127,14 +129,22 @@ router.put("/", async (req, res) => {
   });
   console.log(inputKamar);
   try {
-    const kamar_penginapan = await Kamar_Penginapan.update(inputKamar, options);
-    response.code = 200;
-    response.message = "Ubah Data Jenis Kamar Berhasil";
-    response.data = inputKamar;
-    res.send(response.getResponse());
+    let data = await Kamar_Penginapan.findOne(options);
+    if (data) {
+      const kamar_penginapan = await Kamar_Penginapan.update(inputKamar, options);
+      response.code = 200;
+      response.message = "Kamar penginapan berhasil diubah";
+      response.data = inputKamar;
+      res.send(response.getResponse());
+    } else {
+      throw new Error('404|Kamar penginapan tidak ditemukan')
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+   let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -146,14 +156,22 @@ router.delete("/", async (req, res) => {
   };
 
   try {
-    const kamar_penginapan = await Kamar_Penginapan.destroy(options);
-    response.code = 200;
-    response.message = "Data Jenis Kamar Berhasil Dihapus";
-    response.data = kamar_penginapan;
-    res.send(response.getResponse());
+    let data = await Kamar_Penginapan.findOne(options)
+    if (data) {
+      const kamar_penginapan = await Kamar_Penginapan.destroy(options);
+      response.code = 200;
+      response.message = "Kamar penginapan berhasil dihapus";
+      response.data = kamar_penginapan;
+      res.send(response.getResponse());
+    } else {
+      throw new Error('404|Kamar penginapan tidak ditemukan')
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });

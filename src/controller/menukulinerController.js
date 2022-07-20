@@ -4,6 +4,7 @@ const Menu_Kuliner = require('../models/MenuKuliner_Model');
 
 router.get('/', async (req, res) => {
   try {
+    
     const menu_kuliner = await Menu_Kuliner.findAll();
     response.code = 200;
     response.message = "Sukses";

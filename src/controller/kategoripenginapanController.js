@@ -19,11 +19,14 @@ router.get("/", async (req, res) => {
       response.data = kategori_penginapan;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data kategori penginapan tidak ditemukan");
+      throw new Error("404|Kategori penginapan tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -43,11 +46,14 @@ router.get("/:id", async (req, res) => {
       response.data = kategori_penginapan;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data kategori penginapan tidak ditemukan");
+      throw new Error("404|Kategori penginapan tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -76,18 +82,21 @@ router.post(
 
     try {
       if (data) {
-        throw new Error("Kategori penginapan sudah ada");
+        throw new Error("403|Kategori penginapan sudah ada");
       } else {
         const kategori = await Kategori_Penginapan.create(inputKategori);
         response.code = 200;
-        response.message = "Tambah data kategori penginapan berhasil";
+        response.message = "Kategori penginapan berhasil ditambahkan";
         response.data = kategori;
         res.send(response.getResponse());
       }
     } catch (error) {
-      response.code = 110;
-      response.message = error.message;
-      res.send(response.getResponse());
+      let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
+    res.send(response.getResponse());
     }
   }
 );
@@ -105,7 +114,7 @@ router.put(
     try {
       let data = await Kategori_Penginapan.findOne(options);
       if (!data) {
-        throw new Error("Data katagori penginapan tidak ditemukan");
+        throw new Error("404|Kategori penginapan tidak ditemukan");
       } else {
         const modelAttr = Kategori_Penginapan.rawAttributes;
         const inputKategori = {};
@@ -131,35 +140,25 @@ router.put(
         });
 
         if (check_data) {
-          throw new Error("Data kategori sudah ada");
+          throw new Error("403|Kategori penginapan sudah ada");
         } else {
           const kategori = await Kategori_Penginapan.update(
             inputKategori,
             options
           );
           response.code = 200;
-          response.message = "Ubah data kategori penginapan berhasil";
+          response.message = "Kategori penginapan berhasil diubah";
           response.data = inputKategori;
           res.send(response.getResponse());
         }
-
-        // let check_data = await Kategori_Wisata.findAll({
-        //   attributes: ["kategori"],
-        //   where: { [Op.not]: [{ kategori: inputKategori.kategori }] },
-        // });
-
-        // check_data.forEach((kategori) => {
-        //   if (kategori.dataValues.kategori == inputKategori.kategori) {
-        //     throw new Error("Data kategori sudah ada");
-        //   } else {
-        //     inputKategori.kategori = inputKategori.kategori;
-        //   }
-        // });
       }
     } catch (error) {
-      response.code = 110;
-      response.message = error.message;
-      res.send(response.getResponse());
+       let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
+    res.send(response.getResponse());
     }
   }
 );
@@ -175,15 +174,18 @@ router.delete("/", async (req, res) => {
     if (data) {
       const kategori = await Kategori_Penginapan.destroy(options);
       response.code = 200;
-      response.message = "Data kategori penginapan berhasil dihapus";
+      response.message = "Kategori penginapan berhasil dihapus";
       response.data = kategori;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data kategori penginapan tidak ditemukan");
+      throw new Error("404|Kategori penginapan tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+      let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });

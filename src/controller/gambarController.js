@@ -40,7 +40,7 @@ router.get("/", async (req, res) => {
       response.data = gambar;
       res.send(response.getResponse());
     } else {
-      throw new Error("101|Data kategori wisata tidak ditemukan");
+      throw new Error("404|Gambar tidak ditemukan");
     }
   } catch (error) {
     let errors = error.message || "";
@@ -76,13 +76,14 @@ router.get('/find', async (req, res) => {
       response.data = gambar;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error('404|Gambar tidak ditemukan')
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })
@@ -93,7 +94,7 @@ router.post('/', multer({ storage: storage, fileFilter: fileFilter }).single('ga
       const gambar = req.file
       const gambar_pariwisata = req.file.path.split("\\").join('/')
       if (!gambar) {
-        throw new Error("110|Gambar wisata kosong")
+        throw new Error("110|Gambar kosong")
       } else {
         const modelAttr = Gambar.rawAttributes;
         const inputGambar = {};
@@ -110,12 +111,12 @@ router.post('/', multer({ storage: storage, fileFilter: fileFilter }).single('ga
         inputGambar['gambar'] = gambar_pariwisata
         let gambar = await Gambar.create(inputGambar);
         response.code = 200;
-        response.message = "Tambah data gambar berhasil";
+        response.message = "Gambar berhasil ditambahkan";
         response.data = gambar;
         res.send(response.getResponse());
       }
     } else {
-      throw new Error("110|File tidak ditemukan")
+      throw new Error("403|Format file salah")
     }
   } catch (error) {
     let errors = error.message || "";
@@ -137,7 +138,7 @@ router.put('/', multer({ storage: storage, fileFilter: fileFilter }).single('gam
   try {
     let data = await Gambar.findOne(options);
     if (!data) {
-      throw new Error('Data gambar tidak ditemukan')
+      throw new Error('404|Gambar tidak ditemukan')
     } else {
       if (req.file) {
         fs.unlink(data.dataValues.gambar, (errors) => {
@@ -160,10 +161,10 @@ router.put('/', multer({ storage: storage, fileFilter: fileFilter }).single('gam
               }
             }
           });
-      inputGambar['gambar'] = gambar_pariwisata
+        inputGambar['gambar'] = gambar_pariwisata
         let gambar = await Gambar.update(inputGambar, options);
         response.code = 200;
-        response.message = "Ubah data gambar berhasil";
+        response.message = "Gambar berhasil diubah";
         response.data = gambar;
         res.send(response.getResponse());
     }
@@ -191,15 +192,18 @@ router.delete('/', async (req, res) => {
       });
       const gambar = await Gambar.destroy(options);
       response.code = 200;
-      response.message = "Data gambar berhasil dihapus";
+      response.message = "Gambar berhasil dihapus";
       response.data = gambar;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data gambar tidak ditemukan");
+      throw new Error("404|Gambar tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+   let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })

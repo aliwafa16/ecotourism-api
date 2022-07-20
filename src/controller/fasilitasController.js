@@ -5,13 +5,20 @@ const Fasilitas = require("../models/Fasilitas_Model");
 router.get('/', async (req, res) => {
   try {
     const fasilitas = await Fasilitas.findAll()
-    response.code = 200;
+    if (fasilitas) {
+      response.code = 200;
     response.message = "Sukses";
     response.data = fasilitas;
     res.send(response.getResponse());
+    } else {
+      throw new Error('404|Fasilitas tidak ditemukan')
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })
@@ -40,13 +47,14 @@ router.get("/find", async (req, res) => {
       response.data = fasilitas;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error('404|Fasilitas tidak ditemukan')
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -60,13 +68,20 @@ router.get('/:id', async (req, res) => {
       }
     })
 
-    response.code = 200;
+    if (fasilitas) {
+      response.code = 200;
     response.message = "Sukses";
     response.data = fasilitas;
     res.send(response.getResponse());
+    } else {
+      throw new Error('404|Fasilitas tidak ditemukan')
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })
@@ -90,7 +105,7 @@ router.post('/', async (req, res) => {
     try {
         const fasilitas = await Fasilitas.create(inputFasilitas)
         response.code = 200;
-        response.message = "Tambah Data Fasilitas Berhasil";
+        response.message = "Fasilitas berhasil ditambahkan";
         response.data = inputFasilitas;
         res.send(response.getResponse());
     } catch (error) {
@@ -122,26 +137,21 @@ router.put('/', async (req, res) => {
           }
         }
       });
-      try {
+
         const fasilitas = await Fasilitas.update(inputFasilitas, options);
         response.code = 200;
-        response.message = "Ubah Data Fasilitas Berhasil";
+        response.message = "Fasilitas berhasil diubah";
         response.data = inputFasilitas;
         res.send(response.getResponse());
-      } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-      }
     } else {
-      response.code = 110;
-      response.message = "Data fasilitas tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error('404|Fasilitas tidak ditemukan')
     }
-
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })
@@ -153,14 +163,22 @@ const options = {};
   };
 
   try {
+    let data = await Fasilitas.findOne(options);
+    if (data) {
     const fasilitas = await Fasilitas.destroy(options);
     response.code = 200;
-    response.message = "Data fasilitas berhasil dihapus";
+    response.message = "Fasilitas berhasil dihapus";
     response.data = fasilitas;
     res.send(response.getResponse());
+    } else {
+      throw new Error('404|Fasilitas tidak ditemukan')
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })
