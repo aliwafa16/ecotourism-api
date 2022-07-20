@@ -10,16 +10,27 @@ const Fasilitas = require('../models/Fasilitas_Model');
 const Fasilitas_Kamar = require('../models/FasilitasKamar_Model');
 const Kamar_Penginapan = require('../models/KamarPenginapan_Model');
 const Gambar = require('../models/Gambar_Model');
+const Item = require("../models/ItemPariwisata_Model");
 
-Penginapan.hasMany(Fasilitas, { as: 'fasilitas', foreignKey: 'id_pariwisata' });
-Penginapan.belongsTo(Kategori_Pariwisata, { as: 'kategori_pariwisata', foreignKey: 'kategori_pariwisata_id' });
-Penginapan.belongsTo(Kategori_Penginapan, { as: 'kategori_penginapan', foreignKey: 'kategori_penginapan_id' });
-Penginapan.hasMany(Kamar_Penginapan, { as: 'tipe_kamar', foreignKey: 'penginapan_id' });
-Penginapan.hasMany(Gambar, { as: 'gambar', foreignKey: 'id_pariwisata' });
+Penginapan.hasMany(Fasilitas, { as: "fasilitas", foreignKey: "id_pariwisata" });
+Penginapan.belongsTo(Kategori_Pariwisata, {
+  as: "kategori_pariwisata",
+  foreignKey: "kategori_pariwisata_id",
+});
+Penginapan.belongsTo(Kategori_Penginapan, {
+  as: "kategori_penginapan",
+  foreignKey: "kategori_penginapan_id",
+});
+Penginapan.hasMany(Kamar_Penginapan, {
+  as: "tipe_kamar",
+  foreignKey: "penginapan_id",
+});
+Penginapan.hasMany(Gambar, { as: "gambar", foreignKey: "id_pariwisata" });
 Kamar_Penginapan.hasMany(Fasilitas_Kamar, {
   as: "fasilitas_kamar",
   foreignKey: "kamar_penginapan_id",
 });
+Penginapan.hasMany(Item, { as: "item", foreignKey: "id_pariwisata" });
 
 router.get("/", async (req, res) => {
   const options = {
@@ -71,7 +82,24 @@ router.get("/", async (req, res) => {
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["gambar", "keterangan", "tanggal"],
+        attributes: [
+          "id_gambar",
+          "id_pariwisata",
+          "gambar",
+          "keterangan",
+          "tanggal",
+        ],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
       },
     ],
   };
@@ -140,7 +168,24 @@ router.get("/search", async (req, res) => {
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["gambar", "keterangan", "tanggal"],
+        attributes: [
+          "id_gambar",
+          "id_pariwisata",
+          "gambar",
+          "keterangan",
+          "tanggal",
+        ],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
       },
     ],
   };
@@ -266,7 +311,24 @@ router.get("/filter", async (req, res) => {
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["gambar", "keterangan", "tanggal"],
+        attributes: [
+          "id_gambar",
+          "id_pariwisata",
+          "gambar",
+          "keterangan",
+          "tanggal",
+        ],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
       },
     ],
   };
@@ -363,7 +425,24 @@ router.get("/find", async (req, res) => {
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["gambar", "keterangan", "tanggal"],
+        attributes: [
+          "id_gambar",
+          "id_pariwisata",
+          "gambar",
+          "keterangan",
+          "tanggal",
+        ],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
       },
     ],
   };
@@ -401,7 +480,7 @@ router.get("/find", async (req, res) => {
   }
 });
 
-router.get('/:id', async (req,res)=>{
+router.get("/:id", async (req, res) => {
   const options = {
     include: [
       {
@@ -451,33 +530,50 @@ router.get('/:id', async (req,res)=>{
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["gambar", "keterangan", "tanggal"],
+        attributes: [
+          "id_gambar",
+          "id_pariwisata",
+          "gambar",
+          "keterangan",
+          "tanggal",
+        ],
+      },
+      {
+        model: Item,
+        as: "item",
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
       },
     ],
   };
 
-    options['where'] = {
-        id_penginapan : req.params.id
-    }
+  options["where"] = {
+    id_penginapan: req.params.id,
+  };
 
-    try {
-        const penginapan = await Penginapan.findOne(options)
-        if(penginapan){
-            response.code = 200;
-            response.message = "Sukses";
-            response.data = penginapan;
-            res.send(response.getResponse());
-        }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
-        }
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+  try {
+    const penginapan = await Penginapan.findOne(options);
+    if (penginapan) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = penginapan;
+      res.send(response.getResponse());
+    } else {
+      response.code = 111;
+      response.message = "Data tidak ditemukan";
+      res.send(response.getResponse());
     }
-})
+  } catch (error) {
+    response.code = 110;
+    response.message = error.message;
+    res.send(response.getResponse());
+  }
+});
 
 router.post('/',validationPenginapan,runValidation, async (req, res)=>{
 
