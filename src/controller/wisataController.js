@@ -4,6 +4,7 @@ const { Op } = require("sequelize");
 const { runValidation, validationWisata } = require("../validation/index");
 const { token } = require("../core/middleware");
 const Wisata = require("../models/Wisata_Model");
+
 const Jadwal = require("../models/Jadwal_Model");
 const Kategori_Wisata = require("../models/KategoriWisata_Model");
 const Kategori_Pariwisata = require("../models/Pariwisata_Model");
@@ -12,7 +13,7 @@ const Fasilitas = require("../models/Fasilitas_Model");
 const Gambar = require("../models/Gambar_Model");
 const Item = require("../models/ItemPariwisata_Model")
 
-Wisata.hasMany(Jadwal, { as: "jadwal", foreignKey: "id_pariwisata" });
+Wisata.hasMany(Jadwal, { as: 'jadwal', foreignKey: "id_pariwisata" });
 Wisata.belongsTo(Kategori_Wisata, {
   as: "kategori_wisata",
   foreignKey: "kategori_wisata_id",
@@ -31,7 +32,7 @@ router.get("/", async (req, res) => {
     include: [
       {
         model: Jadwal,
-        as: "jadwal",
+        as:'jadwal',
         attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup", 'keterangan'],
       },
       {
