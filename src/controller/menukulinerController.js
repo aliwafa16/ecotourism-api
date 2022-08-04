@@ -4,15 +4,21 @@ const Menu_Kuliner = require('../models/MenuKuliner_Model');
 
 router.get('/', async (req, res) => {
   try {
-    
     const menu_kuliner = await Menu_Kuliner.findAll();
+    if (menu_kuliner) {
     response.code = 200;
     response.message = "Sukses";
     response.data = menu_kuliner;
     res.send(response.getResponse());
+    } else {
+       throw new Error("404|Menu kuliner tidak ditemukan");
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })
@@ -41,13 +47,14 @@ router.get("/find", async (req, res) => {
       response.data = menu_kuliner;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+       throw new Error("404|Menu kuliner tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -60,15 +67,21 @@ router.get('/:id', async (req, res) => {
             }
         })
 
+      if (menu_kuliner) {
         response.code = 200;
         response.message = "Sukses";
         response.data = menu_kuliner;
         res.send(response.getResponse());
-
+      } else {
+        throw new Error("404|Menu kuliner tidak ditemukan");
+      }
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
+    res.send(response.getResponse());
     }
 })
 
@@ -91,7 +104,7 @@ router.post('/', async (req, res) => {
     try {
         const tiket = await Menu_Kuliner.create(inputMenuKuliner)
         response.code = 200;
-        response.message = "Tambah Data Menu Kuliner Berhasil";
+        response.message = "Menu kuliner berhasil ditambahkan";
         response.data = inputMenuKuliner;
         res.send(response.getResponse());
     } catch (error) {
@@ -122,26 +135,21 @@ router.put('/', async (req, res) => {
           }
         }
       });
-      try {
-        const tiket = await Menu_Kuliner.update(inputMenuKuliner, options);
+        const menu_kuliner = await Menu_Kuliner.update(inputMenuKuliner, options);
         response.code = 200;
-        response.message = "Tambah Data Menu Kuliner Berhasil";
+        response.message = "Menu kuliner berhasil diubah";
         response.data = inputMenuKuliner;
         res.send(response.getResponse());
-      } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-      }
     } else {
-      response.code = 110;
-      response.message = "Data menu tidak ditemukan";
-      res.send(response.getResponse());
+       throw new Error("404|Menu kuliner tidak ditemukan");
     }
 
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })
@@ -154,14 +162,23 @@ const options = {};
   };
 
   try {
-    const menu_kuliner = await Menu_Kuliner.destroy(options);
-    response.code = 200;
-    response.message = "Data Menu Kuliner Berhasil Dihapus";
-    response.data = menu_kuliner;
-    res.send(response.getResponse());
+    let data = await Menu_Kuliner.findOne(options)
+    if (data) {
+       const menu_kuliner = await Menu_Kuliner.destroy(options);
+        response.code = 200;
+        response.message = "Menu kuliner berhasil dihapus";
+        response.data = menu_kuliner;
+        res.send(response.getResponse());
+    } else {
+      throw new Error("404|Menu kuliner tidak ditemukan");
+    }
+   
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 })

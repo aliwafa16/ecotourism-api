@@ -5,10 +5,11 @@ const Rating = sequalize.define('tbl_rating', {
     id_rating: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
+        autoIncrement : true,
     },
     id_pariwisata: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         allowNull:false
     },
     pengguna_id: {

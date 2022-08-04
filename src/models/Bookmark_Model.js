@@ -5,10 +5,11 @@ const Bookmark = sequalize.define('tbl_bookmark', {
     id_bookmark: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
+        autoIncrement:true,
     },
     id_pariwisata: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         allowNull:false
     },
     pengguna_id: {

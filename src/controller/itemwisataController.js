@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const fs = require('fs')
+const { existsSync} = require('fs')
 const multer = require('multer')
 const path = require('path');
 const Qrcode = require('qrcode')
@@ -60,6 +60,18 @@ router.get('/', async (req, res) => {
     res.send(response.getResponse());
   }
 })
+
+router.get("/load", (req, res) => {
+  const { filename, filepath } = req.query;
+  const filePath = `${filepath}${filename}`;
+  const existFile = existsSync(filePath);
+  if (existFile) res.download(filePath);
+  else {
+    response.code = "404";
+    response.message = "File tidak ditemukan";
+    res.send(response.getResponse());
+  }
+});
 
 
 router.get('/find', async (req, res) => {
@@ -130,17 +142,7 @@ router.get('/:id', async (req, res) => {
   }
 } )
 
-router.get("/load", (req, res) => {
-  const { filename, filepath } = req.query;
-  const filePath = `${filepath}${filename}`;
-  const existFile = existsSync(filePath);
-  if (existFile) res.download(filePath);
-  else {
-    response.code = "404";
-    response.message = "File tidak ditemukan";
-    res.send(response.getResponse());
-  }
-});
+
 
 
 router.post('/:id', multer({ storage: storage, fileFilter: fileFilter }).single('audio'), async (req, res) => {

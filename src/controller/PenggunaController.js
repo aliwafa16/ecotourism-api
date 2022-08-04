@@ -46,15 +46,22 @@ router.get('/', async(req,res)=>{
     }
 
     try {
-        const pengguna = await Pengguna.findAll(options)
+      const pengguna = await Pengguna.findAll(options)
+      if (pengguna) {
         response.code = 200;
         response.message = "Sukses";
         response.data = pengguna;
         res.send(response.getResponse());
+      } else {
+         throw new Error("404|Pengguna tidak ditemukan");
+      }
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
+    res.send(response.getResponse());
     }
 })
 
@@ -105,11 +112,14 @@ router.get("/search", async (req, res) => {
       response.data = pengguna;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data pengguna tidak ditemukan");
+     throw new Error("404|Pengguna tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -151,11 +161,14 @@ router.get("/filter", async (req, res) => {
       response.data = pengguna;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data pengguna tidak ditemukan");
+       throw new Error("404|Pengguna tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -193,11 +206,14 @@ router.get("/find", async (req, res) => {
       response.data = pengguna;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data pengguna tidak ditemukan");
+      throw new Error("404|Pengguna tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -224,11 +240,14 @@ router.get("/:id", async (req, res) => {
       response.data = pengguna;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data pengguna tidak ditemukan");
+      throw new Error("404|Pengguna tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+   let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -264,15 +283,18 @@ router.post("/", multer({ storage: storage, fileFilter: fileFilter }).single('fo
       inputPengguna.status = 1;
       const pengguna = await Pengguna.create(inputPengguna);
       response.code = 200;
-      response.message = "Tambah data pengguna berhasil";
+      response.message = "Pengguna berhasil ditambahkan";
       response.data = inputPengguna;
       res.send(response.getResponse());
     } else {
-      throw new Error("Email sudah digunakan");
+      throw new Error('403|Email sudah digunakan')
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+       let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -319,20 +341,23 @@ router.put("/",multer({ storage: storage, fileFilter: fileFilter }).single('foto
       });
 
       if (check_data) {
-        throw new Error("Data pengguna sudah ada");
+        throw new Error('403|Email pengguna sudah ada')
       } else {
         const pengguna = await Pengguna.update(inputPengguna, options);
         response.code = 200;
-        response.message = "Ubah data pengguna berhasil";
+        response.message = "Pengguna berhasil diubah";
         response.data = inputPengguna;
         res.send(response.getResponse());
       }
     } else {
-      throw new Error("Data pengguna tidak ditemukan");
+      throw new Error('404|Pengguna tidak ditemukan')
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+      let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -373,15 +398,18 @@ router.delete("/", async (req, res) => {
     if (data) {
       const pengguna = await Pengguna.destroy(options);
       response.code = 200;
-      response.message = "Data pengguna berhasil dihapus";
+      response.message = "Pengguna berhasil dihapus";
       response.data = pengguna;
       res.send(response.getResponse());
     } else {
-      throw new Error("Data pengguna tidak ditemukan");
+      throw new Error("404|Pengguna tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });

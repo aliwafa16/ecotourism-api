@@ -87,13 +87,20 @@ router.get("/", async (req, res) => {
 
   try {
     const oleh_oleh = await Oleh_Oleh.findAll(options);
-    response.code = 200;
-    response.message = "Sukses";
-    response.data = oleh_oleh;
-    res.send(response.getResponse());
+    if (oleh_oleh) {
+          response.code = 200;
+          response.message = "Sukses";
+          response.data = oleh_oleh;
+          res.send(response.getResponse());
+    } else {
+       throw new Error("404|Oleh-oleh tidak ditemukan");
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -205,13 +212,14 @@ router.get("/search", async (req, res) => {
       response.data = oleh_oleh;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error("404|Oleh-oleh tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -304,13 +312,14 @@ router.get("/filter", async (req, res) => {
       response.data = oleh_oleh;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+       throw new Error("404|Oleh-oleh tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+        let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -399,13 +408,14 @@ router.get("/find", async (req, res) => {
       response.data = oleh_oleh;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+       throw new Error("404|Oleh-oleh tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -483,13 +493,14 @@ router.get("/:id", async (req, res) => {
       response.data = oleh_oleh;
       res.send(response.getResponse());
     } else {
-      response.code = 110;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error("404|Oleh-oleh tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+      let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -519,12 +530,15 @@ router.post("/", validationOlehOleh, runValidation, async (req, res) => {
   try {
     const oleh_oleh = await Oleh_Oleh.create(inputOlehOleh);
     response.code = 200;
-    response.message = "Tambah Data Wisata Oleh-Oleh Berhasil";
+    response.message = "Oleh-oleh berhasil ditambahkan";
     response.data = inputOlehOleh;
     res.send(response.getResponse());
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+      let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -550,26 +564,20 @@ router.put("/", validationOlehOleh, runValidation, async (req, res) => {
           }
         }
       });
-      try {
         const oleh_oleh = await Oleh_Oleh.update(inputOlehOleh, options);
         response.code = 200;
-        response.message = "Ubah Data Wisata Oleh-Oleh Berhasil";
+        response.message = "Oleh-oleh berhasil diubah";
         response.data = inputOlehOleh;
         res.send(response.getResponse());
-      } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-      }
     } else {
-      response.code = 110;
-      response.message = "Data wisata oleh-oleh tidak ditemukan";
-      res.send(response.getResponse());
+        throw new Error("404|Oleh-oleh tidak ditemukan");
     }
-
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -581,14 +589,23 @@ router.delete("/", async (req, res) => {
   };
 
   try {
-    const oleh_oleh = await Oleh_Oleh.destroy(options);
+    let data = await Oleh_Oleh.findOne(options)
+    if (data) {
+       const oleh_oleh = await Oleh_Oleh.destroy(options);
     response.code = 200;
-    response.message = "Data wisata oleh-oleh berhasil dihapus";
+    response.message = "Oleh-oleh berhasil dihapus";
     response.data = oleh_oleh;
     res.send(response.getResponse());
+    } else {
+      throw new Error("404|Oleh-oleh tidak ditemukan");
+    }
+   
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+     let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });

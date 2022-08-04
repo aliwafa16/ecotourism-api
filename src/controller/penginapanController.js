@@ -106,13 +106,21 @@ router.get("/", async (req, res) => {
 
   try {
     const penginapan = await Penginapan.findAll(options);
-    response.code = 200;
+    if(penginapan){
+      response.code = 200;
     response.message = "Sukses";
     response.data = penginapan;
     res.send(response.getResponse());
+    } else {
+      throw new Error("404|Penginapan tidak ditemukan")
+    }
+    
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -249,13 +257,14 @@ router.get("/search", async (req, res) => {
       response.data = penginapan;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error("404|Penginapan tidak ditemukan")
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -364,13 +373,14 @@ router.get("/filter", async (req, res) => {
       response.data = penginapan;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+     throw new Error("404|Penginapan tidak ditemukan")
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -469,13 +479,14 @@ router.get("/find", async (req, res) => {
       response.data = penginapan;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+   throw new Error("404|Penginapan tidak ditemukan")
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+     let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -564,13 +575,14 @@ router.get("/:id", async (req, res) => {
       response.data = penginapan;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error("404|Penginapan tidak ditemukan")
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+     let errors = error.message || "";
+    errors = errors.split('|');
+    console.log(errors)
+    response.code = errors.length>1?errors[0]:500
+    response.message = errors.length>1?errors[1]:errors[0];
     res.send(response.getResponse());
   }
 });
@@ -599,12 +611,15 @@ router.post('/',validationPenginapan,runValidation, async (req, res)=>{
     try {
         const penginapan = await Penginapan.create(inputPenginapan)
         response.code = 200;
-        response.message = "Tambah Data Wisata Penginapan Berhasil";
+        response.message = "Penginapan berhasil ditambahkan";
         response.data = inputPenginapan;
         res.send(response.getResponse());
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
+        let errors = error.message || "";
+        errors = errors.split('|');
+        console.log(errors)
+        response.code = errors.length>1?errors[0]:500
+        response.message = errors.length>1?errors[1]:errors[0];
         res.send(response.getResponse());
     }
 
@@ -629,16 +644,24 @@ router.put('/',validationPenginapan,runValidation, async (req,res)=>{
         }
     });
     console.log(inputPenginapan)
-    try {
-        const penginapan = await Penginapan.update(inputPenginapan, options);
+  try {
+    let data = Penginapan.findOne(options)
+    if (data) {
+      const penginapan = await Penginapan.update(inputPenginapan, options);
         response.code = 200;
         response.message = "Ubah Data Wisata Penginapan Berhasil";
         response.data = inputPenginapan;
         res.send(response.getResponse());
+    } else {
+      throw new Error('404|Penginapan tidak ditemukan')
+    } 
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+         let errors = error.message || "";
+          errors = errors.split('|');
+          console.log(errors)
+          response.code = errors.length>1?errors[0]:500
+          response.message = errors.length>1?errors[1]:errors[0];
+          res.send(response.getResponse());
     }
     
 })
@@ -651,16 +674,25 @@ router.delete('/', async(req,res)=>{
     }
 
 
-    try {
-        const penginapan = await Penginapan.destroy(options)
+  try {
+    let data = Penginapan.findOne(options)
+    if (data) {
+       const penginapan = await Penginapan.destroy(options)
         response.code = 200;
-        response.message = "Data wisata penginapan berhasil dihapus";
+        response.message = "Penginapan berhasil dihapus";
         response.data = penginapan;
         res.send(response.getResponse());
+    } else {
+      throw new Error("404|Penginapan tidak ditemukan")
+    }
+       
     } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+        let errors = error.message || "";
+          errors = errors.split('|');
+          console.log(errors)
+          response.code = errors.length>1?errors[0]:500
+          response.message = errors.length>1?errors[1]:errors[0];
+          res.send(response.getResponse());
     }
 })
 

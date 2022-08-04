@@ -32,7 +32,8 @@ app.listen(port, () => {
     next();
 });
 
-app.use('/public',express.static('public'))
+  app.use('/public', express.static('public'))
+  app.use('/public/audio/', express.static('/public/audio/'))
 
   app.get("/download", function(req,res) {
    
