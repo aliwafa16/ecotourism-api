@@ -1,0 +1,5967 @@
+{
+	"info": {
+		"_postman_id": "47793138-1021-43ee-a876-1990c577b069",
+		"name": "Ecotourism",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14564717"
+	},
+	"item": [
+		{
+			"name": "pariwisata",
+			"item": [
+				{
+					"name": "http://localhost:8000/pariwisata",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_pariwisata",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "kategori",
+									"value": "weee",
+									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "deleted_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "updated_at",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/pariwisata",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pariwisata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pariwisata/10",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/pariwisata/38",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pariwisata",
+								"38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pariwisata/search?kategori=belanja",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/pariwisata/search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pariwisata",
+								"search"
+							],
+							"query": [
+								{
+									"key": "nama",
+									"value": "taman",
+									"disabled": true
+								},
+								{
+									"key": "kategori",
+									"value": "penginapan",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "36",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pariwisata/filter?id_kategori_wisata=&kategori&kategori_wisata_id&kategori_kuliner_id&kategori_penginapan_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/pariwisata/filter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pariwisata",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_wisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_kuliner_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_penginapan_id",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pariwisata/find?id_kategori_pariwisata&kategori",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/pariwisata/find",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pariwisata",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_kategori_pariwisata",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "kategori",
+									"value": "penginapan",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pariwisata",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_pariwisata",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "kategori",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "updated_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "deleted_at",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/pariwisata",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pariwisata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pariwisata/34",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_pariwisata",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "kategori",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "updated_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "deleted_at",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/pariwisata/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pariwisata",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pariwisata/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_pariwisata",
+									"value": "34",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/pariwisata/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pariwisata",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "wisata",
+			"item": [
+				{
+					"name": "http://localhost:8000/wisata/",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/wisata/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"wisata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/wisata/69",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/wisata/W69",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"wisata",
+								"W69"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/wisata/search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/wisata/search?nama_wisata=devoyage",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"wisata",
+								"search"
+							],
+							"query": [
+								{
+									"key": "alamat_wisata",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "latitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "longitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_wisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori",
+									"value": "taman",
+									"disabled": true
+								},
+								{
+									"key": "nama_wisata",
+									"value": "devoyage"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/wisata/filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/wisata/filter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"wisata",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_wisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/wisata/find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/wisata/find",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"wisata",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_wisata",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "nama_wisata",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "alamat_wisata",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "deskripsi_wisata",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "no_cs",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "facebook",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "youtube",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "instagram",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "twitter",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "tiktok",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "website",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "latitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "longitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "pengguna_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_wisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "updated_at",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "deleted_at",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/wisata/",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9wZW5nZ3VuYSI6NCwiaWF0IjoxNjYwNjQ4MTMwfQ.pKUEMXEKQI9vxq3RxJnTFndZG6NzkpNVsH08B_qL59U",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_wisata",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "nama_wisata",
+									"value": "Kuburan cina",
+									"type": "text"
+								},
+								{
+									"key": "alamat_wisata",
+									"value": "Jln. Gunung Gadung",
+									"type": "text"
+								},
+								{
+									"key": "deskripsi_wisata",
+									"value": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+									"type": "text"
+								},
+								{
+									"key": "no_cs",
+									"value": "085157554086",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "aliwafamuhamad16@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "facebook",
+									"value": "www.facebook.com/aliwafamuhamad",
+									"type": "text"
+								},
+								{
+									"key": "youtube",
+									"value": "www.youtube.com/aliwafamuhamad",
+									"type": "text"
+								},
+								{
+									"key": "instagram",
+									"value": "www.instagram.com/aliwafamuhamad",
+									"type": "text"
+								},
+								{
+									"key": "twitter",
+									"value": "www.twitter.com/aliwafamuhamad",
+									"type": "text"
+								},
+								{
+									"key": "tiktok",
+									"value": "www.tiktok.com/aliwafamuhamad",
+									"type": "text"
+								},
+								{
+									"key": "website",
+									"value": "www.aliwafamuhamad.com",
+									"type": "text"
+								},
+								{
+									"key": "latitude",
+									"value": "-6.645237358171081",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "106.81510250233691",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "kategori_wisata_id",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "updated_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "deleted_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "no_cs",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/wisata/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"wisata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/wisata/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_wisata",
+									"value": "W105",
+									"type": "text"
+								},
+								{
+									"key": "nama_wisata",
+									"value": "Kuburan Cinaa",
+									"type": "text"
+								},
+								{
+									"key": "alamat_wisata",
+									"value": "Jl. Raya Gn. Gadung Blok Masjid No.40, RT.03/RW.05, Genteng, Kec. Bogor Sel., Kota Bogor, Jawa Barat 16137",
+									"type": "text"
+								},
+								{
+									"key": "deskripsi_wisata",
+									"value": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+									"type": "text"
+								},
+								{
+									"key": "no_cs",
+									"value": "087880627061",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "aliwafamuhamad16@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "facebook",
+									"value": "www.facebook.com/aliwafamuhamad",
+									"type": "text"
+								},
+								{
+									"key": "youtube",
+									"value": "www.youtube.com/aliwafamuhamad",
+									"type": "text"
+								},
+								{
+									"key": "instagram",
+									"value": "www.instagram.com/aliwafamuhamad",
+									"type": "text"
+								},
+								{
+									"key": "twitter",
+									"value": "www.twitter.com/aliwafamuhamad",
+									"type": "text"
+								},
+								{
+									"key": "tiktok",
+									"value": "www.tiktok.com/aliwafamuhamad",
+									"type": "text"
+								},
+								{
+									"key": "website",
+									"value": "www.aliwafamuhamad.com",
+									"type": "text"
+								},
+								{
+									"key": "latitude",
+									"value": "-6.645237358171081",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "106.81510250233691",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "kategori_wisata_id",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "updated_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "deleted_at",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/wisata/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"wisata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/wisata/",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9wZW5nZ3VuYSI6NCwiaWF0IjoxNjYwNjQ4MTMwfQ.pKUEMXEKQI9vxq3RxJnTFndZG6NzkpNVsH08B_qL59U",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_wisata",
+									"value": "W105",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/wisata/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"wisata",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "kuliner",
+			"item": [
+				{
+					"name": "http://localhost:8000/kuliner",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/kuliner",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kuliner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kuliner/search?nama_kuliner&alamat_kuliner&latitude&longitude&kategori_pariwisata_id&kategori_kuliner_id&jenis_kuliner&nama_menu",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8000/kuliner/search?nama_kuliner=rumah",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kuliner",
+								"search"
+							],
+							"query": [
+								{
+									"key": "nama_kuliner",
+									"value": "rumah"
+								},
+								{
+									"key": "alamat_kuliner",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "latitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "longitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_kuliner_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "jenis_kuliner",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "nama_menu",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kuliner/filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/kuliner/filter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kuliner",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_kuliner_id",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kuliner/find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/kuliner/find?kategori_kuliner_id=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kuliner",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_kuliner",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "nama_kuliner",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "deskripsi_kuliner",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "no_cs",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "instagram",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "facebook",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "twitter",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "tiktok",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "youtube",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "website",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "latitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "longitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "pengguna_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "updated_at",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "deleted_at",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_kuliner_id",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kuliner/K2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kuliner",
+									"value": "K2",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kuliner/K10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kuliner",
+								"K10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kuliner/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kuliner",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "nama_kuliner",
+									"value": "Gami Bontang Air Mancur",
+									"type": "text"
+								},
+								{
+									"key": "deskripsi_kuliner",
+									"value": "Gami Bontang cabang ke-2 di Kota Bogor terdapat di seberang air mancur. Menu yang tersedia di Gami Bontang beragam mulai dari gami saikoro, gami wagyu, gami belut serta terdapat berbagai minuman yang tidak kalah segar",
+									"type": "text"
+								},
+								{
+									"key": "alamat_kuliner",
+									"value": "Jl. Achmad Yani No. 4 Air Mancur, Bogor",
+									"type": "text"
+								},
+								{
+									"key": "no_cs",
+									"value": "+6281384187742",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "instagram",
+									"value": "https://www.instagram.com/gamibontang135/",
+									"type": "text"
+								},
+								{
+									"key": "facebook",
+									"value": "https://www.facebook.com/Sambal-Gami-Bontang-135-100235912579603",
+									"type": "text"
+								},
+								{
+									"key": "twitter",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "tiktok",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "youtube",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "website",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "latitude",
+									"value": "0.60328732",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "0.627364873",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "kategori_kuliner_id",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "updated_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "deleted_at",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kuliner/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kuliner",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kuliner/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kuliner",
+									"value": "K13",
+									"type": "text"
+								},
+								{
+									"key": "nama_kuliner",
+									"value": "Gami Bontang Air Mancur232",
+									"type": "text"
+								},
+								{
+									"key": "deskripsi_kuliner",
+									"value": "Gami Bontang cabang ke-2 di Kota Bogor terdapat di seberang air mancur. Menu yang tersedia di Gami Bontang beragam mulai dari gami saikoro, gami wagyu, gami belut serta terdapat berbagai minuman yang tidak kalah segar",
+									"type": "text"
+								},
+								{
+									"key": "alamat_kuliner",
+									"value": "Jl. Achmad Yani No. 4 Air Mancur, Bogor",
+									"type": "text"
+								},
+								{
+									"key": "no_cs",
+									"value": "+6281384187742",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "instagram",
+									"value": "https://www.instagram.com/gamibontang135/",
+									"type": "text"
+								},
+								{
+									"key": "facebook",
+									"value": "https://www.facebook.com/Sambal-Gami-Bontang-135-100235912579603",
+									"type": "text"
+								},
+								{
+									"key": "twitter",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "tiktok",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "youtube",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "website",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "latitude",
+									"value": "-6.581197332529459",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "106.79699293910359",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "kategori_kuliner_id",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "updated_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "deleted_at",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kuliner/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kuliner",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/wisata/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kuliner",
+									"value": "K13",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kuliner/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kuliner",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "penginapan",
+			"item": [
+				{
+					"name": "http://localhost:8000/penginapan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/penginapan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"penginapan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/penginapan/search?nama_penginapan&alamat_penginapan&latitude&longitude&kategori_pariwisata_id&kategori_penginapan_id&jenis_penginapan&kategori_pariwisata&tipe_kamar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/penginapan/search?nama_penginapan=padjajaran",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"penginapan",
+								"search"
+							],
+							"query": [
+								{
+									"key": "nama_penginapan",
+									"value": "padjajaran"
+								},
+								{
+									"key": "alamat_penginapan",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "latitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "longitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_penginapan_id",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "jenis_penginapan",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_pariwisata",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "tipe_kamar",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/penginapan/filter?kategori_pariwisata_id&kategori_penginapan_id&status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/penginapan/filter?kategori_penginapan_id=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"penginapan",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "13",
+									"disabled": true
+								},
+								{
+									"key": "kategori_penginapan_id",
+									"value": "3"
+								},
+								{
+									"key": "status",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/penginapan/find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/penginapan/find?status=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"penginapan",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_penginapan",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "nama_penginapan",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "deskripsi_penginapan",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "alamat_penginapan",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "no_cs",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "facebook",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "instagram",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "twitter",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "tiktok",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "youtube",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "website",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "latitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "longitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "1"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_penginapan_id",
+									"value": "4",
+									"disabled": true
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "updated_at",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "deleted_at",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/penginapan/P26",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/penginapan/P90",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"penginapan",
+								"P90"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/penginapan/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_penginapan",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "nama_penginapan",
+									"value": "TESTQ",
+									"type": "text"
+								},
+								{
+									"key": "deskripsi_penginapan",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "alamat_penginapan",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "no_cs",
+									"value": "0193019",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "aliwafa@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "facebook",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "instagram",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "twitter",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "tiktok",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "youtube",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "website",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "latitude",
+									"value": "-6.0000000",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "106.000000",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "kategori_penginapan_id",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "updated_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "deleted_at",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/penginapan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"penginapan",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/penginapan/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_penginapan",
+									"value": "P58",
+									"type": "text"
+								},
+								{
+									"key": "nama_penginapan",
+									"value": "TESTQ",
+									"type": "text"
+								},
+								{
+									"key": "deskripsi_penginapan",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "alamat_penginapan",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "no_cs",
+									"value": "0193019",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "aliwafa@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "facebook",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "instagram",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "twitter",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "tiktok",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "youtube",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "website",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "latitude",
+									"value": "-6.0000000",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "106.000000",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "kategori_penginapan_id",
+									"value": "13",
+									"type": "text"
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "updated_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "deleted_at",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/penginapan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"penginapan",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/penginapan/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_penginapan",
+									"value": "P58",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/penginapan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"penginapan",
+								""
+							],
+							"query": [
+								{
+									"key": "id_penginapan",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pengguna",
+			"item": [
+				{
+					"name": "http://localhost:8000/pengguna",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/pengguna",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pengguna"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pengguna/search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/pengguna/search?role=wisatawan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pengguna",
+								"search"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "verifikasi",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "role",
+									"value": "wisatawan"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pengguna/filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/pengguna/filter?role_id=4&status=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pengguna",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "role_id",
+									"value": "4"
+								},
+								{
+									"key": "status",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pengguna/find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/pengguna/find?email=adminkrb@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pengguna",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_pengguna",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "role_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "username",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "adminkrb@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "access_token",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "refresh_token",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "foto_profil",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pengguna/10",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/pengguna/20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pengguna",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pengguna/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "ikaayu",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "ikaayuprtw@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "ikaayu",
+									"type": "text"
+								},
+								{
+									"key": "foto_profil",
+									"type": "file",
+									"src": "/C:/Users/HI DARLING/Pictures/Screenshots/Screenshot (1).png"
+								},
+								{
+									"key": "role_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "id_pengguna",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/pengguna/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pengguna",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pengguna/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "ikaayuaaaaa",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "ikaayuprtw@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "ikaayu",
+									"type": "text"
+								},
+								{
+									"key": "foto_profil",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "role_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "access_token",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "refresh_token",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "id_pengguna",
+									"value": "48",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/pengguna/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pengguna",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/pengguna/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_pengguna",
+									"value": "47",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/pengguna/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pengguna",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "http://localhost:8000/auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admindevoyage@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admindevoyage",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/auth/sign-in/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "aliwafamuhamad16@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "aliwafa16",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/sign-in/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"sign-in",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/auth/registration",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "pengelola",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "wisatawan",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "Administrator Taman Cipaku",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "wynstelledxd@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admintamancipaku",
+									"type": "text"
+								},
+								{
+									"key": "no_telp",
+									"value": "085157554086",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/registration",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/auth/verifikasi",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ind5bnN0ZWxsZWR4ZEBnbWFpbC5jb20iLCJpYXQiOjE2NTgyMTc4NDd9.Xkem_BOH7AQY1ZtIijQ7wiGRrXs1rHDhxiTlbmr1IyM",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/verifikasi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"verifikasi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/auth/lupa_password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "wynstelledxd@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/lupa_password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"lupa_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/auth/reset_password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "reset_password",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9wZW5nZ3VuYSI6NDcsImlhdCI6MTY1NjU5NjAyM30.FK0gg9oInwxfLEOxGF3EjooyZhSf_CJjK3OGkMxuUDo",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/reset_password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"reset_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/auth/cekEmail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "wynstellaedxd@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/cekEmail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"cekEmail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "access",
+			"item": [
+				{
+					"name": "http://localhost:8000/access/1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8000/access/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"access",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "kategori wisata",
+			"item": [
+				{
+					"name": "http://localhost:8000/kategori_wisata",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8000/kategori_wisata",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_wisata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kategori_wisata/10",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/kategori_wisata/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_wisata",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kategori_wisata/5",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_wisata",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "kategori",
+									"value": "main",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kategori_wisata/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_wisata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kategori_wisata/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_wisata",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "kategori",
+									"value": "siuuuu",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kategori_wisata/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_wisata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kategori_wisata/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_wisata",
+									"value": "23",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kategori_wisata/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_wisata",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "jadwal",
+			"item": [
+				{
+					"name": "http://localhost:8000/jadwal",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_jadwal",
+									"value": "90",
+									"type": "text"
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W90",
+									"type": "text"
+								},
+								{
+									"key": "hari",
+									"value": "Senin - minggu",
+									"type": "text"
+								},
+								{
+									"key": "jam_buka",
+									"value": "10.00",
+									"type": "text"
+								},
+								{
+									"key": "jam_tutup",
+									"value": "20.00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/jadwal",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"jadwal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/jadwal",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_jadwal",
+									"value": "89",
+									"type": "text"
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W69",
+									"type": "text"
+								},
+								{
+									"key": "hari",
+									"value": "Senin - senin",
+									"type": "text"
+								},
+								{
+									"key": "jam_buka",
+									"value": "10.00",
+									"type": "text"
+								},
+								{
+									"key": "jam_tutup",
+									"value": "20.00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/jadwal",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"jadwal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/jadwal/71",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/jadwal/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"jadwal",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/jadwal/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_jadwal",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/jadwal/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"jadwal",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/jadwal/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/jadwal/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"jadwal",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/jadwal/find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/jadwal/find?id_pariwisata=W83",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"jadwal",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_jadwal",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "hari",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "jam_buka",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "jam_tutup",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "keterangan",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W83"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tiket",
+			"item": [
+				{
+					"name": "http://localhost:8000/tiket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_tiket",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W69",
+									"type": "text"
+								},
+								{
+									"key": "tiket",
+									"value": "Wisatawan Lokal safasf",
+									"type": "text"
+								},
+								{
+									"key": "harga",
+									"value": "15.000",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "Tiket untuk wisatawan lokal",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/tiket",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"tiket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/tiket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/tiket",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"tiket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/tiket/find?id_tiket&id_pariwisata&tiket&harga&keterangan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/tiket/find?id_pariwisata=W90",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"tiket",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_tiket",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W90"
+								},
+								{
+									"key": "tiket",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "harga",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "keterangan",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/tiket/2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/tiket/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"tiket",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/tiket",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_tiket",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W69",
+									"type": "text"
+								},
+								{
+									"key": "tiket",
+									"value": "Wisatawan Lo",
+									"type": "text"
+								},
+								{
+									"key": "harga",
+									"value": "15.000",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "Tiket untuk wisatawan lokal",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/tiket",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"tiket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/tiket",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_tiket",
+									"value": "11",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/tiket",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"tiket"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "kategori kuliner",
+			"item": [
+				{
+					"name": "http://localhost:8000/kategori_kuliner",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/kategori_kuliner",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_kuliner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kategori_kuliner/20",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/kategori_kuliner/20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_kuliner",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kategori_kuliner",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_kuliner",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "jenis_kuliner",
+									"value": "aaaa",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kategori_kuliner",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_kuliner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kategori_kuliner",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_kuliner",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "jenis_kuliner",
+									"value": "pfff",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kategori_kuliner",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_kuliner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kategori_kuliner",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_kuliner",
+									"value": "7",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kategori_kuliner",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_kuliner"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "kategori penginapan",
+			"item": [
+				{
+					"name": "http://localhost:8000/kategori_penginapan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/kategori_penginapan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_penginapan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kategori_penginapan/4",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/kategori_penginapan/11111",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_penginapan",
+								"11111"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kategori_penginapan/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_penginapan",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "kategori",
+									"value": "aaaa",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kategori_penginapan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_penginapan",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kategori_penginapan/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_penginapan",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "kategori",
+									"value": "a",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kategori_penginapan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_penginapan",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/kategori_penginapan/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kategori_penginapan",
+									"value": "11",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/kategori_penginapan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"kategori_penginapan",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "jenis kamar",
+			"item": [
+				{
+					"name": "http://localhost:8000/jenis_kamar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_penginapan",
+									"value": "P27",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/jenis_kamar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"jenis_kamar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/jenis_kamar/3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/jenis_kamar/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"jenis_kamar",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/jenis_kamar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "penginapan_id",
+									"value": "P27",
+									"type": "text"
+								},
+								{
+									"key": "tipe_kamar",
+									"value": "aaaaaaa",
+									"type": "text"
+								},
+								{
+									"key": "harga",
+									"value": "5000000",
+									"type": "text"
+								},
+								{
+									"key": "kapasitas",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/jenis_kamar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"jenis_kamar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/jenis_kamar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "penginapan_id",
+									"value": "P27",
+									"type": "text"
+								},
+								{
+									"key": "tipe_kamar",
+									"value": "sdjhfgjksd",
+									"type": "text"
+								},
+								{
+									"key": "harga",
+									"value": "5000000",
+									"type": "text"
+								},
+								{
+									"key": "kapasitas",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "id_kamar_penginapan",
+									"value": "27",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/jenis_kamar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"jenis_kamar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/jenis_kamar/find?penginapan_id=P27",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/jenis_kamar/find?penginapan_id=P27",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"jenis_kamar",
+								"find"
+							],
+							"query": [
+								{
+									"key": "penginapan_id",
+									"value": "P27"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/jenis_kamar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_kamar_penginapan",
+									"value": "23",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/jenis_kamar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"jenis_kamar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "fasilitas kamar",
+			"item": [
+				{
+					"name": "http://localhost:8000/fasilitas_kamar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/fasilitas_kamar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fasilitas_kamar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Oleh Oleh",
+			"item": [
+				{
+					"name": "http://localhost:8000/oleh_oleh",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/oleh_oleh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"oleh_oleh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/oleh_oleh/search?nama_oleh_oleh=unchal&alamat_oleh_oleh&latitude&longitude&kategori_pariwisata_id&kategori",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/oleh_oleh/search?nama_oleh_oleh=roti",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"oleh_oleh",
+								"search"
+							],
+							"query": [
+								{
+									"key": "nama_oleh_oleh",
+									"value": "roti"
+								},
+								{
+									"key": "alamat_oleh_oleh",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "latitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "longitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/oleh_oleh/filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/oleh_oleh/filter?status=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"oleh_oleh",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "1"
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/oleh_oleh/find?id_oleh_oleh&nama_oleh_oleh&deskripsi_oleh_oleh&alamat_oleh_oleh&no_cs&email&instagram&facebook&twitter&website&tiktok&youtube&latitude&longitude&status&pengguna_id&kategori_pariwisata_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/oleh_oleh/find?nama_oleh_oleh=Boneka Potty",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"oleh_oleh",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_oleh_oleh",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "nama_oleh_oleh",
+									"value": "Boneka Potty"
+								},
+								{
+									"key": "deskripsi_oleh_oleh",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "alamat_oleh_oleh",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "no_cs",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "instagram",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "facebook",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "twitter",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "website",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "tiktok",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "youtube",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "latitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "longitude",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "pengguna_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/oleh_oleh/O11",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/oleh_oleh/O11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"oleh_oleh",
+								"O11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/oleh_oleh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nama_oleh_oleh",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "deskripsi_oleh_oleh",
+									"value": "aaawdww",
+									"type": "text"
+								},
+								{
+									"key": "alamat_oleh_oleh",
+									"value": "aaaadsa",
+									"type": "text"
+								},
+								{
+									"key": "no_cs",
+									"value": "123124",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "alw@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "instagram",
+									"value": "wdsad",
+									"type": "text"
+								},
+								{
+									"key": "facebook",
+									"value": "asfas",
+									"type": "text"
+								},
+								{
+									"key": "twitter",
+									"value": "safas",
+									"type": "text"
+								},
+								{
+									"key": "website",
+									"value": "asfas",
+									"type": "text"
+								},
+								{
+									"key": "tiktok",
+									"value": "asfewf3",
+									"type": "text"
+								},
+								{
+									"key": "youtube",
+									"value": "fasf3f3w",
+									"type": "text"
+								},
+								{
+									"key": "latitude",
+									"value": "21214",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "124324",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "36",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/oleh_oleh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"oleh_oleh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/oleh_oleh",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nama_oleh_oleh",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "deskripsi_oleh_oleh",
+									"value": "aaawdww",
+									"type": "text"
+								},
+								{
+									"key": "alamat_oleh_oleh",
+									"value": "aaaadsa",
+									"type": "text"
+								},
+								{
+									"key": "no_cs",
+									"value": "112121443546",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "alw@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "instagram",
+									"value": "wdsad",
+									"type": "text"
+								},
+								{
+									"key": "facebook",
+									"value": "asfas",
+									"type": "text"
+								},
+								{
+									"key": "twitter",
+									"value": "safas",
+									"type": "text"
+								},
+								{
+									"key": "website",
+									"value": "asfas",
+									"type": "text"
+								},
+								{
+									"key": "tiktok",
+									"value": "asfewf3",
+									"type": "text"
+								},
+								{
+									"key": "youtube",
+									"value": "fasf3f3w",
+									"type": "text"
+								},
+								{
+									"key": "latitude",
+									"value": "21214",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "124324",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "kategori_pariwisata_id",
+									"value": "36",
+									"type": "text"
+								},
+								{
+									"key": "id_oleh_oleh",
+									"value": "O18",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/oleh_oleh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"oleh_oleh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/oleh_oleh",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_oleh_oleh",
+									"value": "O17",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/oleh_oleh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"oleh_oleh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "fasilitas",
+			"item": [
+				{
+					"name": "http://localhost:8000/fasilitas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/fasilitas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fasilitas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/fasilitas/718",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/fasilitas/718",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fasilitas",
+								"718"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/fasilitas/find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/fasilitas/find?id_pariwisata=W90",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fasilitas",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_fasilitas",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "nama_fasilitas",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "keterangan",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W90"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/fasilitas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_fasilitas",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W68",
+									"type": "text"
+								},
+								{
+									"key": "nama_fasilitas",
+									"value": "asasfas",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "ewqeqwewq",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/fasilitas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fasilitas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/fasilitas",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_fasilitas",
+									"value": "718",
+									"type": "text"
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W68",
+									"type": "text"
+								},
+								{
+									"key": "nama_fasilitas",
+									"value": "asa",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "ewqeqwewq",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/fasilitas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fasilitas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/fasilitas",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_fasilitas",
+									"value": "720",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/fasilitas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fasilitas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "menu kuliner",
+			"item": [
+				{
+					"name": "http://localhost:8000/menu_kuliner",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/menu_kuliner",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"menu_kuliner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/menu_kuliner",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/menu_kuliner/824",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"menu_kuliner",
+								"824"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/menu_kuliner/find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/menu_kuliner/find?kuliner_id=K10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"menu_kuliner",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_menu_kuliner",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "kuliner_id",
+									"value": "K10"
+								},
+								{
+									"key": "nama_menu",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "harga",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "keterangan",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/menu_kuliner/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_menu_kuliner",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "kuliner_id",
+									"value": "K10",
+									"type": "text"
+								},
+								{
+									"key": "nama_menu",
+									"value": "ASINN kasbgfa",
+									"type": "text"
+								},
+								{
+									"key": "harga",
+									"value": "22132",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "wqewwqw",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/menu_kuliner/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"menu_kuliner",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/menu_kuliner/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_menu_kuliner",
+									"value": "827",
+									"type": "text"
+								},
+								{
+									"key": "kuliner_id",
+									"value": "K10",
+									"type": "text"
+								},
+								{
+									"key": "nama_menu",
+									"value": "ASINN",
+									"type": "text"
+								},
+								{
+									"key": "harga",
+									"value": "22132",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "wqewwqw",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/menu_kuliner/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"menu_kuliner",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/menu_kuliner/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_menu_kuliner",
+									"value": "827",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/menu_kuliner/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"menu_kuliner",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "role",
+			"item": [
+				{
+					"name": "http://localhost:8000/role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/role/4",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/role/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"role",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/role",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_role",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/role",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_role",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "pengelola wisata",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "gambar",
+			"item": [
+				{
+					"name": "http://localhost:8000/gambar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/gambar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"gambar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/gambar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id_gambar",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "zzzzzz",
+									"type": "text"
+								},
+								{
+									"key": "gambar",
+									"type": "file",
+									"src": "/C:/Users/HI DARLING/Downloads/WhatsApp Image 2022-07-13 at 14.51.15.jpeg"
+								},
+								{
+									"key": "keterangan",
+									"value": "aaa",
+									"type": "text"
+								},
+								{
+									"key": "tanggal",
+									"value": "asasfa",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/gambar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"gambar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/gambar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id_gambar",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "id_pariwisara",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "gambar",
+									"type": "file",
+									"src": "/C:/Users/HI DARLING/Pictures/Screenshots/Screenshot (6).png"
+								},
+								{
+									"key": "keterangan",
+									"value": "sadsgsdgsd",
+									"type": "text"
+								},
+								{
+									"key": "tanggal",
+									"value": "asasfasdsgdgdsg",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/gambar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"gambar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/gambar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_gambar",
+									"value": "8",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/gambar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"gambar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/gambar/find?id_gambar=2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/gambar/find?id_gambar=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"gambar",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_gambar",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/gambar/2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/gambar/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"gambar",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "item",
+			"item": [
+				{
+					"name": "http://localhost:8000/item",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/item",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/item/5",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "audio",
+									"type": "file",
+									"src": "/E:/TUGAS AKHIR/Audio/Devoyage 1.mp3"
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W71",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "audio devoyage 1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/item/W71",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item",
+								"W71"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/item/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_item_pariwisata",
+									"value": "6",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/item/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/item/W70",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id_item_pariwisata",
+									"value": "9",
+									"type": "text"
+								},
+								{
+									"key": "audio",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W70",
+									"type": "text"
+								},
+								{
+									"key": "deskripsi",
+									"value": "hghj",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/item/W70",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item",
+								"W70"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/item/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/item/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/item/find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/item/find?id_item_pariwisata=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_item_pariwisata",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/item/load",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/item/load?filename=pariwisata-1660862220523.mp3&filepath=public/audio/W71/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item",
+								"load"
+							],
+							"query": [
+								{
+									"key": "filename",
+									"value": "pariwisata-1660862220523.mp3"
+								},
+								{
+									"key": "filepath",
+									"value": "public/audio/W71/"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "item oleh oleh",
+			"item": [
+				{
+					"name": "http://localhost:8000/item_oleh_oleh",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/item_oleh_oleh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item_oleh_oleh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/item_oleh_oleh/find?id_item_oleh_oleh=e",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/item_oleh_oleh/find?id_item_oleh_oleh=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item_oleh_oleh",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_item_oleh_oleh",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/item_oleh_oleh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_item_oleh_oleh",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "oleh_oleh_id",
+									"value": "aa",
+									"type": "text"
+								},
+								{
+									"key": "nama_item",
+									"value": "aa",
+									"type": "text"
+								},
+								{
+									"key": "harga",
+									"value": "a",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "a",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/item_oleh_oleh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item_oleh_oleh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/item_oleh_oleh",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_item_oleh_oleh",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "oleh_oleh_id",
+									"value": "aa",
+									"type": "text"
+								},
+								{
+									"key": "nama_item",
+									"value": "aa",
+									"type": "text"
+								},
+								{
+									"key": "harga",
+									"value": "a",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "a",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/item_oleh_oleh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item_oleh_oleh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/item_oleh_oleh/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/item_oleh_oleh/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item_oleh_oleh",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/item_oleh_oleh/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_item_oleh_oleh",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/item_oleh_oleh/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"item_oleh_oleh",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rating",
+			"item": [
+				{
+					"name": "http://localhost:8000/rating",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/rating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/rating/find?id_rating=2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/rating/find?id_rating=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rating",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_pariwisata",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "pengguna_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "komentar",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "rating",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "tanggal",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "id_rating",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/rating/2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/rating/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rating",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/rating/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_pariwisata",
+									"value": "W69",
+									"type": "text"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "komentar",
+									"value": "Mantep benerrr",
+									"type": "text"
+								},
+								{
+									"key": "rating",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "tanggal",
+									"value": "1 Agustus 2022",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/rating/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rating",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/rating/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_rating",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W69",
+									"type": "text"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "komentar",
+									"value": "21321",
+									"type": "text"
+								},
+								{
+									"key": "rating",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/rating/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rating",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/rating/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_rating",
+									"value": "8",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/rating/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rating",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bookmark",
+			"item": [
+				{
+					"name": "http://localhost:8000/simpan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/simpan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"simpan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/simpan/find?id_bookmark&id_pariwisata&pengguna_id&tanggal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/simpan/find?id_pariwisata=W69",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"simpan",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id_bookmark",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "W69"
+								},
+								{
+									"key": "pengguna_id",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "tanggal",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/simpan/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/simpan/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"simpan",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/simpan/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_pariwisata",
+									"value": "W69",
+									"type": "text"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "tanggal",
+									"value": "1 Agustus 2022",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/simpan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"simpan",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/simpan/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_bookmark",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "id_pariwisata",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "pengguna_id",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "tanggal",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/simpan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"simpan",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8000/simpan/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_bookmark",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/simpan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"simpan",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
