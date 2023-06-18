@@ -2,22 +2,29 @@ const router = require("express").Router();
 const response = require("../core/response");
 const Tiket = require('../models/Tiket_Model');
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const tiket = await Tiket.findAll();
-    response.code = 200;
-    response.message = "Sukses";
-    response.data = tiket;
-    res.send(response.getResponse());
+    if (tiket) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = tiket;
+      res.send(response.getResponse());
+    } else {
+      throw new Error("404|Tiket tidak ditemukan");
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
-})
+});
 
 router.get("/find", async (req, res) => {
-  const options = {}
+  const options = {};
   const find = req.query;
   let modelAttr = Tiket.rawAttributes;
   const findwhere = {};
@@ -40,73 +47,81 @@ router.get("/find", async (req, res) => {
       response.data = tiket;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error("404|Tiket tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
 
-router.get('/:id', async (req, res) => {
-    try {
-        const tiket = await Tiket.findOne({
-            where: {
-                id_tiket:req.params.id
-            }
-        })
-
-        response.code = 200;
-        response.message = "Sukses";
-        response.data = tiket;
-        res.send(response.getResponse());
-
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
-})
-
-
-router.post('/', async (req, res) => {
-  const modelAttr = Tiket.rawAttributes;
-    const inputTiket = {};
-
-    Object.values(modelAttr).forEach((val) => {
-        if (val.field != "id_tiket") {
-        if (req.body[val.field] != "") {
-            inputTiket[val.fieldName] = req.body[val.field];
-        } else {
-            inputTiket[val.fieldName] = null;
-        }
-        }
+router.get("/:id", async (req, res) => {
+  try {
+    const tiket = await Tiket.findOne({
+      where: {
+        id_tiket: req.params.id,
+      },
     });
 
-
-    try {
-        const tiket = await Tiket.create(inputTiket)
-        response.code = 200;
-        response.message = "Tambah Data Tiket Berhasil";
-        response.data = inputTiket;
-        res.send(response.getResponse());
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+    if (tiket) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = tiket;
+      res.send(response.getResponse());
+    } else {
+      throw new Error("404|Tiket tidak ditemukan");
     }
-})
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
 
-router.put('/', async (req, res) => {
-    const options = {};
-    options.where = {
-        id_tiket: req.body.id_tiket,
-    };
-    
-    try {
+router.post("/", async (req, res) => {
+  const modelAttr = Tiket.rawAttributes;
+  const inputTiket = {};
+
+  Object.values(modelAttr).forEach((val) => {
+    if (val.field != "id_tiket") {
+      if (req.body[val.field] != "") {
+        inputTiket[val.fieldName] = req.body[val.field];
+      } else {
+        inputTiket[val.fieldName] = null;
+      }
+    }
+  });
+
+  try {
+    const tiket = await Tiket.create(inputTiket);
+    response.code = 200;
+    response.message = "Tiket berhasil ditambahkan";
+    response.data = inputTiket;
+    res.send(response.getResponse());
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
+
+router.put("/", async (req, res) => {
+  const options = {};
+  options.where = {
+    id_tiket: req.body.id_tiket,
+  };
+
+  try {
     const data = await Tiket.findOne(options);
     if (data) {
       const modelAttr = Tiket.rawAttributes;
@@ -121,29 +136,24 @@ router.put('/', async (req, res) => {
           }
         }
       });
-      try {
-        const tiket = await Tiket.update(inputTiket, options);
-        response.code = 200;
-        response.message = "Ubah Data Tiket Berhasil";
-        response.data = inputTiket;
-        res.send(response.getResponse());
-      } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-      }
-    } else {
-      response.code = 110;
-      response.message = "Data tiket tidak ditemukan";
-      res.send(response.getResponse());
-    }
 
+      const tiket = await Tiket.update(inputTiket, options);
+      response.code = 200;
+      response.message = "Tiket berhasil diubah";
+      response.data = inputTiket;
+      res.send(response.getResponse());
+    } else {
+      throw new Error("404|Tidak tidak ditemukan");
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
-})
+});
 
 
 router.delete('/', async (req, res) => {
@@ -153,15 +163,23 @@ const options = {};
   };
 
   try {
-    const tiket = await Tiket.destroy(options);
-    response.code = 200;
-    response.message = "Data tiket berhasil dihapus";
-    response.data = tiket;
-    res.send(response.getResponse());
+    let data = await Tiket.findOne(options)
+    if (data) {
+      const tiket = await Tiket.destroy(options);
+      response.code = 200;
+      response.message = "Tiket berhasil dihapus";
+      response.data = tiket;
+      res.send(response.getResponse());
+    } else {
+      throw new Error('404|Tiket tidak ditemukan')
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
-    res.send(response.getResponse());
+   let errors = error.message || "";
+   errors = errors.split("|");
+   console.log(errors);
+   response.code = errors.length > 1 ? errors[0] : 500;
+   response.message = errors.length > 1 ? errors[1] : errors[0];
+   res.send(response.getResponse());
   }
 })
 

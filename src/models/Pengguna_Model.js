@@ -38,10 +38,6 @@ const Pengguna = sequalize.define(
       type: DataTypes.CHAR,
       allowNull: true,
     },
-    refresh_token: {
-      type: DataTypes.CHAR,
-      allowNull: true,
-    },
     status: {
       type: DataTypes.INTEGER,
       allowNull: false,

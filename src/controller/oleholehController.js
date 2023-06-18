@@ -2,7 +2,7 @@ const router = require("express").Router();
 const response = require("../core/response");
 const { Op } = require("sequelize");
 const { runValidation, validationOlehOleh } = require('../validation/index')
-
+const { token } = require('../core/middleware')
 
 const Oleh_Oleh = require('../models/OlehOleh_Model');
 const Jadwal = require("../models/Jadwal_Model");
@@ -505,7 +505,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", validationOlehOleh, runValidation, async (req, res) => {
+router.post("/",token, validationOlehOleh, runValidation, async (req, res) => {
   const lastest = await Oleh_Oleh.findOne({
     attributes: ["id_oleh_oleh"],
     order: [["created_at", "DESC"]],
@@ -525,25 +525,32 @@ router.post("/", validationOlehOleh, runValidation, async (req, res) => {
     }
   });
   inputOlehOleh["id_oleh_oleh"] = `O` + id_oleh_oleh;
-  console.log(inputOlehOleh);
 
   try {
-    const oleh_oleh = await Oleh_Oleh.create(inputOlehOleh);
-    response.code = 200;
-    response.message = "Oleh-oleh berhasil ditambahkan";
-    response.data = inputOlehOleh;
-    res.send(response.getResponse());
+    let data = await Oleh_Oleh.findOne({
+      where: { nama_oleh_oleh: inputOlehOleh["nama_oleh_oleh"] },
+    });
+
+    if (data) {
+      throw new Error("403|Oleh-oleh sudah ada");
+    } else {
+      const oleh_oleh = await Oleh_Oleh.create(inputOlehOleh);
+      response.code = 200;
+      response.message = "Oleh-oleh berhasil ditambahkan";
+      response.data = inputOlehOleh;
+      res.send(response.getResponse());
+    }
   } catch (error) {
-      let errors = error.message || "";
-    errors = errors.split('|');
-    console.log(errors)
-    response.code = errors.length>1?errors[0]:500
-    response.message = errors.length>1?errors[1]:errors[0];
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
 
-router.put("/", validationOlehOleh, runValidation, async (req, res) => {
+router.put("/",token, validationOlehOleh, runValidation, async (req, res) => {
   const options = {};
   options.where = {
     id_oleh_oleh: req.body.id_oleh_oleh,
@@ -564,25 +571,38 @@ router.put("/", validationOlehOleh, runValidation, async (req, res) => {
           }
         }
       });
+
+      let check_data = await Oleh_Oleh.count({
+        attributes: ["nama_oleh_oleh"],
+        where: {
+          nama_oleh_oleh: inputOlehOleh.nama_oleh_oleh,
+          id_oleh_oleh: { [Op.not]: inputOlehOleh.id_oleh_oleh },
+        },
+      });
+
+      if (check_data) {
+        throw new Error("403|Oleh-oleh sudah ada");
+      } else {
         const oleh_oleh = await Oleh_Oleh.update(inputOlehOleh, options);
         response.code = 200;
         response.message = "Oleh-oleh berhasil diubah";
         response.data = inputOlehOleh;
         res.send(response.getResponse());
+      }
     } else {
-        throw new Error("404|Oleh-oleh tidak ditemukan");
+      throw new Error("404|Oleh-oleh tidak ditemukan");
     }
   } catch (error) {
     let errors = error.message || "";
-    errors = errors.split('|');
-    console.log(errors)
-    response.code = errors.length>1?errors[0]:500
-    response.message = errors.length>1?errors[1]:errors[0];
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
 
-router.delete("/", async (req, res) => {
+router.delete("/",token, async (req, res) => {
   const options = {};
   options.where = {
     id_oleh_oleh: req.body.id_oleh_oleh,

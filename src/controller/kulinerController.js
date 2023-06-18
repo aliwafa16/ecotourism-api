@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const response = require("../core/response");
 const {Op} = require('sequelize')
-const {runValidation, validationKuliner} = require('../validation/index');
+const { runValidation, validationKuliner } = require('../validation/index');
+const { token } = require('../core/middleware')
 
 
 const Kuliner = require('../models/Kuliner_Model');
@@ -425,102 +426,129 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-router.post('/', validationKuliner, runValidation, async (req, res)=>{
-try {
-    const lastest = await Kuliner.findOne({attributes:['id_kuliner'],order:[['created_at','DESC']]})
-    const id_kuliner = parseInt(lastest.id_kuliner.slice(1))+1
+router.post("/", token, validationKuliner, runValidation, async (req, res) => {
+  try {
+    const lastest = await Kuliner.findOne({
+      attributes: ["id_kuliner"],
+      order: [["created_at", "DESC"]],
+    });
+    const id_kuliner = parseInt(lastest.id_kuliner.slice(1)) + 1;
 
-    const modelAttr = Kuliner.rawAttributes
+    const modelAttr = Kuliner.rawAttributes;
     const inputKuliner = {};
 
     Object.values(modelAttr).forEach((val) => {
-        if (val.field != "id_kuliner") {
-          if (req.body[val.field] != '') {
-            inputKuliner[val.fieldName] = req.body[val.field];
-          } else {
-            inputKuliner[val.fieldName] = null;
-          }
+      if (val.field != "id_kuliner") {
+        if (req.body[val.field] != "") {
+          inputKuliner[val.fieldName] = req.body[val.field];
+        } else {
+          inputKuliner[val.fieldName] = null;
         }
+      }
     });
 
-    inputKuliner['id_kuliner'] = `K` + id_kuliner
+    inputKuliner["id_kuliner"] = `K` + id_kuliner;
 
-        const kuliner = await Kuliner.create(inputKuliner)
-        response.code = 200;
-        response.message = "Kuliner berhasil ditambahkan";
-        response.data = inputKuliner;
-        res.send(response.getResponse());
-    } catch (error) {
-        let errors = error.message || "";
-        errors = errors.split('|');
-        console.log(errors)
-        response.code = errors.length>1?errors[0]:500
-        response.message = errors.length>1?errors[1]:errors[0];
-        res.send(response.getResponse());
-    }
-
-})
-
-router.put('/', validationKuliner, runValidation, async (req,res)=>{
-    const options = {}
-    options.where = {
-        id_kuliner : req.body.id_kuliner
-    }
-
-    const modelAttr = Kuliner.rawAttributes
-    const inputKuliner = {};
-    inputKuliner.id_kuliner = req.body.id_kuliner
-    Object.values(modelAttr).forEach((val) => {
-        if (val.field != "id_kuliner") {
-          if (req.body[val.field] != '') {
-            inputKuliner[val.fieldName] = req.body[val.field];
-          } else {
-            inputKuliner[val.fieldName] = null;
-          }
-        }
+    let data = await Kuliner.findOne({
+      where: { nama_kuliner: inputKuliner["nama_kuliner"] },
     });
-    console.log(inputKuliner)
-    try {
+
+    if (data) {
+      throw new Error("403|Kuliner sudah ada");
+    } else {
+      const kuliner = await Kuliner.create(inputKuliner);
+      response.code = 200;
+      response.message = "Kuliner berhasil ditambahkan";
+      response.data = inputKuliner;
+      res.send(response.getResponse());
+    }
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
+
+router.put("/", token, validationKuliner, runValidation, async (req, res) => {
+  const options = {};
+  options.where = {
+    id_kuliner: req.body.id_kuliner,
+  };
+
+  const modelAttr = Kuliner.rawAttributes;
+  const inputKuliner = {};
+  inputKuliner.id_kuliner = req.body.id_kuliner;
+  Object.values(modelAttr).forEach((val) => {
+    if (val.field != "id_kuliner") {
+      if (req.body[val.field] != "") {
+        inputKuliner[val.fieldName] = req.body[val.field];
+      } else {
+        inputKuliner[val.fieldName] = null;
+      }
+    }
+  });
+  try {
+    const data = await Kuliner.findOne(options);
+    if (data) {
+      let check_data = await Kuliner.count({
+        attributes: ["nama_kuliner"],
+        where: {
+          nama_kuliner: inputKuliner.nama_kuliner,
+          id_kuliner: { [Op.not]: inputKuliner.id_kuliner },
+        },
+      });
+
+      if (check_data) {
+        throw new Error("403|Kuliner sudah ada");
+      } else {
         const kuliner = await Kuliner.update(inputKuliner, options);
         response.code = 200;
         response.message = "Kuliner berhasil diubah";
         response.data = inputKuliner;
         res.send(response.getResponse());
-    } catch (error) {
-       let errors = error.message || "";
-        errors = errors.split('|');
-        console.log(errors)
-        response.code = errors.length>1?errors[0]:500
-        response.message = errors.length>1?errors[1]:errors[0];
-        res.send(response.getResponse());
+      }
+    } else {
+      throw new Error("404|Kuliner tidak ditemukan");
     }
-    
-})
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
 
+router.delete("/", token,  async (req, res) => {
+  const options = {};
+  options.where = {
+    id_kuliner: req.body.id_kuliner,
+  };
 
-router.delete('/', async(req,res)=>{
-    const options = {}
-    options.where = {
-        id_kuliner : req.body.id_kuliner
+  try {
+    let data = await Kuliner.findOne(options);
+    if (data) {
+      const kuliner = await Kuliner.destroy(options);
+      response.code = 200;
+      response.message = "Kuliner berhasil dihapus";
+      response.data = kuliner;
+      res.send(response.getResponse());
+    } else {
+      throw new Error("404|Kuliner tidak ditemukan");
     }
-
-    
-
-    try {
-        const kuliner = await Kuliner.destroy(options)
-        response.code = 200;
-        response.message = "Kuliner berhasil dihapus";
-        response.data = kuliner;
-        res.send(response.getResponse());
-    } catch (error) {
-       let errors = error.message || "";
-        errors = errors.split('|');
-        console.log(errors)
-        response.code = errors.length>1?errors[0]:500
-        response.message = errors.length>1?errors[1]:errors[0];
-        res.send(response.getResponse());
-    }
-})
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
 
 
 // router.get("/find", (req, res) => {

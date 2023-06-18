@@ -32,23 +32,36 @@ router.get("/", async (req, res) => {
     include: [
       {
         model: Jadwal,
-        as:'jadwal',
-        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup", 'keterangan'],
+        as: "jadwal",
+        attributes: [
+          "id_jadwal",
+          "id_pariwisata",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
+        ],
       },
       {
         model: Tiket,
-        as: 'tiket',
-        attributes:["id_tiket",'id_pariwisata','tiket','harga','keterangan'],
+        as: "tiket",
+        attributes: [
+          "id_tiket",
+          "id_pariwisata",
+          "tiket",
+          "harga",
+          "keterangan",
+        ],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Wisata,
@@ -63,7 +76,13 @@ router.get("/", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code', 'audio','deskripsi'],
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
       },
     ],
     order: [["created_at", "DESC"]],
@@ -71,13 +90,20 @@ router.get("/", async (req, res) => {
 
   try {
     const wisata = await Wisata.findAll(options);
-    response.code = 200;
-    response.message = "Sukses";
-    response.data = wisata;
-    res.send(response.getResponse());
+    if (wisata) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = wisata;
+      res.send(response.getResponse());
+    } else {
+      throw new Error("404|Wisata tidak ditemukan");
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
@@ -89,22 +115,35 @@ router.get("/search", async (req, res) => {
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup",'keterangan'],
+        attributes: [
+          "id_jadwal",
+          "id_pariwisata",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
+        ],
       },
       {
         model: Tiket,
-        as: 'tiket',
-        attributes:["id_tiket",'id_pariwisata','tiket','harga','keterangan'],
+        as: "tiket",
+        attributes: [
+          "id_tiket",
+          "id_pariwisata",
+          "tiket",
+          "harga",
+          "keterangan",
+        ],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Wisata,
@@ -119,7 +158,13 @@ router.get("/search", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code','audio','deskripsi'],
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
       },
     ],
   };
@@ -173,13 +218,14 @@ router.get("/search", async (req, res) => {
       response.data = wisata;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error("404|Wisata tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
@@ -191,22 +237,35 @@ router.get("/filter", async (req, res) => {
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup",'keterangan'],
+        attributes: [
+          "id_jadwal",
+          "id_pariwisata",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
+        ],
       },
       {
         model: Tiket,
-        as: 'tiket',
-        attributes:["id_tiket",'id_pariwisata','tiket','harga','keterangan'],
+        as: "tiket",
+        attributes: [
+          "id_tiket",
+          "id_pariwisata",
+          "tiket",
+          "harga",
+          "keterangan",
+        ],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Wisata,
@@ -221,7 +280,13 @@ router.get("/filter", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code','audio','deskripsi'],
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
       },
     ],
   };
@@ -257,13 +322,14 @@ router.get("/filter", async (req, res) => {
       response.data = wisata;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error("404|Wisata tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
@@ -274,22 +340,35 @@ router.get("/find", async (req, res) => {
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup",'keterangan'],
+        attributes: [
+          "id_jadwal",
+          "id_pariwisata",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
+        ],
       },
       {
         model: Tiket,
-        as: 'tiket',
-        attributes:["id_tiket",'id_pariwisata','tiket','harga','keterangan'],
+        as: "tiket",
+        attributes: [
+          "id_tiket",
+          "id_pariwisata",
+          "tiket",
+          "harga",
+          "keterangan",
+        ],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Wisata,
@@ -304,7 +383,13 @@ router.get("/find", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code','audio','deskripsi'],
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
       },
     ],
   };
@@ -331,13 +416,14 @@ router.get("/find", async (req, res) => {
       response.data = wisata;
       res.send(response.getResponse());
     } else {
-      response.code = 111;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error("404|Wisata tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
@@ -348,22 +434,35 @@ router.get("/:id", async (req, res) => {
       {
         model: Jadwal,
         as: "jadwal",
-        attributes: ["id_jadwal","id_pariwisata", "hari", "jam_buka", "jam_tutup",'keterangan'],
+        attributes: [
+          "id_jadwal",
+          "id_pariwisata",
+          "hari",
+          "jam_buka",
+          "jam_tutup",
+          "keterangan",
+        ],
       },
       {
         model: Tiket,
-        as: 'tiket',
-        attributes:["id_tiket",'id_pariwisata','tiket','harga','keterangan'],
+        as: "tiket",
+        attributes: [
+          "id_tiket",
+          "id_pariwisata",
+          "tiket",
+          "harga",
+          "keterangan",
+        ],
       },
       {
         model: Fasilitas,
         as: "fasilitas",
-        attributes: ["id_fasilitas","nama_fasilitas", "keterangan"],
+        attributes: ["id_fasilitas", "nama_fasilitas", "keterangan"],
       },
       {
         model: Gambar,
         as: "gambar",
-        attributes: ["id_gambar","gambar", "keterangan", "tanggal"],
+        attributes: ["id_gambar", "gambar", "keterangan", "tanggal"],
       },
       {
         model: Kategori_Wisata,
@@ -378,7 +477,13 @@ router.get("/:id", async (req, res) => {
       {
         model: Item,
         as: "item",
-        attributes: ["id_item_pariwisata","id_pariwisata", 'qr_code','audio','deskripsi'],
+        attributes: [
+          "id_item_pariwisata",
+          "id_pariwisata",
+          "qr_code",
+          "audio",
+          "deskripsi",
+        ],
       },
     ],
   };
@@ -394,18 +499,19 @@ router.get("/:id", async (req, res) => {
       response.data = wisata;
       res.send(response.getResponse());
     } else {
-      response.code = 110;
-      response.message = "Data tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error("404|Wisata tidak ditemukan");
     }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
 
-router.post("/", validationWisata, runValidation, async (req, res) => {
+router.post("/", token,validationWisata, runValidation, async (req, res) => {
   const lastest = await Wisata.findOne({
     attributes: ["id_wisata"],
     order: [["created_at", "DESC"]],
@@ -428,19 +534,29 @@ router.post("/", validationWisata, runValidation, async (req, res) => {
   console.log(inputWisata);
 
   try {
-    const wisata = await Wisata.create(inputWisata);
-    response.code = 200;
-    response.message = "Tambah Data Wisata Berhasil";
-    response.data = inputWisata;
-    res.send(response.getResponse());
+    let data = await Wisata.findOne({
+      where: { nama_wisata: inputWisata["nama_wisata"] },
+    });
+    if (data) {
+      throw new Error("403|Wisata sudah ada");
+    } else {
+      const wisata = await Wisata.create(inputWisata);
+      response.code = 200;
+      response.message = "Wisata berhasil ditambahkan";
+      response.data = inputWisata;
+      res.send(response.getResponse());
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
 
-router.put("/", validationWisata, runValidation, async (req, res) => {
+router.put("/", token, validationWisata, runValidation, async (req, res) => {
   const options = {};
   options.where = {
     id_wisata: req.body.id_wisata,
@@ -461,45 +577,60 @@ router.put("/", validationWisata, runValidation, async (req, res) => {
           }
         }
       });
-      try {
+
+      let check_data = await Wisata.count({
+        attributes: ["nama_wisata"],
+        where: {
+          nama_wisata: inputWisata.nama_wisata,
+          id_wisata: { [Op.not]: inputWisata.id_wisata },
+        },
+      });
+
+      if (check_data) {
+        throw new Error("403|Wisata sudah ada");
+      } else {
         const wisata = await Wisata.update(inputWisata, options);
         response.code = 200;
-        response.message = "Ubah Data Wisata Berhasil";
+        response.message = "Wisata berhasil diubah";
         response.data = inputWisata;
-        res.send(response.getResponse());
-      } catch (error) {
-        response.code = 110;
-        response.message = error.message;
         res.send(response.getResponse());
       }
     } else {
-      response.code = 110;
-      response.message = "Data wisata tidak ditemukan";
-      res.send(response.getResponse());
+      throw new Error("404|Wisata tidak ditemukan");
     }
-
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
 
-router.delete("/", async (req, res) => {
+router.delete("/",token, async (req, res) => {
   const options = {};
   options.where = {
     id_wisata: req.body.id_wisata,
   };
 
   try {
-    const wisata = await Wisata.destroy(options);
-    response.code = 200;
-    response.message = "Data wisata berhasil dihapus";
-    response.data = wisata;
-    res.send(response.getResponse());
+    const data = await Wisata.findOne(options);
+    if (data) {
+      const wisata = await Wisata.destroy(options);
+      response.code = 200;
+      response.message = "Wisata berhasil dihapus";
+      response.data = wisata;
+      res.send(response.getResponse());
+    } else {
+      throw new Error("404|Wisata tidak ditemukan");
+    }
   } catch (error) {
-    response.code = 110;
-    response.message = error.message;
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });

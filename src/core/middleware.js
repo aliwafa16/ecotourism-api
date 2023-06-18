@@ -23,24 +23,23 @@ require('dotenv').config();
  }
 
 const token = async (req, res, next) => {
-    let token = req.header('Authorization');
-    
-
-
+    let token = req.header("Authorization");
     try {
-        if (!token) {
-            // response.message = "Tidak ada token"
-            // res.send(response.getResponse());
-            throw new Error('Tidak ada token')
-        } else {
-        const decode = jsonwebtoken.verify(token, process.env.ECOTOURISM_TOKEN)
-        req.id_pengguna = decode.id_pengguna
-        }
+      if (!token) {
+        throw new Error("403|Tidak ada token");
+      } else {
+        const decode = jsonwebtoken.verify(token, process.env.ECOTOURISM_TOKEN);
+        req.id_pengguna = decode.id_pengguna;
+      }
 
-        next()
+      next();
     } catch (error) {
-        response.message = error.message
-        return res.send(response.getResponse());
+      let errors = error.message || "";
+      errors = errors.split("|");
+      console.log(errors);
+      response.code = errors.length > 1 ? errors[0] : 500;
+      response.message = errors.length > 1 ? errors[1] : errors[0];
+      res.send(response.getResponse());
     }
 
  }

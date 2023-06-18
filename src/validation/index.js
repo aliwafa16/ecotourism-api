@@ -18,51 +18,90 @@ exports.validationPariwisata = [
 ]
 
 exports.validationWisata = [
-    check('nama_wisata','Nama Wisata harus diisi').notEmpty(),
-    check('deskripsi_wisata','Deskripsi Wisata harus diisi').notEmpty(),
-    check('alamat_wisata','Alamat Wisata harus diisi').notEmpty(),
-    check('latitude','Latitude harus diisi').notEmpty(),
-    check('longitude','Longitude harus diisi').notEmpty(),
-    check('kategori_pariwisata_id','Id Kategori Pariwisata harus diisi').notEmpty(),
-    check('kategori_wisata_id','Id Kategori Wisata harus diisi').notEmpty(),
-    check('status','Status harus diisi').notEmpty(),
-    check('pengguna_id','Id Pengguna harus diisi').notEmpty()
-]
+  check("nama_wisata", "Nama Wisata harus diisi").notEmpty(),
+  check("deskripsi_wisata", "Deskripsi Wisata harus diisi").notEmpty(),
+  check("alamat_wisata", "Alamat Wisata harus diisi").notEmpty(),
+  check("latitude", "Latitude harus diisi")
+    .notEmpty()
+    .isNumeric()
+    .withMessage("Format latitude salah"),
+  check("longitude", "Longitude harus diisi")
+    .notEmpty()
+    .isNumeric()
+    .withMessage("Format longitude salah"),
+  check(
+    "kategori_pariwisata_id",
+    "Id Kategori Pariwisata harus diisi"
+  ).notEmpty(),
+  check("kategori_wisata_id", "Id Kategori Wisata harus diisi").notEmpty(),
+  check("status", "Status harus diisi").notEmpty(),
+  check("pengguna_id", "Id Pengguna harus diisi").notEmpty(),
+];
 
 exports.validationKuliner = [
-    check('nama_kuliner','Nama Kuliner harus diisi').notEmpty(),
-    check('deskripsi_kuliner','Deskripsi Kuliner harus diisi').notEmpty(),
-    check('alamat_kuliner','Alamat Kuliner harus diisi').notEmpty(),
-    check('latitude','Latitude harus diisi').notEmpty(),
-    check('longitude','Longitude harus diisi').notEmpty(),
-    check('kategori_pariwisata_id','Id Kategori Pariwisata harus diisi').notEmpty(),
-    check('kategori_kuliner_id','Id Kategori Kuliner harus diisi').notEmpty(),
-    check('status','Status harus diisi').notEmpty(),
-    check('pengguna_id','Id Pengguna harus diisi').notEmpty()
-]
+  check("nama_kuliner", "Nama Kuliner harus diisi").notEmpty(),
+  check("deskripsi_kuliner", "Deskripsi Kuliner harus diisi").notEmpty(),
+  check("alamat_kuliner", "Alamat Kuliner harus diisi").notEmpty(),
+  check("latitude", "Latitude harus diisi")
+    .notEmpty()
+    .isNumeric()
+    .withMessage("Format latitude salah"),
+  check("longitude", "Longitude harus diisi")
+    .notEmpty()
+    .isNumeric()
+    .withMessage("Format longitude salah"),
+  check(
+    "kategori_pariwisata_id",
+    "Id Kategori Pariwisata harus diisi"
+  ).notEmpty(),
+  check("kategori_kuliner_id", "Id Kategori Kuliner harus diisi").notEmpty(),
+  check("status", "Status harus diisi").notEmpty(),
+  check("pengguna_id", "Id Pengguna harus diisi").notEmpty(),
+];
 
 exports.validationPenginapan = [
-    check('nama_penginapan', 'Nama Penginapan harus diisi').notEmpty(),
-    check('deskripsi_penginapan', 'Deskripsi Penginapan harus diisi').notEmpty(),
-    check('alamat_penginapan', 'Alamat Penginapan harus diisi').notEmpty(),
-    check('latitude', 'Latitude harus diisi').notEmpty(),
-    check('longitude', 'Longitude harus diisi').notEmpty(),
-    check('status', 'Status harus diisi').notEmpty(),
-    check('pengguna_id', 'Id Pengguna harus diisi').notEmpty(),
-    check('kategori_penginapan_id', 'Id Kategori Penginapan harus diisi').notEmpty(),
-    check('kategori_pariwisata_id', 'Id Kategori Pariwisata harus diisi').notEmpty(),
-]
+  check("nama_penginapan", "Nama Penginapan harus diisi").notEmpty(),
+  check("deskripsi_penginapan", "Deskripsi Penginapan harus diisi").notEmpty(),
+  check("alamat_penginapan", "Alamat Penginapan harus diisi").notEmpty(),
+  check("latitude", "Latitude harus diisi")
+    .notEmpty()
+    .isNumeric()
+    .withMessage("Format latitude salah"),
+  check("longitude", "Longitude harus diisi")
+    .notEmpty()
+    .isNumeric()
+    .withMessage("Format longitude salah"),
+  check("status", "Status harus diisi").notEmpty(),
+  check("pengguna_id", "Id Pengguna harus diisi").notEmpty(),
+  check(
+    "kategori_penginapan_id",
+    "Id Kategori Penginapan harus diisi"
+  ).notEmpty(),
+  check(
+    "kategori_pariwisata_id",
+    "Id Kategori Pariwisata harus diisi"
+  ).notEmpty(),
+];
 
 exports.validationOlehOleh = [
-    check('nama_oleh_oleh', 'Nama Oleh-oleh harus diisi').notEmpty(),
-    check('deskripsi_oleh_oleh', 'Deskripsi Oleh-oleh harus diisi').notEmpty(),
-    check('alamat_oleh_oleh', 'Alamat Oleh-oleh harus diisi').notEmpty(),
-    check('latitude', 'Latitude harus diisi').notEmpty(),
-    check('longitude', 'Longitude harus diisi').notEmpty(),
-    check('status', 'Status harus diisi').notEmpty(),
-    check('pengguna_id', 'Id Pengguna harus diisi').notEmpty(),
-    check('kategori_pariwisata_id', 'Id Kategori Pariwisata harus diisi').notEmpty(),
-]
+  check("nama_oleh_oleh", "Nama Oleh-oleh harus diisi").notEmpty(),
+  check("deskripsi_oleh_oleh", "Deskripsi Oleh-oleh harus diisi").notEmpty(),
+  check("alamat_oleh_oleh", "Alamat Oleh-oleh harus diisi").notEmpty(),
+  check("latitude", "Latitude harus diisi")
+    .notEmpty()
+    .isNumeric()
+    .withMessage("Format longitude salah"),
+  check("longitude", "Longitude harus diisi")
+    .notEmpty()
+    .isNumeric()
+    .withMessage("Format longitude salah"),
+  check("status", "Status harus diisi").notEmpty(),
+  check("pengguna_id", "Id Pengguna harus diisi").notEmpty(),
+  check(
+    "kategori_pariwisata_id",
+    "Id Kategori Pariwisata harus diisi"
+  ).notEmpty(),
+];
 
 
 exports.validationLogin = [

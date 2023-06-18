@@ -1,14 +1,15 @@
 const router = require("express").Router();
 const response = require("../core/response");
-const routes = require("../routers");
 const crypto = require("crypto");
 const Pengguna = require("../models/Pengguna_Model");
-const { runValidation, validationLogin, validationRegistrasi } = require('../validation/index');
-const jsonwebtoken = require('jsonwebtoken')
-const { kirimEmail } = require('../helpers/index');
-require('dotenv').config();
-
-
+const {
+  runValidation,
+  validationLogin,
+  validationRegistrasi,
+} = require("../validation/index");
+const jsonwebtoken = require("jsonwebtoken");
+const { kirimEmail } = require("../helpers/index");
+require("dotenv").config();
 
 router.post("/", validationLogin, runValidation, async (req, res) => {
   try {
@@ -23,36 +24,46 @@ router.post("/", validationLogin, runValidation, async (req, res) => {
 
     if (pengguna) {
       if (pengguna.status == 1) {
-          const new_pw = crypto.createHash("md5").update(password_pengguna).digest("hex");
-            if (new_pw == pengguna.password) {
-                if (pengguna.role_id !=3 ) {
-                    const data = {
-                      id_pengguna : pengguna.id_pengguna
-                    }
-                    const token = await jsonwebtoken.sign(data, process.env.ECOTOURISM_TOKEN)
-                    pengguna.dataValues.token = token
-                    response.code = 200;
-                    response.message = "Berhasil login";
-                    response.data = pengguna;
-                    res.send(response.getResponse());
-                } else {
-                  throw new Error('404|Email tidak ditemukan')
-                }
-            } else {
-              throw new Error('403|Email atau kata sandi salah')
-            }
+        const new_pw = crypto
+          .createHash("md5")
+          .update(password_pengguna)
+          .digest("hex");
+        if (new_pw == pengguna.password) {
+          if (pengguna.role_id != 3) {
+            const data = {
+              id_pengguna: pengguna.id_pengguna,
+            };
+            const token = await jsonwebtoken.sign(
+              data,
+              process.env.ECOTOURISM_TOKEN
+            );
+            let access_token = await Pengguna.update(
+              { access_token: token },
+              { where: { email: email_pengguna } }
+            );
+            pengguna.dataValues.token = token;
+            response.code = 200;
+            response.message = "Berhasil login";
+            response.data = pengguna;
+            res.send(response.getResponse());
+          } else {
+            throw new Error("404|Email tidak ditemukan");
+          }
         } else {
-          throw new Error('403|Email belum diverifikasi')
+          throw new Error("403|Email atau kata sandi salah");
         }
+      } else {
+        throw new Error("403|Email belum diverifikasi");
+      }
     } else {
-      throw new Error('404|Email tidak ditemukan')
+      throw new Error("404|Email tidak ditemukan");
     }
   } catch (error) {
     let errors = error.message || "";
-    errors = errors.split('|');
-    console.log(errors)
-    response.code = errors.length>1?errors[0]:500
-    response.message = errors.length>1?errors[1]:errors[0];
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });

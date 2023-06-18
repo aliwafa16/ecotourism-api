@@ -119,6 +119,7 @@ router.put("/", validationKategoriKuliner, runValidation, async (req, res) => {
           }
         }
       });
+
       let check_data = await Kategori_Kuliner.count({
         attributes: ["jenis_kuliner"],
         where: {

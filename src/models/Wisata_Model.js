@@ -52,11 +52,11 @@ const Wisata = sequalize.define("tbl_wisata", {
         allowNull: true
     },
     latitude: {
-        type:DataTypes.CHAR,
+        type:DataTypes.DOUBLE,
         allowNull:false
     },
     longitude: {
-        type: DataTypes.CHAR,
+        type: DataTypes.DOUBLE,
         allowNull:false
     },
     status: {

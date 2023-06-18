@@ -86,449 +86,483 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/search', async (req,res)=>{
-    let search = req.query;
-    const options = {
-        include:[
-            {
-                model:Wisata,
-            as: 'wisata',
-                include:[{
+router.get("/search", async (req, res) => {
+  let search = req.query;
+  const options = {
+    include: [
+      {
+        model: Wisata,
+        as: "wisata",
+        include: [
+          {
             model: Gambar,
-          as:'gambar'
-        }]
-            },{
-                model:Oleh_Oleh,
-            as: 'oleh_oleh',
-                include:[{
-            model: Gambar,
-          as:'gambar'
-        }]
-            },{
-                model:Penginapan,
-            as: 'penginapan',
-                include:[{
-            model: Gambar,
-          as:'gambar'
-        }]
-            },{
-                model: Kuliner,
-            as: 'kuliner',
-                include:[{
-            model: Gambar,
-          as:'gambar'
-        }]
-        }, 
-      ],
-            attributes:{
-                exclude:['created_at','deleted_at','updated_at']
-            }
-    }
-
-    options["where"] = {
-        [Op.or]: [
-          {
-            "$wisata.nama_wisata$": {
-              [Op.like]: `%${search.nama}%`,
-            },
+            as: "gambar",
           },
-          {
-              "$wisata.pengguna_id$":{
-                [Op.like]: `%${search.pengguna_id}%`,
-              }
-          },
-          {
-            "$oleh_oleh.nama_oleh_oleh$": {
-              [Op.like]: `%${search.nama}%`,
-            },
-          },
-          {
-            "$oleh_oleh.pengguna_id$": {
-              [Op.like]: `%${search.pengguna_id}%`,
-            },
-          },
-          {
-            "$penginapan.nama_penginapan$": {
-              [Op.like]: `%${search.nama}%`,
-            },
-          },
-          {
-            "$penginapan.pengguna_id$": {
-              [Op.like]: `%${search.pengguna_id}%`,
-            },
-          },
-          {
-            "$kuliner.nama_kuliner$": {
-              [Op.like]: `%${search.nama}%`,
-            },
-          },
-          {
-            "$kuliner.pengguna_id$": {
-              [Op.like]: `%${search.pengguna_id}%`,
-            },
-          },
-          {
-              kategori : {
-                  [Op.like] : `%${search.kategori}%`
-              }
-          },
-          {
-              id_kategori_pariwisata : {
-                  [Op.like] : `%${search.id_kategori_pariwisata}%`
-              }
-          }
         ],
-    };
-    try {
-      let pariwisata = await Pariwisata.findAll(options)
-      let results = [];
-
-      pariwisata = JSON.parse(JSON.stringify(pariwisata))
-      pariwisata.map(function (element) {
-        if (element.wisata.length > 0) {
-          element.wisata.map((wisata) => {
-            results.push(wisata)
-          })
-        }
-
-         if (element.kuliner.length > 0) {
-           element.kuliner.map((kuliner) => {
-            results.push(kuliner)
-          })
-        }
-
-        if (element.penginapan.length > 0) {
-          element.penginapan.map((penginapan) => {
-            results.push(penginapan)
-          })
-        }
-
-        if (element.oleh_oleh.length > 0) {
-          element.oleh_oleh.map((oleh_oleh) => {
-            results.push(oleh_oleh)
-          })
-        }
-
-      })
-
-
-
-        if(results.length!=0){
-            response.code = 200;
-            response.message = "Sukses";
-            response.data = results;
-            res.send(response.getResponse());
-        }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
-        }
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
-})
-
-
-router.get('/filter', async(req,res)=>{
-    let filter = req.query;
-
-    const options = {
-        include:[
-            {
-                model:Wisata,
-            as: 'wisata',
-                include:[{
+      },
+      {
+        model: Oleh_Oleh,
+        as: "oleh_oleh",
+        include: [
+          {
             model: Gambar,
-          as:'gambar'
-        }]
-            },{
-                model:Oleh_Oleh,
-            as: 'oleh_oleh',
-                include:[{
+            as: "gambar",
+          },
+        ],
+      },
+      {
+        model: Penginapan,
+        as: "penginapan",
+        include: [
+          {
             model: Gambar,
-          as:'gambar'
-        }]
-            },{
-                model:Penginapan,
-            as: 'penginapan',
-                include:[{
+            as: "gambar",
+          },
+        ],
+      },
+      {
+        model: Kuliner,
+        as: "kuliner",
+        include: [
+          {
             model: Gambar,
-          as:'gambar'
-        }]
-            },{
-                model: Kuliner,
-            as: 'kuliner',
-                include:[{
-            model: Gambar,
-          as:'gambar'
-        }]
-        }, 
-      ],
-            attributes:{
-                exclude:['created_at','deleted_at','updated_at']
-            }
-    }
-  
-    options["where"] = {
-        ...options.where,
-        [Op.and]: [],
-      };
+            as: "gambar",
+          },
+        ],
+      },
+    ],
+    attributes: {
+      exclude: ["created_at", "deleted_at", "updated_at"],
+    },
+  };
 
-      if (filter.id_kategori_pariwisata) {
-        options.where[Op.and].push({
-          id_kategori_pariwisata: filter.id_kategori_pariwisata,
+  options["where"] = {
+    [Op.or]: [
+      {
+        "$wisata.nama_wisata$": {
+          [Op.like]: `%${search.nama}%`,
+        },
+      },
+      {
+        "$wisata.pengguna_id$": {
+          [Op.like]: `%${search.pengguna_id}%`,
+        },
+      },
+      {
+        "$oleh_oleh.nama_oleh_oleh$": {
+          [Op.like]: `%${search.nama}%`,
+        },
+      },
+      {
+        "$oleh_oleh.pengguna_id$": {
+          [Op.like]: `%${search.pengguna_id}%`,
+        },
+      },
+      {
+        "$penginapan.nama_penginapan$": {
+          [Op.like]: `%${search.nama}%`,
+        },
+      },
+      {
+        "$penginapan.pengguna_id$": {
+          [Op.like]: `%${search.pengguna_id}%`,
+        },
+      },
+      {
+        "$kuliner.nama_kuliner$": {
+          [Op.like]: `%${search.nama}%`,
+        },
+      },
+      {
+        "$kuliner.pengguna_id$": {
+          [Op.like]: `%${search.pengguna_id}%`,
+        },
+      },
+      {
+        kategori: {
+          [Op.like]: `%${search.kategori}%`,
+        },
+      },
+      {
+        id_kategori_pariwisata: {
+          [Op.like]: `%${search.id_kategori_pariwisata}%`,
+        },
+      },
+    ],
+  };
+  try {
+    let pariwisata = await Pariwisata.findAll(options);
+    let results = [];
+
+    pariwisata = JSON.parse(JSON.stringify(pariwisata));
+    pariwisata.map(function (element) {
+      if (element.wisata.length > 0) {
+        element.wisata.map((wisata) => {
+          results.push(wisata);
         });
       }
 
-      if (filter.kategori) {
-        options.where[Op.and].push({
-          kategori: filter.kategori,
+      if (element.kuliner.length > 0) {
+        element.kuliner.map((kuliner) => {
+          results.push(kuliner);
         });
       }
 
-      if (filter.kategori_wisata_id) {
-        options.where[Op.and].push({
-          "$wisata.kategori_wisata_id$": filter.kategori_wisata_id,
+      if (element.penginapan.length > 0) {
+        element.penginapan.map((penginapan) => {
+          results.push(penginapan);
         });
       }
 
-      if (filter.kategori_kuliner_id) {
-        options.where[Op.and].push({
-          "$kuliner.kategori_kuliner_id$": filter.kategori_kuliner_id,
+      if (element.oleh_oleh.length > 0) {
+        element.oleh_oleh.map((oleh_oleh) => {
+          results.push(oleh_oleh);
         });
-      }
-
-      if (filter.kategori_penginapan_id) {
-        options.where[Op.and].push({
-          "$penginapan.kategori_penginapan_id$": filter.kategori_penginapan_id,
-        });
-      }
-      try {
-      let pariwisata = await Pariwisata.findAll(options)
-      let results = [];
-
-      pariwisata = JSON.parse(JSON.stringify(pariwisata))
-      pariwisata.map(function (element) {
-        if (element.wisata.length > 0) {
-          element.wisata.map((wisata) => {
-            results.push(wisata)
-          })
-        }
-
-         if (element.kuliner.length > 0) {
-           element.kuliner.map((kuliner) => {
-            results.push(kuliner)
-          })
-        }
-
-        if (element.penginapan.length > 0) {
-          element.penginapan.map((penginapan) => {
-            results.push(penginapan)
-          })
-        }
-
-        if (element.oleh_oleh.length > 0) {
-          element.oleh_oleh.map((oleh_oleh) => {
-            results.push(oleh_oleh)
-          })
-        }
-
-      })
-        if(results.length!=0){
-            response.code = 200;
-            response.message = "Sukses";
-            response.data = results;
-            res.send(response.getResponse());
-        }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
-        }
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
-
-})
-
-router.get('/find', async(req,res)=>{
-    const options = {
-        include:[
-            {
-                model:Wisata,
-                as: 'wisata'
-            },{
-                model:Oleh_Oleh,
-                as: 'oleh_oleh'
-            },{
-                model:Penginapan,
-                as: 'penginapan'
-            },{
-                model: Kuliner,
-                as:'kuliner'
-            }],
-            attributes:{
-                exclude:['created_at','deleted_at','updated_at']
-            }
-    }
-    let find = req.query
-    let modelAttr = Pariwisata.rawAttributes;
-    const findwhere = {};
-    Object.values(modelAttr).forEach((val) => {
-      Object.entries(find).forEach((f) => {
-        const key = f[0];
-        const value = f[1];
-        if (val.field === key && value) {
-          findwhere[val.field] = value.toString();
-        }
-      });
-    });
-    options["where"] = findwhere
-    try {
-        const pariwisata = await Pariwisata.findAll(options)
-        if(pariwisata.length!=0){
-            response.code = 200;
-            response.message = "Sukses";
-            response.data = pariwisata;
-            res.send(response.getResponse());
-        }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
-        }
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
-})
-
-router.get('/:id', async(req,res)=>{
-    const options = {
-        include:[
-            {
-                model:Wisata,
-                as: 'wisata'
-            },{
-                model:Oleh_Oleh,
-                as: 'oleh_oleh'
-            },{
-                model:Penginapan,
-                as: 'penginapan'
-            },{
-                model: Kuliner,
-                as:'kuliner'
-            }],
-            attributes:{
-                exclude:['created_at','deleted_at','updated_at']
-            }
-    }
-
-    options['where'] = {
-        id_kategori_pariwisata : req.params.id
-    }
-
-    try {
-        const pariwisata = await Pariwisata.findOne(options)
-        if(pariwisata){
-            response.code = 200;
-            response.message = "Sukses";
-            response.data = pariwisata;
-            res.send(response.getResponse());
-        }else{
-            response.code = 111;
-            response.message = "Data tidak ditemukan";
-            res.send(response.getResponse());
-        }
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
-    }
-})
-
-router.post('/', validationPariwisata, runValidation, async(req,res)=>{
-    const modelAttr = Pariwisata.rawAttributes;
-    const inputPariwisata = {};
-
-    Object.values(modelAttr).forEach((val) => {
-      if (val.field != "id_kategori_pariwisata") {
-        if (req.body[val.field] != '') {
-          inputPariwisata[val.fieldName] = req.body[val.field];
-        } else {
-          inputPariwisata[val.fieldName] = null;
-        }
       }
     });
 
-    try {
-        const pariwisata = await Pariwisata.create(inputPariwisata)
-        response.code = 200;
-        response.message = "Sukses";
-        response.data = inputPariwisata;
-        res.send(response.getResponse());
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+    if (results.length != 0) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = results;
+      res.send(response.getResponse());
+    } else {
+      throw new Error("404|Data tidak ditemukan");
     }
-   
-})
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
 
+router.get("/filter", async (req, res) => {
+  let filter = req.query;
 
-router.put('/', validationPariwisata, runValidation, async(req, res)=>{
-    const options = {};
-     options.where = {
-        id_kategori_pariwisata : req.body.id_kategori_pariwisata
-    }
+  const options = {
+    include: [
+      {
+        model: Wisata,
+        as: "wisata",
+        include: [
+          {
+            model: Gambar,
+            as: "gambar",
+          },
+        ],
+      },
+      {
+        model: Oleh_Oleh,
+        as: "oleh_oleh",
+        include: [
+          {
+            model: Gambar,
+            as: "gambar",
+          },
+        ],
+      },
+      {
+        model: Penginapan,
+        as: "penginapan",
+        include: [
+          {
+            model: Gambar,
+            as: "gambar",
+          },
+        ],
+      },
+      {
+        model: Kuliner,
+        as: "kuliner",
+        include: [
+          {
+            model: Gambar,
+            as: "gambar",
+          },
+        ],
+      },
+    ],
+    attributes: {
+      exclude: ["created_at", "deleted_at", "updated_at"],
+    },
+  };
 
-    const modelAttr = Pariwisata.rawAttributes;
-    const inputPariwisata = {};
-    inputPariwisata.id_kategori_pariwisata = req.body.id_kategori_pariwisata
-    Object.values(modelAttr).forEach((val) => {
-      if (val.field != "id_kategori_pariwisata") {
-        if (req.body[val.field] != '') {
-          inputPariwisata[val.fieldName] = req.body[val.field];
-        } else {
-          inputPariwisata[val.fieldName] = null;
-        }
+  options["where"] = {
+    ...options.where,
+    [Op.and]: [],
+  };
+
+  if (filter.id_kategori_pariwisata) {
+    options.where[Op.and].push({
+      id_kategori_pariwisata: filter.id_kategori_pariwisata,
+    });
+  }
+
+  if (filter.kategori) {
+    options.where[Op.and].push({
+      kategori: filter.kategori,
+    });
+  }
+
+  if (filter.kategori_wisata_id) {
+    options.where[Op.and].push({
+      "$wisata.kategori_wisata_id$": filter.kategori_wisata_id,
+    });
+  }
+
+  if (filter.kategori_kuliner_id) {
+    options.where[Op.and].push({
+      "$kuliner.kategori_kuliner_id$": filter.kategori_kuliner_id,
+    });
+  }
+
+  if (filter.kategori_penginapan_id) {
+    options.where[Op.and].push({
+      "$penginapan.kategori_penginapan_id$": filter.kategori_penginapan_id,
+    });
+  }
+  try {
+    let pariwisata = await Pariwisata.findAll(options);
+    let results = [];
+
+    pariwisata = JSON.parse(JSON.stringify(pariwisata));
+    pariwisata.map(function (element) {
+      if (element.wisata.length > 0) {
+        element.wisata.map((wisata) => {
+          results.push(wisata);
+        });
+      }
+
+      if (element.kuliner.length > 0) {
+        element.kuliner.map((kuliner) => {
+          results.push(kuliner);
+        });
+      }
+
+      if (element.penginapan.length > 0) {
+        element.penginapan.map((penginapan) => {
+          results.push(penginapan);
+        });
+      }
+
+      if (element.oleh_oleh.length > 0) {
+        element.oleh_oleh.map((oleh_oleh) => {
+          results.push(oleh_oleh);
+        });
       }
     });
-    try {
-        const pariwisata = await Pariwisata.update(inputPariwisata,options);
-        response.code = 200;
-        response.message = "Sukses";
-        response.data = inputPariwisata;
-        res.send(response.getResponse());
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+    if (results.length != 0) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = results;
+      res.send(response.getResponse());
+    } else {
+      throw new Error("404|Data tidak ditemukan");
     }
-})
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
 
-
-router.delete('/', async(req,res)=>{
-    const options = {}
-    options.where = {
-        id_kategori_pariwisata : req.body.id_kategori_pariwisata
+router.get("/find", async (req, res) => {
+  const options = {
+    include: [
+      {
+        model: Wisata,
+        as: "wisata",
+      },
+      {
+        model: Oleh_Oleh,
+        as: "oleh_oleh",
+      },
+      {
+        model: Penginapan,
+        as: "penginapan",
+      },
+      {
+        model: Kuliner,
+        as: "kuliner",
+      },
+    ],
+    attributes: {
+      exclude: ["created_at", "deleted_at", "updated_at"],
+    },
+  };
+  let find = req.query;
+  let modelAttr = Pariwisata.rawAttributes;
+  const findwhere = {};
+  Object.values(modelAttr).forEach((val) => {
+    Object.entries(find).forEach((f) => {
+      const key = f[0];
+      const value = f[1];
+      if (val.field === key && value) {
+        findwhere[val.field] = value.toString();
+      }
+    });
+  });
+  options["where"] = findwhere;
+  try {
+    const pariwisata = await Pariwisata.findAll(options);
+    if (pariwisata.length != 0) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = pariwisata;
+      res.send(response.getResponse());
+    } else {
+      throw new Error("404|Data tidak ditemukan");
     }
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
 
-    try {
-        const pariwisata = await Pariwisata.destroy(options)
-        response.code = 200;
-        response.message = "Sukses";
-        response.data = pariwisata;
-        res.send(response.getResponse());
-    } catch (error) {
-        response.code = 110;
-        response.message = error.message;
-        res.send(response.getResponse());
+router.get("/:id", async (req, res) => {
+  const options = {
+    include: [
+      {
+        model: Wisata,
+        as: "wisata",
+      },
+      {
+        model: Oleh_Oleh,
+        as: "oleh_oleh",
+      },
+      {
+        model: Penginapan,
+        as: "penginapan",
+      },
+      {
+        model: Kuliner,
+        as: "kuliner",
+      },
+    ],
+    attributes: {
+      exclude: ["created_at", "deleted_at", "updated_at"],
+    },
+  };
+
+  options["where"] = {
+    id_kategori_pariwisata: req.params.id,
+  };
+
+  try {
+    const pariwisata = await Pariwisata.findOne(options);
+    if (pariwisata) {
+      response.code = 200;
+      response.message = "Sukses";
+      response.data = pariwisata;
+      res.send(response.getResponse());
+    } else {
+      throw new Error("404|Data tidak ditemukan");
     }
-})
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
+
+router.post("/", validationPariwisata, runValidation, async (req, res) => {
+  const modelAttr = Pariwisata.rawAttributes;
+  const inputPariwisata = {};
+
+  Object.values(modelAttr).forEach((val) => {
+    if (val.field != "id_kategori_pariwisata") {
+      if (req.body[val.field] != "") {
+        inputPariwisata[val.fieldName] = req.body[val.field];
+      } else {
+        inputPariwisata[val.fieldName] = null;
+      }
+    }
+  });
+
+  try {
+    const pariwisata = await Pariwisata.create(inputPariwisata);
+    response.code = 200;
+    response.message = "Sukses";
+    response.data = inputPariwisata;
+    res.send(response.getResponse());
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
+
+router.put("/", validationPariwisata, runValidation, async (req, res) => {
+  const options = {};
+  options.where = {
+    id_kategori_pariwisata: req.body.id_kategori_pariwisata,
+  };
+
+  const modelAttr = Pariwisata.rawAttributes;
+  const inputPariwisata = {};
+  inputPariwisata.id_kategori_pariwisata = req.body.id_kategori_pariwisata;
+  Object.values(modelAttr).forEach((val) => {
+    if (val.field != "id_kategori_pariwisata") {
+      if (req.body[val.field] != "") {
+        inputPariwisata[val.fieldName] = req.body[val.field];
+      } else {
+        inputPariwisata[val.fieldName] = null;
+      }
+    }
+  });
+  try {
+    const pariwisata = await Pariwisata.update(inputPariwisata, options);
+    response.code = 200;
+    response.message = "Sukses";
+    response.data = inputPariwisata;
+    res.send(response.getResponse());
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
+
+router.delete("/", async (req, res) => {
+  const options = {};
+  options.where = {
+    id_kategori_pariwisata: req.body.id_kategori_pariwisata,
+  };
+
+  try {
+    const pariwisata = await Pariwisata.destroy(options);
+    response.code = 200;
+    response.message = "Sukses";
+    response.data = pariwisata;
+    res.send(response.getResponse());
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
 
 
 // router.get("/find", async (req, res) => {

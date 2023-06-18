@@ -2,14 +2,14 @@ const router = require("express").Router();
 const response = require("../core/response");
 const {Op} = require('sequelize')
 const { runValidation, validationPenginapan } = require('../validation/index');
-
-const Penginapan = require('../models/Penginapan_Model');
-const Kategori_Penginapan = require('../models/KategoriPenginapan_Model');
-const Kategori_Pariwisata = require('../models/Pariwisata_Model');
-const Fasilitas = require('../models/Fasilitas_Model');
-const Fasilitas_Kamar = require('../models/FasilitasKamar_Model');
-const Kamar_Penginapan = require('../models/KamarPenginapan_Model');
-const Gambar = require('../models/Gambar_Model');
+const { token } = require("../core/middleware");
+const Penginapan = require("../models/Penginapan_Model");
+const Kategori_Penginapan = require("../models/KategoriPenginapan_Model");
+const Kategori_Pariwisata = require("../models/Pariwisata_Model");
+const Fasilitas = require("../models/Fasilitas_Model");
+const Fasilitas_Kamar = require("../models/FasilitasKamar_Model");
+const Kamar_Penginapan = require("../models/KamarPenginapan_Model");
+const Gambar = require("../models/Gambar_Model");
 const Item = require("../models/ItemPariwisata_Model");
 
 Penginapan.hasMany(Fasilitas, { as: "fasilitas", foreignKey: "id_pariwisata" });
@@ -106,21 +106,20 @@ router.get("/", async (req, res) => {
 
   try {
     const penginapan = await Penginapan.findAll(options);
-    if(penginapan){
+    if (penginapan) {
       response.code = 200;
-    response.message = "Sukses";
-    response.data = penginapan;
-    res.send(response.getResponse());
+      response.message = "Sukses";
+      response.data = penginapan;
+      res.send(response.getResponse());
     } else {
-      throw new Error("404|Penginapan tidak ditemukan")
+      throw new Error("404|Penginapan tidak ditemukan");
     }
-    
   } catch (error) {
     let errors = error.message || "";
-    errors = errors.split('|');
-    console.log(errors)
-    response.code = errors.length>1?errors[0]:500
-    response.message = errors.length>1?errors[1]:errors[0];
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
@@ -257,14 +256,14 @@ router.get("/search", async (req, res) => {
       response.data = penginapan;
       res.send(response.getResponse());
     } else {
-      throw new Error("404|Penginapan tidak ditemukan")
+      throw new Error("404|Penginapan tidak ditemukan");
     }
   } catch (error) {
     let errors = error.message || "";
-    errors = errors.split('|');
-    console.log(errors)
-    response.code = errors.length>1?errors[0]:500
-    response.message = errors.length>1?errors[1]:errors[0];
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
@@ -373,14 +372,14 @@ router.get("/filter", async (req, res) => {
       response.data = penginapan;
       res.send(response.getResponse());
     } else {
-     throw new Error("404|Penginapan tidak ditemukan")
+      throw new Error("404|Penginapan tidak ditemukan");
     }
   } catch (error) {
     let errors = error.message || "";
-    errors = errors.split('|');
-    console.log(errors)
-    response.code = errors.length>1?errors[0]:500
-    response.message = errors.length>1?errors[1]:errors[0];
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
@@ -479,14 +478,14 @@ router.get("/find", async (req, res) => {
       response.data = penginapan;
       res.send(response.getResponse());
     } else {
-   throw new Error("404|Penginapan tidak ditemukan")
+      throw new Error("404|Penginapan tidak ditemukan");
     }
   } catch (error) {
-     let errors = error.message || "";
-    errors = errors.split('|');
-    console.log(errors)
-    response.code = errors.length>1?errors[0]:500
-    response.message = errors.length>1?errors[1]:errors[0];
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
@@ -575,99 +574,125 @@ router.get("/:id", async (req, res) => {
       response.data = penginapan;
       res.send(response.getResponse());
     } else {
-      throw new Error("404|Penginapan tidak ditemukan")
+      throw new Error("404|Penginapan tidak ditemukan");
     }
   } catch (error) {
-     let errors = error.message || "";
-    errors = errors.split('|');
-    console.log(errors)
-    response.code = errors.length>1?errors[0]:500
-    response.message = errors.length>1?errors[1]:errors[0];
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
     res.send(response.getResponse());
   }
 });
 
-router.post('/',validationPenginapan,runValidation, async (req, res)=>{
+router.post(
+  "/",
+  token,
+  validationPenginapan,
+  runValidation,
+  async (req, res) => {
+    const lastest = await Penginapan.findOne({
+      attributes: ["id_penginapan"],
+      order: [["created_at", "DESC"]],
+    });
+    const id_penginapan = parseInt(lastest.id_penginapan.slice(1)) + 1;
 
-    const lastest = await Penginapan.findOne({attributes:['id_penginapan'],order:[['created_at','DESC']]})
-    const id_penginapan = parseInt(lastest.id_penginapan.slice(1))+1
-
-    const modelAttr = Penginapan.rawAttributes
+    const modelAttr = Penginapan.rawAttributes;
     const inputPenginapan = {};
 
     Object.values(modelAttr).forEach((val) => {
-        if (val.field != "id_penginapan") {
-          if (req.body[val.field] != '') {
-            inputPenginapan[val.fieldName] = req.body[val.field];
-          } else {
-            inputPenginapan[val.fieldName] = null;
-          }
+      if (val.field != "id_penginapan") {
+        if (req.body[val.field] != "") {
+          inputPenginapan[val.fieldName] = req.body[val.field];
+        } else {
+          inputPenginapan[val.fieldName] = null;
         }
+      }
     });
 
-    inputPenginapan['id_penginapan'] = `P` + id_penginapan
-    console.log(id_penginapan)
-    
+    inputPenginapan["id_penginapan"] = `P` + id_penginapan;
+    console.log(inputPenginapan);
+
     try {
-        const penginapan = await Penginapan.create(inputPenginapan)
+      let data = await Penginapan.findOne({
+        where: { nama_penginapan: inputPenginapan["nama_penginapan"] },
+      });
+
+      if (data) {
+        throw new Error("403|Penginapan sudah ada");
+      } else {
+        const penginapan = await Penginapan.create(inputPenginapan);
         response.code = 200;
         response.message = "Penginapan berhasil ditambahkan";
         response.data = inputPenginapan;
         res.send(response.getResponse());
+      }
     } catch (error) {
-        let errors = error.message || "";
-        errors = errors.split('|');
-        console.log(errors)
-        response.code = errors.length>1?errors[0]:500
-        response.message = errors.length>1?errors[1]:errors[0];
-        res.send(response.getResponse());
+      let errors = error.message || "";
+      errors = errors.split("|");
+      console.log(error);
+      response.code = errors.length > 1 ? errors[0] : 500;
+      response.message = errors.length > 1 ? errors[1] : errors[0];
+      res.send(response.getResponse());
     }
+  }
+);
 
-})
+router.put("/",token, validationPenginapan, runValidation, async (req, res) => {
+  const options = {};
+  options.where = {
+    id_penginapan: req.body.id_penginapan,
+  };
 
-router.put('/',validationPenginapan,runValidation, async (req,res)=>{
-    const options = {}
-    options.where = {
-        id_penginapan : req.body.id_penginapan
+  const modelAttr = Penginapan.rawAttributes;
+  const inputPenginapan = {};
+  inputPenginapan.id_penginapan = req.body.id_penginapan;
+  Object.values(modelAttr).forEach((val) => {
+    if (val.field != "id_penginapan") {
+      if (req.body[val.field] != "") {
+        inputPenginapan[val.fieldName] = req.body[val.field];
+      } else {
+        inputPenginapan[val.fieldName] = null;
+      }
     }
-
-    const modelAttr = Penginapan.rawAttributes
-    const inputPenginapan = {};
-    inputPenginapan.id_kuliner = req.body.id_penginapan
-    Object.values(modelAttr).forEach((val) => {
-        if (val.field != "id_penginapan") {
-          if (req.body[val.field] != '') {
-            inputPenginapan[val.fieldName] = req.body[val.field];
-          } else {
-            inputPenginapan[val.fieldName] = null;
-          }
-        }
-    });
-    console.log(inputPenginapan)
+  });
+  console.log(inputPenginapan);
   try {
-    let data = Penginapan.findOne(options)
+    let data = await Penginapan.findOne(options);
     if (data) {
-      const penginapan = await Penginapan.update(inputPenginapan, options);
+      let check_data = await Penginapan.count({
+        attributes: ["nama_penginapan"],
+        where: {
+          nama_penginapan: inputPenginapan.nama_penginapan,
+          id_penginapan: { [Op.not]: inputPenginapan.id_penginapan },
+        },
+      });
+
+      if (check_data) {
+        throw new Error("403|Penginapan sudah ada");
+      } else {
+        const penginapan = await Penginapan.update(inputPenginapan, options);
         response.code = 200;
-        response.message = "Ubah Data Wisata Penginapan Berhasil";
+        response.message = "Penginapan berhasil diubah";
         response.data = inputPenginapan;
         res.send(response.getResponse());
+      }
     } else {
-      throw new Error('404|Penginapan tidak ditemukan')
-    } 
-    } catch (error) {
-         let errors = error.message || "";
-          errors = errors.split('|');
-          console.log(errors)
-          response.code = errors.length>1?errors[0]:500
-          response.message = errors.length>1?errors[1]:errors[0];
-          res.send(response.getResponse());
+      throw new Error("404|Penginapan tidak ditemukan");
     }
-    
-})
+  } catch (error) {
+    let errors = error.message || "";
+    errors = errors.split("|");
+    console.log(errors);
+    response.code = errors.length > 1 ? errors[0] : 500;
+    response.message = errors.length > 1 ? errors[1] : errors[0];
+    res.send(response.getResponse());
+  }
+});
 
 
-router.delete('/', async(req,res)=>{
+router.delete('/',token, async(req,res)=>{
     const options = {}
     options.where = {
         id_penginapan : req.body.id_penginapan

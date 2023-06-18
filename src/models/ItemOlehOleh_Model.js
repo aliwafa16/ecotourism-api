@@ -24,7 +24,7 @@ const Item_Oleh_Oleh = sequalize.define(
     },
     keterangan: {
       type: DataTypes.CHAR,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

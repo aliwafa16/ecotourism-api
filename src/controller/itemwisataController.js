@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const { existsSync} = require('fs')
+const { existsSync } = require("fs");
+const fs = require("fs");
 const multer = require('multer')
 const path = require('path');
 const Qrcode = require('qrcode')
